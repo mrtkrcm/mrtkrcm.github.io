@@ -4,6 +4,7 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: [
     "babel-polyfill",
     "./index"
@@ -19,11 +20,8 @@ module.exports = {
         "NODE_ENV": JSON.stringify("production")
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    })
+    new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
+    new webpack.optimize.AggressiveMergingPlugin()
   ],
   module: {
     loaders: [{
