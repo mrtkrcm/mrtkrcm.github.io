@@ -1,0 +1,2 @@
+const div = React.createElement("div", {className: "red"}, "Text")
+const counter = React.createElement(MyCounter, {count: 3 + 5})

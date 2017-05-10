@@ -1,0 +1,7 @@
+const LastSlide = () => (
+  <section>
+	<ThankYou />
+	<Prompt message="Questions?" />
+	<Author name="Murat.Karacam" />
+  </section>
+)

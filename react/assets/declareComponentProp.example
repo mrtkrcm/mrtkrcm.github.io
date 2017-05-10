@@ -1,0 +1,2 @@
+const element = <Welcome name="DMI" />;
+// Output: <h1>Welcome, DMI</h1>
