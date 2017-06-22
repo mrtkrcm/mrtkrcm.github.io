@@ -17,7 +17,7 @@ export default class Clock extends React.Component {
     this.i = 0;
 
     this.rotate = this.rotate.bind(this);
-    //this.timerID = setInterval(() => this.rotate(), 3000);
+    this.timerID = setInterval(() => this.rotate(), 3000);
   }
 
   componentWillUnmount() {
