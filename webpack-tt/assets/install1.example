@@ -1,0 +1,7 @@
+# Install as npm package
+👏🏼 $ yarn add webpack
+# or
+😒 $ npm install webpack
+
+# Could be runned from CLI
+$ webpack <entry.js> <target.js>

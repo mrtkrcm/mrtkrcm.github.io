@@ -1,0 +1,2 @@
+const div = <div className="red">Text</div>
+const counter = <MyCounter count={3 + 5} />

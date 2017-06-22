@@ -1,0 +1,3 @@
+// or as a Node.js package from script
+var webpack = require("webpack");
+webpack({ /* configuration...*/ }, function(err, stats) { … });

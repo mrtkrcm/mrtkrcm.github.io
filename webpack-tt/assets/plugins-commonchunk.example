@@ -1,0 +1,13 @@
+// webpack.config.js
+module.exports = {
+    ...
+    plugins: [
+		new webpack.optimize.CommonsChunkPlugin({
+			filename: 'used-twice.js',
+			async: 'used-twice',
+			minChunks(module, count) {
+				return count >= 2;
+			},
+		})
+    ]
+};
