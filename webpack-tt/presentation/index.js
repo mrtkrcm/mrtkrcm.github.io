@@ -21,9 +21,9 @@ require("spectacle/lib/themes/default/index.css");
 require("../assets/custom.css");
 
 const images = {
-  overview: require("../assets/webpack-overview.png"),
+  overview: require("../assets/webpack-overview.jpg"),
   logo: require("../assets/logo.svg"),
-  analyz: require("../assets/webpack-analyz.png")
+  analyz: require("../assets/webpack-analyz.jpg")
 };
 
 preloader(images);
