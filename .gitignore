@@ -1,2 +1,5 @@
 .idea
 shared-components/*.checksum
+.history
+sandbox/src/shared-components
+sandbox/node_modules
