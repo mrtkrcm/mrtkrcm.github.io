@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                sh "echo Hola "
+                sh "scripts/releaseAllSharedComponents.sh"
             }
         }
     }
