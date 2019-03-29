@@ -18,11 +18,15 @@ for component in $allComponents; do
     if [[ "${checksumFileContents}" != "${componentCheckSum}" ]]; then
         echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
         ${basedir}/releaseSharedComponent.sh ${component}
-        componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
-        echo "$componentCheckSum" > ${checksumFile}
-        git add -f ${checksumFile}
-        git commit -m "JENKINS: Added checksum file for ${component}"
-        git push origin HEAD:master
+        if [ $? == 0 ]; then
+            componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
+            echo "$componentCheckSum" > ${checksumFile}
+            git add -f ${checksumFile}
+            git commit -m "JENKINS: Added checksum file for ${component}"
+            git push origin HEAD:master
+        else
+            echo "Release of ${component} failed."
+        fi
     else
         echo "Checksum matches. Skipping ${component}."
     fi
