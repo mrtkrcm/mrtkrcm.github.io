@@ -1,11 +1,14 @@
 {
-    "name": "hello_world",
-    "description": "Our first test package",
-    "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [],
-    "author": "Josep"
-  }
+  "name": "hello_world",
+  "description": "Our first test package",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "publishConfig": {
+    "registry": "nexus.dminc-gtc.com:50000"
+  },
+  "author": "Josep"
+}
