@@ -14,6 +14,7 @@ for component in $allComponents; do
     checksumFile=${sharedComponentsDir}${component}.checksum
     if [ -f ${checksumFile} ]; then
         checksumFileContents=$(cat ${checksumFile})
+        echo "Checksum in file ${checksumFile} is $checksumFileContents"
     fi
     if [[ "${checksumFileContents}" != "${componentCheckSum}" ]]; then
         echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
