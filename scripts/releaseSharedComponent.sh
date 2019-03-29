@@ -11,7 +11,7 @@ componentName=$1
 
 echo "Releasing ${componentName}"
 
-${basedir}/scripts/closeVersion.sh ${componentName}
+${basedir}/closeVersion.sh ${componentName}
 
 cd $sharedComponentsDir$componentName && npm publish
 
