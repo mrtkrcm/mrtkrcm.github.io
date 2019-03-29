@@ -22,7 +22,7 @@ for component in $allComponents; do
         ${basedir}/releaseSharedComponent.sh
         componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
         echo "$componentCheckSum" > ${checksumFile}
-        git add  ${checksumFile}
+        git add -f ${checksumFile}
         git commit -m "JENKINS: Added checksum file for ${component}"
         git push origin HEAD:master
     else
