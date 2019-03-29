@@ -3,7 +3,6 @@
 basedir=$(dirname $0)
 sharedComponentsDir=${basedir}/../shared-components/
 
-
 allComponents=$(cd ${sharedComponentsDir} && ls -d1 */ | cut -d\/ -f1 )
 
 for component in $allComponents; do
@@ -18,7 +17,6 @@ for component in $allComponents; do
     fi
     if [[ "${checksumFileContents}" != "${componentCheckSum}" ]]; then
         echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
-        echo "Building ${component}."
         ${basedir}/releaseSharedComponent.sh ${component}
         componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
         echo "$componentCheckSum" > ${checksumFile}
