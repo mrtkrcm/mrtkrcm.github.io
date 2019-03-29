@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Hello') {
+        stage('Releasing all shared components') {
             steps {
                 sh "scripts/releaseAllSharedComponents.sh"
             }

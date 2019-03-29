@@ -16,12 +16,16 @@ for component in $allComponents; do
         checksumFileContents=$(cat ${checksumFile})
     fi
     if [[ "${checksumFileContents}" != "${componentCheckSum}" ]]; then
-        echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}. Building ${component}."
+        echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
+        echo "Building ${component}."
         ${basedir}/releaseSharedComponent.sh
         componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
         echo "$componentCheckSum" > ${checksumFile}
+        git add  ${checksumFile}
+        git commit -m "JENKINS: Added checksum file for ${component}"
+        git push origin HEAD:master
     else
-        echo "Checksum matches. Skipping."
+        echo "Checksum matches. Skipping ${component}."
     fi
 done
 
