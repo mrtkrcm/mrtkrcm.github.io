@@ -26,6 +26,7 @@ for component in $allComponents; do
             git push origin HEAD:master
         else
             echo "Release of ${component} failed."
+            exit 1;
         fi
     else
         echo "Checksum matches. Skipping ${component}."
