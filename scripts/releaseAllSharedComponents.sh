@@ -19,7 +19,7 @@ for component in $allComponents; do
     if [[ "${checksumFileContents}" != "${componentCheckSum}" ]]; then
         echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
         echo "Building ${component}."
-        ${basedir}/releaseSharedComponent.sh
+        ${basedir}/releaseSharedComponent.sh ${component}
         componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
         echo "$componentCheckSum" > ${checksumFile}
         git add -f ${checksumFile}
