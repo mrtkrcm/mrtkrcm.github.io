@@ -6,7 +6,7 @@ if [ $# -ne 1 ]; then
 fi
 
 basedir=$(dirname $0)
-sharedComponentsDir=${basedir}/../shared-components/
+sharedComponentsDir=${basedir}/../sandbox/src/shared-components/
 componentName=$1
 
 echo "Releasing ${componentName}"
