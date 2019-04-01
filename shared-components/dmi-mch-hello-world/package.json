@@ -1,5 +1,5 @@
 {
-  "name": "hello_world",
+  "name": "dmi-mch-hello-world",
   "description": "Our first test package",
   "version": "1.0.0-SNAPSHOT",
   "main": "index.js",
