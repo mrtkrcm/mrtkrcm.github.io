@@ -25,6 +25,7 @@ if [ $? == 0 ]; then
     echo "Cleaning generated files"
     rm -rf ${sharedComponentsDir}${componentName}/build
     rm -rf ${sharedComponentsDir}${componentName}/node-modules
+    rm -rf ${sharedComponentsDir}${componentName}/package-lock.json
     echo "Cleaning done. Contents of the folder: "
     ls -lah ${sharedComponentsDir}${componentName}
 else
