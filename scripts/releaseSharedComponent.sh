@@ -8,12 +8,14 @@ fi
 basedir=$(dirname $0)
 sharedComponentsDir=${basedir}/../sandbox/src/shared-components/
 componentName=$1
+temporaryDirectory=$(mktemp -d -t "tmp-mfp-fe-modules-$componentName")
 
 echo "Releasing ${componentName}"
 
 ${basedir}/version/closeVersion.sh ${componentName}
 
-(cd $sharedComponentsDir$componentName && npm install && npm run build && cp package.json build/ && cd build/ && npm publish)
+cp -R $sharedComponentsDir$componentName $temporaryDirectory
+(cd $temporaryDirectory && npm install && npm run build && cp package.json build/ && cd build/ && npm publish && rm -rf $temporaryDirectory)
 
 if [ $? == 0 ]; then
     echo "NPM publish was OK. Increasing to next snapshot version."
