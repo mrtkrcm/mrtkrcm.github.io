@@ -7,7 +7,7 @@ allComponents=$(cd ${sharedComponentsDir} && ls -d1 */ | cut -d\/ -f1 )
 
 for component in $allComponents; do
     echo "Processing component ${component}. Contents of the folder:"
-    (cd ${sharedComponentsDir} &&  ls -lah)
+    (cd ${sharedComponentsDir}${component} &&  ls -lah)
     componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
     echo "Checksum for component ${component} is $componentCheckSum"
     checksumFileContents="<empty>"
