@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "publishConfig": {
-    "registry": "nexus.dminc-gtc.com:50000"
+    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
   "author": "Josep"
 }
