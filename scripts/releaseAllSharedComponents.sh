@@ -6,8 +6,7 @@ sharedComponentsDir=${basedir}/../sandbox/src/shared-components/
 allComponents=$(cd ${sharedComponentsDir} && ls -d1 */ | cut -d\/ -f1 )
 
 for component in $allComponents; do
-    echo "Processing component ${component}. Contents of the folder:"
-    (cd ${sharedComponentsDir}${component} &&  ls -lah)
+    echo "Processing component ${component}."
     componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
     echo "Checksum for component ${component} is $componentCheckSum"
     checksumFileContents="<empty>"
@@ -20,7 +19,6 @@ for component in $allComponents; do
         echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
         ${basedir}/releaseSharedComponent.sh ${component}
         if [ $? == 0 ]; then
-            componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
             echo "$componentCheckSum" > ${checksumFile}
             git add -f ${checksumFile}
             git commit -m "JENKINS: Added checksum file for ${component}"
