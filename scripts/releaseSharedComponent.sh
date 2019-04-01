@@ -21,6 +21,12 @@ if [ $? == 0 ]; then
     git add ${sharedComponentsDir}${componentName}/package.json
     git commit -m "JENKINS: Closed release `${basedir}/version/getVersion.sh ${componentName}` of ${componentName}"
     git push origin HEAD:master
+
+    echo "Cleaning generated files"
+    rm -rf ${sharedComponentsDir}${componentName}/build
+    rm -rf ${sharedComponentsDir}${componentName}/node-modules
+    echo "Cleaning done. Contents of the folder: "
+    ls -lah ${sharedComponentsDir}${componentName}
 else
     echo "NPM build failed."
     exit 1;
