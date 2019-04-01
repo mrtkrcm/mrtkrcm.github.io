@@ -8,7 +8,7 @@ fi
 basedir=$(dirname $0)
 sharedComponentsDir=${basedir}/../sandbox/src/shared-components/
 componentName=$1
-temporaryDirectory=$(mktemp -d -t "tmp-mfp-fe-modules-$componentName")
+temporaryDirectory=$(mktemp -d -t "tmp-mfp-fe-modules-$componentName"-XXXXX)
 
 echo "Releasing ${componentName}"
 
