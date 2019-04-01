@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+sandbox/src/shared-components/**/node_modules
+sandbox/src/shared-components/**/lib
