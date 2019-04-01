@@ -17,8 +17,6 @@ ${basedir}/version/closeVersion.sh ${componentName}
 
 if [ $? == 0 ]; then
     echo "NPM publish was OK. Increasing to next snapshot version."
-    pwd
-    ls
     ${basedir}/version/increaseVersion.sh ${componentName}
     git add ${sharedComponentsDir}${componentName}/package.json
     git commit -m "JENKINS: Closed release `${basedir}/version/getVersion.sh ${componentName}` of ${componentName}"
