@@ -21,7 +21,7 @@ if [ $? == 0 ]; then
     ls
     ${basedir}/version/increaseVersion.sh ${componentName}
     git add ${sharedComponentsDir}${componentName}/package.json
-    git commit -m "JENKINS: Closed release `${basedir}/version/getVersion.sh` of ${componentName}"
+    git commit -m "JENKINS: Closed release `${basedir}/version/getVersion.sh ${componentName}` of ${componentName}"
     git push origin HEAD:master
 else
     echo "NPM build failed."
