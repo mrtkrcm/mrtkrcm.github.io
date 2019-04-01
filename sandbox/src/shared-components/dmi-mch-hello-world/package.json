@@ -1,7 +1,7 @@
 {
   "name": "dmi-mch-hello-world",
   "description": "Our first test package",
-  "version": "1.0.17-SNAPSHOT",
+  "version": "1.0.18-SNAPSHOT",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
