@@ -29,5 +29,6 @@
   "publishConfig": {
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
-  "author": "Josep and Carlos Aller"
+  "author": "Josep and Carlos Aller",
+  "dependencies": {}
 }
