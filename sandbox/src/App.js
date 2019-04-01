@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
+import HelloWorld from './shared-components/dmi-mch-hello-world'
+
 import './App.css'
 
 function Index() {
@@ -21,6 +23,7 @@ class App extends Component {
           </header>
         </div>
         <Route path="/" exact component={Index} />
+        <Route path="/hello-world" exact component={HelloWorld} />
       </Router>
     )
   }

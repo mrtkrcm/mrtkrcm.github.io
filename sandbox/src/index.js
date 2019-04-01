@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import './shared-components/dmi-mch-hello-world'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
