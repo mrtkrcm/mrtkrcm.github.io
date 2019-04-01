@@ -19,6 +19,7 @@ for component in $allComponents; do
         echo "Checksum mismatch: Recorded ${checksumFileContents}, current ${componentCheckSum}."
         ${basedir}/releaseSharedComponent.sh ${component}
         if [ $? == 0 ]; then
+            componentCheckSum=$(cd ${sharedComponentsDir} &&  tar -cf - ${component} | md5sum  | cut -d\  -f1)
             echo "$componentCheckSum" > ${checksumFile}
             git add -f ${checksumFile}
             git commit -m "JENKINS: Added checksum file for ${component}"
