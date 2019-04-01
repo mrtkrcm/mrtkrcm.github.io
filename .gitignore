@@ -3,3 +3,30 @@ shared-components/*.checksum
 .history
 /shared-components
 sandbox/node_modules
+
+sandbox/src/shared-components/**/node_modules
+sandbox/src/shared-components/**/build
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+sandbox/.pnp
+sandbox/.pnp.js
+
+# testing
+sandbox/coverage
+
+# production
+sandbox/build
+
+# misc
+sandbox/.DS_Store
+sandbox/.env.local
+sandbox/.env.development.local
+sandbox/.env.test.local
+sandbox/.env.production.local
+
+sandbox/npm-debug.log*
+sandbox/yarn-debug.log*
+sandbox/yarn-error.log*

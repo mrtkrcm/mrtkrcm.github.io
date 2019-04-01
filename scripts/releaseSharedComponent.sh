@@ -13,7 +13,7 @@ echo "Releasing ${componentName}"
 
 ${basedir}/version/closeVersion.sh ${componentName}
 
-(cd $sharedComponentsDir$componentName && npm install && npm run build && npm publish)
+(cd $sharedComponentsDir$componentName && npm install && npm run build && cp package.json build/ && cd build/ && npm publish)
 
 if [ $? == 0 ]; then
     echo "NPM publish was OK. Increasing to next snapshot version."
