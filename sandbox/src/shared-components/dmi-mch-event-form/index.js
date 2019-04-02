@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Form, Container, Grid, TextArea, Control } from 'semantic-ui-react'
+import { Input, Form, Container, Grid, TextArea } from 'semantic-ui-react'
 
 const EventForm = () => (
   <Container>
@@ -9,19 +9,15 @@ const EventForm = () => (
         <Grid.Row columns={2}>
           <Grid.Column>
             <Form.Field>
-              <Control>
-                <label>Enter Name</label>
-                <Input type='text' />
-              </Control>
+              <label>Enter Name</label>
+              <Input type='text' />
             </Form.Field>
           </Grid.Column>
           
           <Grid.Column>
             <Form.Field>
-              <Control>
-                <label>Image</label>
-                <Input type='file' />
-              </Control>
+              <label>Image</label>
+              <Input type='file' />
             </Form.Field>
           </Grid.Column>
           
@@ -29,19 +25,15 @@ const EventForm = () => (
         <Grid.Row columns={2}>
           <Grid.Column>
             <Form.Field>
-              <Control>
-                <label>Subtitle</label>
-                <Input type='text' />
-              </Control>
+              <label>Subtitle</label>
+              <Input type='text' />
             </Form.Field>
           </Grid.Column>
           
           <Grid.Column>
             <Form.Field>
-              <Control>
-                <label>Image Caption</label>
-                <Input type='text' />
-              </Control>
+              <label>Image Caption</label>
+              <Input type='text' />
             </Form.Field>
           </Grid.Column>
           
@@ -49,10 +41,8 @@ const EventForm = () => (
         <Grid.Row columns={2}>
           <Grid.Column>
             <Form.Field>
-              <Control>
-                <label>Long Description</label>
-                <TextArea type='text' />
-              </Control>
+              <label>Long Description</label>
+              <TextArea type='text' />
             </Form.Field>
           </Grid.Column>
         </Grid.Row>
