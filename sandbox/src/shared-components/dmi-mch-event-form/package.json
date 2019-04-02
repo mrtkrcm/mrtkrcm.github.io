@@ -1,7 +1,7 @@
 {
   "name": "dmi-mch-event-form",
   "description": "Form for editing and creating an event",
-  "version": "1.0.13-SNAPSHOT",
+  "version": "1.0.14-SNAPSHOT",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
