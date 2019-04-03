@@ -1,6 +1,6 @@
 {
   "name": "dmi-shared-lib-test",
-  "version": "1.0.0",
+  "version": "1.0.0-SNAPSHOT",
   "description": "dmi shared lib",
   "author": "Josep",
   "license": "MIT",
