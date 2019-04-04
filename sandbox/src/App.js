@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 import HelloWorld from './shared-components/dmi-mch-hello-world'
-import EventForm from './shared-components/dmi-mch-event-form'
+import EventForm from './shared-components/dmi-mch-event-form/src'
 
 import './App.css'
 
