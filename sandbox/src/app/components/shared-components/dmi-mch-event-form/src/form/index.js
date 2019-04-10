@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Form, Grid, TextArea, Label, Button } from 'semantic-ui-react'
 
-import { Event as EventService } from '../../../../../services'
-import { logger, validateAxiosResponse } from '../../../../../utils'
+import Event from '../../../../../services/event'
+import logger from '../../../../../utils/logger'
+import validateAxiosResponse from '../../../../../utils/validateAxiosResponse'
 
 const getEventAttributes = async () => {
   try {
-    const event = await EventService.getEventAttributes()
+    const event = await Event.getEventAttributes()
     console.log('DONE', event)
     if (validateAxiosResponse(event)) {
       console.log('DONE')
