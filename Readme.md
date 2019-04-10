@@ -1,3 +1,3 @@
-mvm use 10.25
+nvm use 10.15
 cd sandbox && yarn
 yarn dev
