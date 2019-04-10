@@ -6,7 +6,7 @@ if [ $# -ne 1 ]; then
 fi
 
 basedir=$(dirname $0)
-sharedComponentsDir=${basedir}/../sandbox/src/shared-components/
+sharedComponentsDir=${basedir}/../sandbox/src/app/components/shared-components/
 componentName=$1
 temporaryDirectory=$(mktemp -d -t "tmp-mfp-fe-modules-$componentName"-XXXXX)
 

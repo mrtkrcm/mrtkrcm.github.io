@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 basedir=$(dirname $0)
-sharedComponentsDir=${basedir}/../sandbox/src/shared-components/
+sharedComponentsDir=${basedir}/../sandbox/src/app/components/shared-components/
 
 allComponents=$(cd ${sharedComponentsDir} && ls -d1 */ | cut -d\/ -f1 )
 

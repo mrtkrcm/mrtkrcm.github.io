@@ -6,7 +6,7 @@ if [ $# -ne 2 ]; then
 fi
 
 basedir=$(dirname $0)
-sharedComponentsDir=${basedir}/../../sandbox/src/shared-components/
+sharedComponentsDir=${basedir}/../../sandbox/src/app/components/shared-components/
 componentName=$1
 
 echo "Setting version of $1 to $2 "
