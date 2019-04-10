@@ -1,0 +1,9 @@
+{
+  "packages": [
+    "src/*",
+    "src/tools/eslint-config-dmi"
+  ],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "0.0.1"
+}

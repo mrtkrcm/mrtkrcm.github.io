@@ -1,18 +1,13 @@
 #!/usr/bin/env bash
 
-if [ $# -ne 1 ]; then
-    echo "You must pass the component name"
-    exit 1
-fi
-
 basedir=$(dirname $0)
-currentVersion=$(${basedir}/getVersion.sh $1)
+currentVersion=$(${basedir}/getVersion.sh)
 
 if [[ "${currentVersion}" == *-SNAPSHOT ]]
 then
     newVersion=$(echo ${currentVersion} | cut -d\- -f1)
-    ${basedir}/setVersion.sh $1 ${newVersion}
+    ${basedir}/setVersion.sh ${newVersion}
 else
-    echo "Current version is not a snapshot, it can't be closed"
+    echo "Current version is not a snapshot, can't be closed"
     exit 1
 fi
