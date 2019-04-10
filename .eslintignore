@@ -1,5 +1,0 @@
-**/node_modules/**
-postcss.config.js
-src/app/.next/**
-src/app/static/**
-**/.history/**
