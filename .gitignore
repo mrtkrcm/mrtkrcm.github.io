@@ -2,7 +2,8 @@
 shared-components/*.checksum
 .history
 /shared-components
-sandbox/node_modules
+sandbox/src/app/node_modules/
+sandbox/node_modules/
 
 sandbox/src/shared-components/**/node_modules
 sandbox/src/shared-components/**/build
