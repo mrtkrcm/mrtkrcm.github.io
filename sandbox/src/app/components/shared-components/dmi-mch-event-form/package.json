@@ -1,7 +1,7 @@
 {
-  "name": "dmi-mch-utils-logger",
-  "version": "1.0.6-SNAPSHOT",
-  "description": "DMI MCH Utils logger",
+  "name": "dmi-mch-event-form",
+  "version": "1.0.5-SNAPSHOT",
+  "description": "DMI MCH Event form",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
