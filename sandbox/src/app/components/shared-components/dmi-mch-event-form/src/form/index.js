@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Form, Grid, TextArea, Label, Button } from 'semantic-ui-react'
 
-import { Event as EventService } from '../../../../services'
-import { logger, validateAxiosResponse } from '../../../../utils'
+import { Event as EventService } from '../../../../../services'
+import { logger, validateAxiosResponse } from '../../../../../utils'
 
 const getEventAttributes = async () => {
   try {
