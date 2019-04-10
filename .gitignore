@@ -13,6 +13,7 @@ sandbox/src/shared-components/**/build
 # dependencies
 sandbox/.pnp
 sandbox/.pnp.js
+sandbox/src/app/.next
 
 # testing
 sandbox/coverage
