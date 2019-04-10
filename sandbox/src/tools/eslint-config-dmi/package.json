@@ -1,0 +1,30 @@
+{
+  "name": "eslint-config-dmi",
+  "main": "index.js",
+  "description": "DMI' Standard ES6 & React Code Style - ESLint Shareable Config",
+  "version": "4.0.1",
+  "author": {
+    "name": "Murat Karacam",
+    "email": "mkaracam@dminc.com"
+  },
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "peerDependencies": {
+    "eslint": ">= 5"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "4.0.0",
+    "eslint-plugin-unicorn": "^7.1.0"
+  }
+}
