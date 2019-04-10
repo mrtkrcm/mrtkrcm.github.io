@@ -1,5 +1,5 @@
 import React from 'react'
-import EventForm from '../dmi-mch-event-form/src'
+import EventForm from '../shared-components/dmi-mch-event-form/src'
 
 const EventFormWrapper = () => (
   <EventForm
