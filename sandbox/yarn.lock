@@ -4545,6 +4545,13 @@ dir-glob@^2.2.1:
   dependencies:
     path-type "^3.0.0"
 
+dmi-mch-services-event@^1.0.2:
+  version "1.0.2"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.2.tgz#da3088a7fdeebecb4dae9b01886af733f47c2a9c"
+  integrity sha512-xwsZyYL1I0J5M/lA+8NcwCIXiAO68VQYBqiP0TMETsq86E+h+efdiU3b5Wj4IDjrWSdslNc1N9b4J3U8nC13IA==
+  dependencies:
+    query-string "^6.2.0"
+
 dmi-mch-utils-logger@^1.0.10:
   version "1.0.10"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.10.tgz#b850634e8b7d4551b90d250ce0756a0cfa75f4e0"

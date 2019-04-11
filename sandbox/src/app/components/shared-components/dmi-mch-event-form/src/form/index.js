@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
 import { Input, Form, Grid, TextArea, Button } from 'semantic-ui-react'
-
 import logger from 'dmi-mch-utils-logger'
-// import Event from 'dmi-mch-services-event'
+import Event from 'dmi-mch-services-event'
 
-import Event from '../../../../../services/event'
 import validateAxiosResponse from '../../../../../utils/validateAxiosResponse'
 
 const getEventAttributes = async (context) => {
@@ -12,7 +10,7 @@ const getEventAttributes = async (context) => {
   try {
     // Event.setContext(context)
     const event = new Event(context)
-    const eventAttributes = event.getEventAttributes()
+    const eventAttributes = event.getAttributes()
     console.log('DONE', eventAttributes)
     if (validateAxiosResponse(eventAttributes)) {
       console.log('DONE')

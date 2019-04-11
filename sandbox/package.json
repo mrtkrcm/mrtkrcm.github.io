@@ -48,5 +48,8 @@
   },
   "devDependencies": {
     "lerna": "^3.4.3"
+  },
+  "dependencies": {
+    "dmi-mch-services-event": "^1.0.2"
   }
 }
