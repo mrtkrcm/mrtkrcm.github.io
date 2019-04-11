@@ -8,7 +8,7 @@
     "build": "mkdir -p dist && ./node_modules/.bin/babel src --out-file dist/index.js"
   },
   "author": "Josep",
-  "peerDependencies": {
+  "dependencies": {
     "query-string": "^6.2.0"
   },
   "devDependencies": {
