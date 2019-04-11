@@ -4545,6 +4545,11 @@ dir-glob@^2.2.1:
   dependencies:
     path-type "^3.0.0"
 
+dmi-mch-utils-logger@^1.0.6:
+  version "1.0.6"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.6.tgz#54fc081e2a1d9873b163210782726165431a91d7"
+  integrity sha512-Ur0AC3xVhNE/78Vg5wsSJYtr5/TLsEvm0BAK0oQo4nxCcYwcNJUXORwvjJQ/GU1UEaZwN0lD2F3CN3yJ/UIjHQ==
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
