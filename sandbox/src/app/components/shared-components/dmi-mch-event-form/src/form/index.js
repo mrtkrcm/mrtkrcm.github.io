@@ -1,30 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, setData } from 'react'
 import { Input, Form, Grid, TextArea, Button } from 'semantic-ui-react'
+import axios from 'axios'
 import logger from 'dmi-mch-utils-logger'
 import Event from 'dmi-mch-services-event'
 
 import validateAxiosResponse from '../../../../../utils/validateAxiosResponse'
 
-const getEventAttributes = async (context) => {
-  console.log('context', context)
-  try {
-    // Event.setContext(context)
-    const event = new Event(context)
-    const eventAttributes = event.getAttributes()
-    console.log('DONE', eventAttributes)
-    if (validateAxiosResponse(eventAttributes)) {
-      console.log('DONE')
-    }
-  } catch (e) {
-    logger(e)
-  }
-}
+// const getEventAttributes = context => new Promise((resolve) => {
+//   try {
+//     const event = new Event(context)
+//     const eventAttributes = event.getAttributes()
+//     if (validateAxiosResponse(eventAttributes)) {
+//       resolve(eventAttributes.data)
+//     }
+//   } catch (e) {
+//     logger(e)
+//   }
+//   return {}
+// })
+
+// console.log('hey', getEventAttributes(props.context))
 
 const EventForm = (props) => {
+  const [eventAttributes, setEventAttributes] = useState({})
   useEffect(() => {
-    console.log('props', props)
-    getEventAttributes(props.context)
-  })
+    const event = new Event(props.context)
+    const fetchData = async () => {
+      const attributes = await event.getAttributes()
+      if (validateAxiosResponse(attributes)) {
+        setEventAttributes(attributes.data)
+      }
+    }
+
+    fetchData()
+  }, [props.context])
 
   const {
     values,
@@ -58,6 +67,7 @@ const EventForm = (props) => {
       <Form onSubmit={handleSubmit}>
         <Button type='submit'>Submit</Button>
         <Grid>
+          {console.log(eventAttributes)}
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form.Field>
