@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Form, Grid, TextArea, Label, Button } from 'semantic-ui-react'
 
+import logger from 'dmi-mch-utils-logger'
+// import Event from 'dmi-mch-services-event'
+
 import Event from '../../../../../services/event'
-import logger from '../../../../../utils/logger'
 import validateAxiosResponse from '../../../../../utils/validateAxiosResponse'
 
-const getEventAttributes = async () => {
+const getEventAttributes = async (context) => {
+  console.log('context', context)
   try {
-    const event = await Event.getEventAttributes()
-    console.log('DONE', event)
-    if (validateAxiosResponse(event)) {
+    // Event.setContext(context)
+    const event = new Event(context)
+    const eventAttributes = event.getEventAttributes()
+    console.log('DONE', eventAttributes)
+    if (validateAxiosResponse(eventAttributes)) {
       console.log('DONE')
     }
   } catch (e) {
@@ -19,7 +24,8 @@ const getEventAttributes = async () => {
 
 const EventForm = (props) => {
   useEffect(() => {
-    getEventAttributes()
+    console.log('props', props)
+    getEventAttributes(props.context)
   })
 
   const {

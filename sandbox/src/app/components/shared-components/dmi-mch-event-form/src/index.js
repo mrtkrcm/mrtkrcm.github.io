@@ -6,14 +6,7 @@ import form from './form'
 // import { Event as EventService } from '../../../services'
 // import { logger, validateAxiosResponse } from '../../../utils'
 
-const EventRecommendation = props =>
-// /* side effects */
-// useEffect(() => {
-//   const event = EventService.getEventAttributes()
-// })
-
-  (<FormRules />)
-
+const EventRecommendation = props => <FormRules {...props} />
 
 const FormRules = withFormik({
   mapPropsToValues: props => ({
