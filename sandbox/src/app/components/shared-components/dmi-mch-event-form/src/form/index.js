@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Input, Form, Grid, TextArea, Label, Button } from 'semantic-ui-react'
+import React, { useEffect } from 'react'
+import { Input, Form, Grid, TextArea, Button } from 'semantic-ui-react'
 
 import logger from 'dmi-mch-utils-logger'
 // import Event from 'dmi-mch-services-event'
