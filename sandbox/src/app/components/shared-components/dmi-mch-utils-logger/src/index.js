@@ -8,3 +8,4 @@ export default function silentLogger(log) {
     console.log(log) // eslint-disable-line no-console
   }
 }
+
