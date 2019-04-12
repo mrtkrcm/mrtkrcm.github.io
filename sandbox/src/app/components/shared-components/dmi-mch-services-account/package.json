@@ -1,0 +1,22 @@
+{
+  "name": "dmi-mch-services-account",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "DMI MCH Services account",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "mkdir -p dist && ./node_modules/.bin/babel src --out-file dist/index.js"
+  },
+  "author": "Josep",
+  "dependencies": {
+    "query-string": "^6.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
+  }
+}
