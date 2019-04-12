@@ -1,34 +1,29 @@
-import React, { useEffect, useState, setData } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, Form, Grid, TextArea, Button } from 'semantic-ui-react'
-import axios from 'axios'
-import logger from 'dmi-mch-utils-logger'
+import Logger from 'dmi-mch-utils-logger'
 import Event from 'dmi-mch-services-event'
-
-import validateAxiosResponse from '../../../../../utils/validateAxiosResponse'
-
-// const getEventAttributes = context => new Promise((resolve) => {
-//   try {
-//     const event = new Event(context)
-//     const eventAttributes = event.getAttributes()
-//     if (validateAxiosResponse(eventAttributes)) {
-//       resolve(eventAttributes.data)
-//     }
-//   } catch (e) {
-//     logger(e)
-//   }
-//   return {}
-// })
-
-// console.log('hey', getEventAttributes(props.context))
+import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
+import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 
 const EventForm = (props) => {
-  const [eventAttributes, setEventAttributes] = useState({})
+  const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   useEffect(() => {
     const event = new Event(props.context)
     const fetchData = async () => {
-      const attributes = await event.getAttributes()
-      if (validateAxiosResponse(attributes)) {
-        setEventAttributes(attributes.data)
+      try {
+        const attributes = await event.getAttributes()
+        if (ValidateAxiosResponse(attributes)) {
+          const selectItem = {
+            key: 'id',
+            value: 'id',
+            text: 'title',
+            name: 'type'
+          }
+          const dropdownOptions = buildSelectOptions(attributes.data.items, selectItem)
+          setEventAttributesDropdown(dropdownOptions)
+        }
+      } catch (e) {
+        Logger(e)
       }
     }
 
@@ -67,7 +62,7 @@ const EventForm = (props) => {
       <Form onSubmit={handleSubmit}>
         <Button type='submit'>Submit</Button>
         <Grid>
-          {console.log(eventAttributes)}
+          {console.log(eventAttributesDropdown)}
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form.Field>
@@ -81,7 +76,8 @@ const EventForm = (props) => {
                 <Form.Select
                   fluid
                   label='Type of Event*'
-                  options={[{ key: '0', value: 'Test', option: 'option', label: 'label' }]}
+                  options={eventAttributesDropdown}
+                  multiple
                 />
               </Form.Field>
               <Form.Field>

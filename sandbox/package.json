@@ -50,6 +50,8 @@
     "lerna": "^3.4.3"
   },
   "dependencies": {
-    "dmi-mch-services-event": "^1.0.2"
+    "dmi-mch-services-event": "^1.0.2",
+    "dmi-mch-utils-dropdown": "^1.0.1",
+    "dmi-mch-utils-validate-axios-response": "^1.0.2"
   }
 }

@@ -4552,10 +4552,22 @@ dmi-mch-services-event@^1.0.2:
   dependencies:
     query-string "^6.2.0"
 
+dmi-mch-utils-dropdown@^1.0.1:
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.1.tgz#cab248c2720c99cc7f9943c1c4feb20787958799"
+  integrity sha512-ouygOqXHFvA5kPE9deu5xZ/8GENB3ixz2OYsC/UDO/BtCLyZ3n/nkABjpHvPHKPbYfiI4kvJDMV4BUKX4GOD7g==
+
 dmi-mch-utils-logger@^1.0.10:
   version "1.0.10"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.10.tgz#b850634e8b7d4551b90d250ce0756a0cfa75f4e0"
   integrity sha512-AvFGe2iOdDTwZ75weyThlp3liLCR/5dvxbF6MunQpCkmsuzqC4TyWoPVFMnbjxvBLJ0bPNSLbRxF7UCFC8Xb2w==
+
+dmi-mch-utils-validate-axios-response@^1.0.2:
+  version "1.0.2"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-validate-axios-response/-/dmi-mch-utils-validate-axios-response-1.0.2.tgz#5f336796aa4902f01bd10ac8839bb5c6432c64c3"
+  integrity sha512-2J1rB/vkWDfVOvzUbtIcm4FS3Hc0Vx0nNBpQ2uVhFuH3NCP5j6DYg29oEHnzouAEf+8bSxMop1iKh3FNshZNpQ==
+  dependencies:
+    lodash "^4.17.11"
 
 doctrine@1.5.0:
   version "1.5.0"
