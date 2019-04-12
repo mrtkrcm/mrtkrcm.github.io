@@ -9,7 +9,7 @@
   },
   "author": "Josep",
   "dependencies": {
-    "dmi-mch-utils-logger": "^1.0.10"
+    "dmi-mch-utils-logger": "1.0.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
