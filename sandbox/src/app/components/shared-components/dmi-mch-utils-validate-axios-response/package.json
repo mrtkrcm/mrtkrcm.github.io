@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-validate-axios-response",
-  "version": "1.0.2-SNAPSHOT",
+  "version": "1.0.3-SNAPSHOT",
   "description": "DMI MCH Utils Validate Axios Response",
   "main": "index.js",
   "scripts": {
