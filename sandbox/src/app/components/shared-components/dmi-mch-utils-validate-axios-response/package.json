@@ -9,7 +9,7 @@
   },
   "author": "Josep",
   "dependencies": {
-    "lodash.isempty": "^4.4.0"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
