@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react'
 import http from '../../services/_http'
 import EventForm from '../shared-components/dmi-mch-event-form/src'

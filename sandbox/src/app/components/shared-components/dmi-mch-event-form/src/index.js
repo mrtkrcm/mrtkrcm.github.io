@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
-import styled from 'styled-components'
-
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
 // Pending to connect as reusable
 import Event from '../../dmi-mch-services-event/src'
-import dayPickerStyle from './styles/daypicker'
 
 // import { useEffect, useState } from 'react'
 
@@ -98,14 +95,10 @@ const FormRules = withFormik({
   displayName: 'EventForm'
 })(form)
 
-const StyledEventFormContainer = styled(EventFormContainer)`
-  ${dayPickerStyle}
-`
-
 EventFormContainer.propTypes = {
   context: PropTypes.object,
   id: PropTypes.number,
   setAddressessList: PropTypes.func
 }
 
-export default StyledEventFormContainer
+export default EventFormContainer
