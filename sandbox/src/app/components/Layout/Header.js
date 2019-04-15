@@ -1,7 +1,6 @@
 
-import { Container, Menu, Dropdown } from 'dmi-ui/components'
+import { Container, Menu } from 'dmi-ui/components'
 import Link from 'next/link'
-import NoSSR from 'react-no-ssr'
 
 import Logo from 'icons/Logo'
 import HeaderStyles from './Header.styles'

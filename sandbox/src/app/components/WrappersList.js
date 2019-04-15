@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import EventFormWrapper from './component-wrappers/EventFormWrapper'
 
-const CmsRoleSections = props => (
+const CmsRoleSections = () => (
   <>
     <EventFormWrapper />
   </>
