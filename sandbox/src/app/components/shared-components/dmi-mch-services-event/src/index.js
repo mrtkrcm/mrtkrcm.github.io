@@ -16,6 +16,10 @@ class Event {
     }
     return this.context.http.get(`/msvc/v1/events/attributes/?${qs.stringify(params)}`)
   }
+
+  getEvent(id) {
+    return this.context.http.get(`/msvc/v1/events/event/${id}`)
+  }
 }
 
 export default Event

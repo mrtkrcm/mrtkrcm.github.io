@@ -1,17 +1,23 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react'
-import { Input, Form, Grid, TextArea, Button, Radio } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
+import { Input, Form, Grid, TextArea, Button, Radio, Image } from 'semantic-ui-react'
+import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import Logger from 'dmi-mch-utils-logger'
 import Event from 'dmi-mch-services-event'
-// import Account from 'dmi-mch-services-account'
-import Account from '../../../dmi-mch-services-account/src'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
+
+import Account from '../../../dmi-mch-services-account/src'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
+  const { context, setAddressessList } = props
+
   useEffect(() => {
-    const event = new Event(props.context)
+    const event = new Event(context)
     // Fetching Event Attributes
     const fetchEventAttributes = async () => {
       try {
@@ -32,19 +38,19 @@ const EventForm = (props) => {
     }
 
     // Fetching the list of locations, first fetching myAccount
-    const account = new Account(props.context)
+    const account = new Account(context)
     const fetchMyAccount = async () => {
       try {
         const myAcc = await account.getMine()
         if (ValidateAxiosResponse(myAcc)) {
           const myAddressesList = await account.getMineAddresses(myAcc.data[0].id)
-          // console.log('myAddresses', myAddresses)
           const selectItem = {
             key: 'locationId',
-            value: 'accountId',
+            value: 'locationId',
             text: 'name',
             name: 'myAddress'
           }
+          setAddressessList(myAddressesList.data)
           const dropdownOptions = buildSelectOptions(myAddressesList.data, selectItem)
           setMyAddresses(dropdownOptions)
         }
@@ -55,32 +61,31 @@ const EventForm = (props) => {
 
     fetchEventAttributes()
     fetchMyAccount()
-  }, [props.context])
+  }, [context, setAddressessList])
 
   const {
     values,
     touched,
     errors,
     handleChange,
-    setFieldValue,
     handleBlur,
-    handleSubmit,
-    description,
-    user,
-    setUser,
-    autocompleteUserOptions,
-    autocompletePlaceOptions,
-    handlePlaceChange,
-    setPlace,
-    statusesDropdown,
-    categoriesDropdown,
-    place,
-    actionBarTitle,
-    pageTitle,
-    isFormSubmitted,
-    setIsFormSubmitted,
-    formControls,
-    maxCommentSize
+    handleSubmit
+    // description,
+    // user,
+    // setUser,
+    // autocompleteUserOptions,
+    // autocompletePlaceOptions,
+    // handlePlaceChange,
+    // setPlace,
+    // statusesDropdown,
+    // categoriesDropdown,
+    // place,
+    // actionBarTitle,
+    // pageTitle,
+    // isFormSubmitted,
+    // setIsFormSubmitted,
+    // formControls,
+    // maxCommentSize
   } = props
 
   return (
@@ -90,30 +95,24 @@ const EventForm = (props) => {
         <Button type='submit'>Submit</Button>
         <h2>Key Information</h2>
         <Grid>
-          {console.log(myAddresses)}
+          {/* {console.log(currentEvent)} */}
           <Grid.Row columns={2}>
             <Grid.Column>
-              <Form.Field>
-                <Form.Select
-                  fluid
-                  label='Location*'
-                  options={myAddresses}
-                />
-              </Form.Field>
               <Form.Field>
                 <Form.Select
                   fluid
                   label='Type of Event*'
                   options={eventAttributesDropdown}
                   multiple
+                  value={values.eventTypes}
                 />
               </Form.Field>
-              <Form.Field>
-                <label>Title*</label>
+              <Form.Field error={errors.title && touched.title}>
+                <label htmlFor='title'>Title*</label>
                 <Input
-                  id='title'
                   type='text'
                   name='title'
+                  id='title'
                   value={values.title}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -123,18 +122,18 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Sub-Title</label>
-                <Input type='text' />
+                <Input name='shortParagraphText' type='text' value={values.shortParagraphText} />
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
-                <TextArea type='text' />
+                <TextArea name='longParagraphText' type='text' value={values.longParagraphText} />
               </Form.Field>
             </Grid.Column>
 
             <Grid.Column>
               <Form.Field>
                 <label>Image*</label>
-                <Input type='text' />
+                <Image src={values.eventImage} />
               </Form.Field>
               <Form.Field>
                 <label>Image caption</label>
@@ -149,20 +148,26 @@ const EventForm = (props) => {
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form.Field>
+                <Form.Select
+                  fluid
+                  label='Location*'
+                  name='locationId'
+                  options={myAddresses}
+                  value={values.locationId}
+                />
+              </Form.Field>
+              <Form.Field>
                 <label>Search Location / Venue</label>
                 <Input type='text' />
               </Form.Field>
               <Form.Field>
-                <Form.Select
-                  fluid
-                  label='Venue Name'
-                  options={eventAttributesDropdown}
-                  multiple
-                />
+                <label>Venue Name</label>
+                <Input name='venueName' disabled type='text' value={values.venueName} />
               </Form.Field>
               <Form.Field>
                 <label>Address Line</label>
                 <Input
+                  disabled
                   id='title'
                   type='text'
                   name='title'
@@ -175,30 +180,30 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>City</label>
-                <Input type='text' />
+                <Input disabled name='city' type='text' value={values.city} />
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
-                <Input type='text' />
+                <Input disabled name='country' type='text' value={values.country} />
               </Form.Field>
             </Grid.Column>
 
             <Grid.Column>
               <Form.Field>
                 <label>&nbsp;</label>
-                <Button>Clear fields</Button>
+                <Button type='button'>Clear fields</Button>
               </Form.Field>
               <Form.Field>
                 <label>Location detail (optional)</label>
-                <Input type='text' />
+                <Input disabled type='text' />
               </Form.Field>
               <Form.Field>
                 <label>ZIP Code</label>
-                <Input type='text' />
+                <Input disabled type='text' />
               </Form.Field>
               <Form.Field>
                 <label>State (U.S Only</label>
-                <Input type='text' />
+                <Input disabled type='text' />
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -210,20 +215,40 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Field>
                 <label>Date*</label>
-                <Input type='text' />
+                <DateInput
+                  autoComplete='new-date'
+                  name='date'
+                  placeholder='Date'
+                  value={values.date}
+                  iconPosition='left'
+                  // onChange={this.handleChange}
+                />
+                {/* <Input type='text' value={values.date} /> */}
                 *Event date and time is in the Event Location/Venue’s time zone
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
                 <label>Start time*</label>
-                <Input type='text' />
+                <TimeInput
+                  name='endtime'
+                  placeholder='Start time'
+                  value={values.startTime}
+                  iconPosition='left'
+                  // onChange={this.handleChange}
+                />
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
                 <label>End time*</label>
-                <Input type='text' />
+                <TimeInput
+                  name='endtime'
+                  placeholder='End time'
+                  value={values.endTime}
+                  iconPosition='left'
+                  // onChange={this.handleChange}
+                />
               </Form.Field>
             </Grid.Column>
 
@@ -243,7 +268,6 @@ const EventForm = (props) => {
             </Grid.Column>
 
 
-
           </Grid.Row>
         </Grid>
         <Grid>
@@ -251,11 +275,10 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Field>
                 <label>Status</label>
-                <Radio label='Draft' />
-                <Radio label='Live' />
+                <Radio id='radioOne' name='status' label='Draft' onChange={handleChange} />
+                <Radio id='radioTwo' name='status' label='Live' onChange={handleChange} />
               </Form.Field>
             </Grid.Column>
-
 
 
           </Grid.Row>
@@ -263,6 +286,18 @@ const EventForm = (props) => {
       </Form>
     </>
   )
+}
+
+EventForm.propTypes = {
+  context: PropTypes.object,
+  values: PropTypes.object,
+  touched: PropTypes.object,
+  errors: PropTypes.object,
+  id: PropTypes.number,
+  setAddressessList: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
+  handleSubmit: PropTypes.func
 }
 
 export default EventForm
