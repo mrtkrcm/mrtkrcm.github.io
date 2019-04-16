@@ -4,14 +4,9 @@ import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
-// Pending to connect as reusable
-import Event from '../../dmi-mch-services-event/src'
-
-// import { useEffect, useState } from 'react'
+import Event from 'dmi-mch-services-event'
 
 import form from './form'
-// import { Event as EventService } from '../../../services'
-// import { logger, validateAxiosResponse } from '../../../utils'
 
 const EventFormContainer = (props) => {
   const [currentEvent, setCurrentEvent] = useState(null)
