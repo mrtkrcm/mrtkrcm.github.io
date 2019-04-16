@@ -17,8 +17,12 @@ class Event {
     return this.context.http.get(`/msvc/v1/events/attributes/?${qs.stringify(params)}`)
   }
 
-  getEvent(id) {
+  get(id) {
     return this.context.http.get(`/msvc/v1/events/event/${id}`)
+  }
+
+  set(id, params) {
+    return this.context.http.put(`/msvc/v1/events/event/${id}`, params)
   }
 }
 

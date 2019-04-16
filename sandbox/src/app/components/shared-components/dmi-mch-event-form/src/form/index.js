@@ -10,11 +10,20 @@ import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 
 import Account from '../../../dmi-mch-services-account/src'
+import Place from '../../../dmi-mch-services-place/src'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
   const { context, setAddressessList } = props
+
+  const getPlace = async (id, setFieldValue) => {
+    const place = new Place(context)
+    const selectedPlace = await place.get(id)
+    if (ValidateAxiosResponse(selectedPlace)) {
+      setFieldValue('city', selectedPlace.data.city)
+    }
+  }
 
   useEffect(() => {
     const event = new Event(context)
@@ -46,7 +55,7 @@ const EventForm = (props) => {
           const myAddressesList = await account.getMineAddresses(myAcc.data[0].id)
           const selectItem = {
             key: 'locationId',
-            value: 'locationId',
+            value: 'placeId',
             text: 'name',
             name: 'myAddress'
           }
@@ -69,7 +78,8 @@ const EventForm = (props) => {
     errors,
     handleChange,
     handleBlur,
-    handleSubmit
+    handleSubmit,
+    setFieldValue
     // description,
     // user,
     // setUser,
@@ -100,12 +110,19 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Field>
                 <Form.Select
+                  name='eventTypes'
                   fluid
                   label='Type of Event*'
                   options={eventAttributesDropdown}
+                  onChange={(e, { value }) => {
+                    setFieldValue('eventTypes', value)
+                  }}
+                  // onBlur={handleBlur}
+                  error={(errors.eventTypes && true) && touched.eventTypes && true}
                   multiple
                   value={values.eventTypes}
                 />
+                {errors.eventTypes && touched.eventTypes && <p className='help is-danger'>{errors.eventTypes}</p>}
               </Form.Field>
               <Form.Field error={errors.title && touched.title}>
                 <label htmlFor='title'>Title*</label>
@@ -154,6 +171,9 @@ const EventForm = (props) => {
                   name='locationId'
                   options={myAddresses}
                   value={values.locationId}
+                  onChange={(e, { value }) => {
+                    getPlace(value, setFieldValue)
+                  }}
                 />
               </Form.Field>
               <Form.Field>
@@ -180,7 +200,7 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>City</label>
-                <Input disabled name='city' type='text' value={values.city} />
+                <Input name='city' type='text' value={values.city} />
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
@@ -310,7 +330,8 @@ EventForm.propTypes = {
   setAddressessList: PropTypes.func,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
-  handleSubmit: PropTypes.func
+  handleSubmit: PropTypes.func,
+  setFieldValue: PropTypes.func
 }
 
 export default EventForm

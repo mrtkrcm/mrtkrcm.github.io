@@ -4,7 +4,8 @@ import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
-import Event from 'dmi-mch-services-event'
+// import Event from 'dmi-mch-services-event'
+import Event from '../../dmi-mch-services-event/src'
 
 import form from './form'
 
@@ -13,12 +14,13 @@ const EventFormContainer = (props) => {
   // TODO: review this part
   const [, setAddressessList] = useState([])
   const { context, id } = props
+
   useEffect(() => {
     const event = new Event(context)
     // Fetching the Event
     const fetchEvent = async () => {
       try {
-        const getEvent = await event.getEvent(id)
+        const getEvent = await event.get(id)
         if (ValidateAxiosResponse(getEvent)) {
           setCurrentEvent(getEvent.data)
         }
@@ -69,24 +71,47 @@ const FormRules = withFormik({
   }),
   enableReinitialize: true,
   validationSchema: () => Yup.object().shape({
+    eventTypes: Yup.array().min(1),
     title: Yup.string().required()
   }),
 
-  // handleSubmit: async (values, { props, resetForm }) => {
-  // props.setFormSubmitting(true)
-  // const objectToSave = { ...values }
-  // delete objectToSave.place
-  // try {
-  //   const savedRecommendation = await RecommendationsService.set(props.recommendation.id, objectToSave)
-  //   if (validateAxiosResponse(savedRecommendation)) {
-  //     resetForm(objectToSave)
-  //     props.setIsFormSubmitted(true)
-  //     props.setFormSubmitting(false)
-  //   }
-  // } catch (e) {
-  //   logger(e)
-  // }
-  // },
+  handleSubmit: async (values, { props }) => {
+    const objectToSave = { ...values }
+    objectToSave.venue = props.currentEvent.venue
+    objectToSave.cityId = props.currentEvent.cityId
+    objectToSave.startDate = props.currentEvent.startDate
+    objectToSave.openingDateTimes = [
+      {
+        date: '2019-06-14',
+        startTime: '00:00',
+        endTime: '02:00'
+      }
+    ]
+    try {
+      const event = new Event(props.context)
+      const saveEvent = await event.set(props.id, objectToSave)
+      if (ValidateAxiosResponse(saveEvent)) {
+        // resetForm(objectToSave)
+        // props.setIsFormSubmitted(true)
+        // props.setFormSubmitting(false)
+      }
+    } catch (e) {
+      Logger(e)
+    }
+    // props.setFormSubmitting(true)
+    // const objectToSave = { ...values }
+    // delete objectToSave.place
+    // try {
+    //   const savedRecommendation = await RecommendationsService.set(props.recommendation.id, objectToSave)
+    //   if (validateAxiosResponse(savedRecommendation)) {
+    //     resetForm(objectToSave)
+    //     props.setIsFormSubmitted(true)
+    //     props.setFormSubmitting(false)
+    //   }
+    // } catch (e) {
+    //   logger(e)
+    // }
+  },
   displayName: 'EventForm'
 })(form)
 
