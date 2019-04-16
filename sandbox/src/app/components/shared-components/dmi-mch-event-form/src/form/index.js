@@ -257,13 +257,23 @@ const EventForm = (props) => {
         </Grid>
         <h2>Publishing</h2>
         <Grid>
-          <Grid.Row columns={3}>
+          <Grid.Row columns={6}>
             <Grid.Column>
               <Form.Field>
-                <label>Events is visible for</label>
-                <Radio label='Public' />
-                <Radio label='VIPs only' />
-                <Radio label='Custom' />
+                <label>Event is visible for</label>
+                <Radio id='public' name='publishing' label='Public' onChange={handleChange} />
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Field>
+                <label>&nbsp;</label>
+                <Radio id='viponly' name='publishing' label='VIPs only' onChange={handleChange} />
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Field>
+                <label>&nbsp;</label>
+                <Radio id='custom' name='publishing' label='Custom' onChange={handleChange} />
               </Form.Field>
             </Grid.Column>
 
@@ -271,16 +281,19 @@ const EventForm = (props) => {
           </Grid.Row>
         </Grid>
         <Grid>
-          <Grid.Row columns={3}>
+          <Grid.Row columns={11}>
             <Grid.Column>
               <Form.Field>
                 <label>Status</label>
                 <Radio id='radioOne' name='status' label='Draft' onChange={handleChange} />
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Field>
+                <label>&nbsp;</label>
                 <Radio id='radioTwo' name='status' label='Live' onChange={handleChange} />
               </Form.Field>
             </Grid.Column>
-
-
           </Grid.Row>
         </Grid>
       </Form>
