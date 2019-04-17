@@ -15,13 +15,23 @@ import Place from '../../../dmi-mch-services-place/src'
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
+  const [isCustomLocationEnabled, enableCustomLocationEnabled] = useState(false)
+
   const { context, setAddressessList } = props
 
   const getPlace = async (id, setFieldValue) => {
-    const place = new Place(context)
-    const selectedPlace = await place.get(id)
-    if (ValidateAxiosResponse(selectedPlace)) {
-      setFieldValue('city', selectedPlace.data.city)
+    if (id !== '0') {
+      const place = new Place(context)
+      const selectedPlace = await place.get(id)
+      if (ValidateAxiosResponse(selectedPlace)) {
+        setFieldValue('city', selectedPlace.data.city)
+        setFieldValue('addressLine', selectedPlace.data.formattedAddress)
+        setFieldValue('country', selectedPlace.data.country)
+        setFieldValue('postCode', selectedPlace.data.postCode)
+        enableCustomLocationEnabled(false)
+      }
+    } else {
+      enableCustomLocationEnabled(true)
     }
   }
 
@@ -60,7 +70,12 @@ const EventForm = (props) => {
             name: 'myAddress'
           }
           setAddressessList(myAddressesList.data)
-          const dropdownOptions = buildSelectOptions(myAddressesList.data, selectItem)
+          let locationsList = [...myAddressesList.data.filter(location => location.placeId)]
+          locationsList = [
+            ...locationsList,
+            ...[{ locationId: 0, placeId: '0', name: '- CREATE CUSTOM LOCATION -' }]
+          ]
+          const dropdownOptions = buildSelectOptions(locationsList, selectItem)
           setMyAddresses(dropdownOptions)
         }
       } catch (e) {
@@ -101,6 +116,7 @@ const EventForm = (props) => {
   return (
     <>
       <h2>New Event</h2>
+      {/* {console.log('isCustomLocationEnabled', isCustomLocationEnabled)} */}
       <Form onSubmit={handleSubmit}>
         <Button type='submit'>Submit</Button>
         <h2>Key Information</h2>
@@ -164,66 +180,57 @@ const EventForm = (props) => {
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
-              <Form.Field>
-                <Form.Select
-                  fluid
-                  label='Location*'
-                  name='locationId'
-                  options={myAddresses}
-                  value={values.locationId}
-                  onChange={(e, { value }) => {
-                    getPlace(value, setFieldValue)
-                  }}
-                />
-              </Form.Field>
+              <Form.Select
+                fluid
+                label='Location*'
+                name='locationId'
+                options={myAddresses}
+                value={values.locationId}
+                onChange={(e, { value }) => {
+                  getPlace(value, setFieldValue)
+                }}
+              />
               <Form.Field>
                 <label>Search Location / Venue</label>
-                <Input type='text' />
+                <Input disabled={!isCustomLocationEnabled} type='text' />
               </Form.Field>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2}>
+            <Grid.Column>
               <Form.Field>
                 <label>Venue Name</label>
-                <Input name='venueName' disabled type='text' value={values.venueName} />
+                <div>{values.venueName}</div>
               </Form.Field>
               <Form.Field>
                 <label>Address Line</label>
-                <Input
-                  disabled
-                  id='title'
-                  type='text'
-                  name='title'
-                  value={values.title}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.title && touched.title}
-                />
+                <div>-</div>
                 {errors.title && touched.title && <p className='help is-danger'>{errors.title}</p>}
               </Form.Field>
               <Form.Field>
                 <label>City</label>
-                <Input name='city' type='text' value={values.city} />
+                <div>{values.city}</div>
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
-                <Input disabled name='country' type='text' value={values.country} />
+                <div>{values.country}</div>
               </Form.Field>
             </Grid.Column>
 
             <Grid.Column>
-              <Form.Field>
-                <label>&nbsp;</label>
-                <Button type='button'>Clear fields</Button>
-              </Form.Field>
-              <Form.Field>
+              {/* <Form.Field>
                 <label>Location detail (optional)</label>
                 <Input disabled type='text' />
-              </Form.Field>
+              </Form.Field> */}
               <Form.Field>
                 <label>ZIP Code</label>
-                <Input disabled type='text' />
+                <div>-</div>
+                {/* <div>{currentEvent && currentEvent.venue && currentEvent.venue.city}</div> */}
               </Form.Field>
               <Form.Field>
                 <label>State (U.S Only</label>
-                <Input disabled type='text' />
+                <div>-</div>
+                {/* <div>{currentEvent && currentEvent.venue && currentEvent.venue.city}</div> */}
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
