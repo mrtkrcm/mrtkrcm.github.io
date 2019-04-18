@@ -60,10 +60,6 @@ const EventForm = (props) => {
     }
   }
 
-  const handleDateChange = async (e, { value }) => {
-    props.setFieldValue('date', value)
-  }
-
   useEffect(() => {
     const event = new Event(context)
     // Fetching Event Attributes
@@ -142,12 +138,17 @@ const EventForm = (props) => {
 
   return (
     <>
+      {/* {console.log(values.date && date(values.date, 'DD/MM/YYYY').format('DD/MM/YYYY'))} */}
       <h2>New Event</h2>
       {/* {console.log('customLocationId', customLocationId)} */}
       <Form onSubmit={handleSubmit}>
         <Button type='submit'>Submit</Button>
         <h2>Key Information</h2>
         <Grid>
+          {/* {format(parse(values.date, 'DD/MM/YYYY'), 'YYYY-MM-DD')} */}
+          {/* {parse(values.date, 'DD/MM/YYYY')} */}
+          {/* <br/> */}
+          {/* {values.date} */}
           {/* {console.log(currentEvent)} */}
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -299,9 +300,10 @@ const EventForm = (props) => {
                   value={values.date}
                   iconPosition='left'
                   dateFormat='DD/MM/YYYY'
-                  onChange={handleDateChange}
+                  onChange={(e, { value }) => {
+                    props.setFieldValue('date', value)
+                  }}
                 />
-                {/* <Input type='text' value={values.date} /> */}
                 *Event date and time is in the Event Location/Venue’s time zone
               </Form.Field>
             </Grid.Column>
@@ -309,11 +311,13 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>Start time*</label>
                 <TimeInput
-                  name='endtime'
+                  name='startTime'
                   placeholder='Start time'
                   value={values.startTime}
                   iconPosition='left'
-                // onChange={this.handleChange}
+                  onChange={(e, { value }) => {
+                    props.setFieldValue('startTime', value)
+                  }}
                 />
               </Form.Field>
             </Grid.Column>
@@ -321,16 +325,16 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>End time*</label>
                 <TimeInput
-                  name='endtime'
+                  name='endTime'
                   placeholder='End time'
                   value={values.endTime}
                   iconPosition='left'
-                // onChange={this.handleChange}
+                  onChange={(e, { value }) => {
+                    props.setFieldValue('endTime', value)
+                  }}
                 />
               </Form.Field>
             </Grid.Column>
-
-
           </Grid.Row>
         </Grid>
         <h2>Publishing</h2>

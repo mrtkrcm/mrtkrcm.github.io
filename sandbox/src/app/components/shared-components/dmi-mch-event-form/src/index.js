@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
-import { format, parse } from 'date-fns'
+// After loosing 3h of my life trying to use dayjs and datejs,
+// I can't help keep using moment.js. The others kept returning Invalid Date
+import moment from 'moment'
+// import { format, parse } from 'date-fns'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
 // import Event from 'dmi-mch-services-event'
@@ -59,14 +62,18 @@ const FormRules = withFormik({
     longParagraphText: (props.currentEvent && props.currentEvent.longParagraphText) || '',
     shortParagraphText: (props.currentEvent && props.currentEvent.shortParagraphText) || '',
     imageCaption: (props.currentEvent && props.currentEvent.imageCaption) || '',
+
     // Venue
     venue: (props.currentEvent && props.currentEvent.venue) || '',
+
     // OpeningDateTimes
     date: (props.currentEvent && props.currentEvent.openingDateTimes
       && props.currentEvent.openingDateTimes.length > 0
-      && format(parse(props.currentEvent.openingDateTimes[0].date), 'DD/MM/YYYY')) || '',
+      && moment(props.currentEvent.openingDateTimes[0].date, 'YYYY-MM-DD').format('DD/MM/YYYY')) || '',
+
     startTime: (props.currentEvent && props.currentEvent.openingDateTimes
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].startTime) || '',
+
     endTime: (props.currentEvent && props.currentEvent.openingDateTimes
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].endTime) || ''
   }),
@@ -75,7 +82,7 @@ const FormRules = withFormik({
     eventTypes: Yup.array().min(1),
     title: Yup.string().required()
   }),
-
+  // 14/06/2019
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
     // Adapting the object to be sent to Save API
@@ -85,12 +92,13 @@ const FormRules = withFormik({
     objectToSave.startDate = props.currentEvent.startDate
     objectToSave.openingDateTimes = [
       {
-        date: format(parse(values.date), 'YYYY-MM-DD'),
-        startTime: '00:00',
-        endTime: '02:00'
+        // YYYY-MM-DD is the format the API needs
+        date: moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+        startTime: values.startTime,
+        endTime: values.endTime
       }
     ]
-    // console.log('objectToSave', objectToSave)
+    console.log('objectToSave', objectToSave)
     try {
       const event = new Event(props.context)
       const saveEvent = await event.set(props.id, objectToSave)
