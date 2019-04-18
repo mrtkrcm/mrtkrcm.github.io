@@ -91,10 +91,6 @@ const FormRules = withFormik({
         endTime: values.endTime
       }
     ]
-<<<<<<< HEAD
-    console.log('objectToSave', objectToSave)
-=======
->>>>>>> MCHGB-2657: [FE] Add / Edit Event Form across MFP & CMS
     try {
       const event = new Event(props.context)
       const saveEvent = await event.set(props.id, objectToSave)
