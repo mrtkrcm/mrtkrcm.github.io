@@ -9,18 +9,15 @@
   },
   "author": "Josep",
   "peerDependencies": {
+    "dmi-mch-services-account": "latest",
+    "dmi-mch-services-event": "latest",
+    "dmi-mch-services-place": "latest",
+    "dmi-mch-utils-dropdown": "latest",
+    "dmi-mch-utils-logger": "latest",
+    "dmi-mch-utils-validate-axios-response": "latest",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
-    "semantic-ui-react": "^0.86.0",
-    "dmi-mch-services-account": "latest",
-    "dmi-mch-utils-dropdown": "latest",
-    "dmi-mch-services-event": "latest",
-    "dmi-mch-utils-validate-axios-response": "latest",
-    "dmi-mch-utils-logger": "latest",
-    "dmi-mch-services-place": "latest"
-  },
-  "dependencies": {
-    "semantic-ui-calendar-react": "latest"
+    "semantic-ui-react": "^0.86.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
@@ -33,7 +30,10 @@
   "publishConfig": {
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
-  "directories":{
+  "directories": {
     "form": "form"
+  },
+  "dependencies": {
+    "regenerator-runtime": "^0.13.2"
   }
 }
