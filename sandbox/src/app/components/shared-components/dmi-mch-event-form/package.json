@@ -11,7 +11,13 @@
   "peerDependencies": {
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
-    "semantic-ui-react": "^0.86.0"
+    "semantic-ui-react": "^0.86.0",
+    "dmi-mch-services-account": "latest",
+    "dmi-mch-utils-dropdown": "latest",
+    "dmi-mch-services-event": "latest",
+    "dmi-mch-utils-validate-axios-response": "latest",
+    "dmi-mch-utils-logger": "latest",
+    "dmi-mch-services-place": "latest"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
