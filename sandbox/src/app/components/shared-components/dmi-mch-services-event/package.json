@@ -9,7 +9,7 @@
   },
   "author": "Josep",
   "dependencies": {
-    "query-string": "^6.2.0"
+    "query-string": "4.3.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
