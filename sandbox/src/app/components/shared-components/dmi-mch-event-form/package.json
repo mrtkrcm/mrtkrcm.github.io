@@ -21,10 +21,10 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
-  "dependencies": {
-    "events-form": "./src/form"
-  },
   "publishConfig": {
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
+  },
+  "directories":{
+    "form": "form"
   }
 }
