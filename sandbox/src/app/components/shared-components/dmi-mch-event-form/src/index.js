@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
+import { format, parse } from 'date-fns'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
 // import Event from 'dmi-mch-services-event'
@@ -62,7 +63,8 @@ const FormRules = withFormik({
     venue: (props.currentEvent && props.currentEvent.venue) || '',
     // OpeningDateTimes
     date: (props.currentEvent && props.currentEvent.openingDateTimes
-      && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].date) || '',
+      && props.currentEvent.openingDateTimes.length > 0
+      && format(parse(props.currentEvent.openingDateTimes[0].date), 'DD/MM/YYYY')) || '',
     startTime: (props.currentEvent && props.currentEvent.openingDateTimes
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].startTime) || '',
     endTime: (props.currentEvent && props.currentEvent.openingDateTimes
@@ -83,11 +85,12 @@ const FormRules = withFormik({
     objectToSave.startDate = props.currentEvent.startDate
     objectToSave.openingDateTimes = [
       {
-        date: '2019-06-14',
+        date: format(parse(values.date), 'YYYY-MM-DD'),
         startTime: '00:00',
         endTime: '02:00'
       }
     ]
+    // console.log('objectToSave', objectToSave)
     try {
       const event = new Event(props.context)
       const saveEvent = await event.set(props.id, objectToSave)

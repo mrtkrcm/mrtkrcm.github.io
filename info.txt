@@ -3,3 +3,4 @@ https://medium.com/recraftrelic/building-a-react-component-as-a-npm-module-18308
 
 To connect to Nexus:
 npm config set registry https://nexus.dminc-gtc.com/nexus/repository/npm-registry/
+

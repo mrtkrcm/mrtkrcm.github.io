@@ -60,6 +60,10 @@ const EventForm = (props) => {
     }
   }
 
+  const handleDateChange = async (e, { value }) => {
+    props.setFieldValue('date', value)
+  }
+
   useEffect(() => {
     const event = new Event(context)
     // Fetching Event Attributes
@@ -294,7 +298,8 @@ const EventForm = (props) => {
                   placeholder='Date'
                   value={values.date}
                   iconPosition='left'
-                // onChange={this.handleChange}
+                  dateFormat='DD/MM/YYYY'
+                  onChange={handleDateChange}
                 />
                 {/* <Input type='text' value={values.date} /> */}
                 *Event date and time is in the Event Location/Venue’s time zone
