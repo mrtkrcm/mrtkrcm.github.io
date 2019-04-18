@@ -8,7 +8,7 @@ import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
 import Event from 'dmi-mch-services-event'
 
-import form from 'dmi-mch-event-form/form'
+import form from './form'
 
 const EventFormContainer = (props) => {
   const [currentEvent, setCurrentEvent] = useState(null)
