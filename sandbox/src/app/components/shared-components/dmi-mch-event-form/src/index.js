@@ -54,13 +54,12 @@ const FormRules = withFormik({
     title: (props.currentEvent && props.currentEvent.title) || '',
     eventTypes: (props.currentEvent && props.currentEvent.eventTypes.map(item => item.id)) || [],
     eventImage: (props.currentEvent && props.currentEvent.eventImage) || '',
-    locationId: props.selectedLocation && props.selectedLocation.locationId,
+    placeId: props.currentEvent && props.currentEvent.venue.placeId,
     longParagraphText: (props.currentEvent && props.currentEvent.longParagraphText) || '',
     shortParagraphText: (props.currentEvent && props.currentEvent.shortParagraphText) || '',
+    imageCaption: (props.currentEvent && props.currentEvent.imageCaption) || '',
     // Venue
-    venueName: (props.currentEvent && props.currentEvent.venue && props.currentEvent.venue.name) || '',
-    city: (props.currentEvent && props.currentEvent.venue && props.currentEvent.venue.city) || '',
-    country: (props.currentEvent && props.currentEvent.venue && props.currentEvent.venue.country) || '',
+    venue: (props.currentEvent && props.currentEvent.venue) || '',
     // OpeningDateTimes
     date: (props.currentEvent && props.currentEvent.openingDateTimes
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].date) || '',
@@ -77,7 +76,10 @@ const FormRules = withFormik({
 
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
-    objectToSave.venue = props.currentEvent.venue
+    // To be fixed in the API
+    // values.venue.timeZoneId = 'Asia/Macau'
+    objectToSave.venue = values.venue
+    objectToSave.venue.timezoneId = values.venue.timeZoneId
     objectToSave.cityId = props.currentEvent.cityId
     objectToSave.startDate = props.currentEvent.startDate
     objectToSave.openingDateTimes = [

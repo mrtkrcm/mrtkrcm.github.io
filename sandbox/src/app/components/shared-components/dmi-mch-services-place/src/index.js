@@ -8,9 +8,9 @@ class Place {
     this.context = context
   }
 
-  get(id) {
-    return this.context.http.get(`/msvc/v1/places/items/${id}`)
-  }
+  autocomplete = text => this.context.http.get(`/msvc/v1/places/suggestions?input=${text}`)
+
+  get = id => this.context.http.get(`/msvc/v1/places/items/${id}`)
 }
 
 export default Place

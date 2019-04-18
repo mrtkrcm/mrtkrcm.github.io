@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Form, Grid, TextArea, Button, Radio, Image } from 'semantic-ui-react'
+import { Input, Form, Grid, TextArea, Button, Radio, Image, Search } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import Logger from 'dmi-mch-utils-logger'
 import Event from 'dmi-mch-services-event'
@@ -15,23 +15,42 @@ import Place from '../../../dmi-mch-services-place/src'
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
-  const [isCustomLocationEnabled, enableCustomLocationEnabled] = useState(false)
+  const [isCustomLocationEnabled, setCustomLocationEnabled] = useState(false)
+  const [customLocationValue, setCustomLocationValue] = useState('')
+  // const [customLocationId, setCustomLocationId] = useState(null)
+  const [locationSuggestions, setLocationSuggestions] = useState([])
 
   const { context, setAddressessList } = props
+  const place = new Place(context)
 
-  const getPlace = async (id, setFieldValue) => {
-    if (id !== '0') {
-      const place = new Place(context)
-      const selectedPlace = await place.get(id)
-      if (ValidateAxiosResponse(selectedPlace)) {
-        setFieldValue('city', selectedPlace.data.city)
-        setFieldValue('addressLine', selectedPlace.data.formattedAddress)
-        setFieldValue('country', selectedPlace.data.country)
-        setFieldValue('postCode', selectedPlace.data.postCode)
-        enableCustomLocationEnabled(false)
+  // This function updates the fields in the location, parting from a placeId
+  const updateVenueFromId = async (id) => {
+    const selectedPlace = await place.get(id)
+    if (ValidateAxiosResponse(selectedPlace)) {
+      props.setFieldValue('venue', selectedPlace.data)
+      props.setFieldValue('placeId', id)
+    }
+  }
+
+  const handleResultSelect = async (e, { result }) => {
+    setCustomLocationValue(result.title)
+    updateVenueFromId(result.value)
+  }
+
+  const handleSearchChange = async (e, { value }) => {
+    setCustomLocationValue(value)
+    // this.setState({ isLoading: true, value })
+
+    try {
+      const matches = await place.autocomplete(value)
+      // console.log('matches', matches)
+      if (ValidateAxiosResponse(matches)) {
+        const remappedData = matches.data.map(item => ({ key: item.id, value: item.id, title: item.name }))
+        // console.log(remappedData)
+        setLocationSuggestions(remappedData)
       }
-    } else {
-      enableCustomLocationEnabled(true)
+    } catch (err) {
+      Logger(err)
     }
   }
 
@@ -116,7 +135,7 @@ const EventForm = (props) => {
   return (
     <>
       <h2>New Event</h2>
-      {/* {console.log('isCustomLocationEnabled', isCustomLocationEnabled)} */}
+      {/* {console.log('customLocationId', customLocationId)} */}
       <Form onSubmit={handleSubmit}>
         <Button type='submit'>Submit</Button>
         <h2>Key Information</h2>
@@ -155,7 +174,16 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Sub-Title</label>
-                <Input name='shortParagraphText' type='text' value={values.shortParagraphText} />
+                <Input
+                  type='text'
+                  name='shortParagraphText'
+                  id='shortParagraphText'
+                  value={values.shortParagraphText}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.shortParagraphText && touched.shortParagraphText}
+                />
+                {errors.imageCaption && touched.imageCaption && <p className='help is-danger'>{errors.imageCaption}</p>}
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
@@ -170,7 +198,16 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Image caption</label>
-                <Input type='text' />
+                <Input
+                  type='text'
+                  name='imageCaption'
+                  id='imageCaption'
+                  value={values.imageCaption}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.imageCaption && touched.imageCaption}
+                />
+                {errors.imageCaption && touched.imageCaption && <p className='help is-danger'>{errors.imageCaption}</p>}
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -183,16 +220,26 @@ const EventForm = (props) => {
               <Form.Select
                 fluid
                 label='Location*'
-                name='locationId'
+                name='placeId'
                 options={myAddresses}
-                value={values.locationId}
+                value={values.placeId}
                 onChange={(e, { value }) => {
-                  getPlace(value, setFieldValue)
+                  if (value !== '0') {
+                    updateVenueFromId(value)
+                  } else {
+                    setCustomLocationEnabled(true)
+                  }
                 }}
               />
               <Form.Field>
                 <label>Search Location / Venue</label>
-                <Input disabled={!isCustomLocationEnabled} type='text' />
+                <Search
+                  disabled={!isCustomLocationEnabled}
+                  onResultSelect={handleResultSelect}
+                  onSearchChange={handleSearchChange}
+                  results={locationSuggestions}
+                  value={customLocationValue}
+                />
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -200,20 +247,19 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Field>
                 <label>Venue Name</label>
-                <div>{values.venueName}</div>
+                <div>{values.venue.name}</div>
               </Form.Field>
               <Form.Field>
                 <label>Address Line</label>
-                <div>-</div>
-                {errors.title && touched.title && <p className='help is-danger'>{errors.title}</p>}
+                <div>{values.venue.street || '-'}</div>
               </Form.Field>
               <Form.Field>
                 <label>City</label>
-                <div>{values.city}</div>
+                <div>{values.venue.city}</div>
               </Form.Field>
               <Form.Field>
                 <label>Country</label>
-                <div>{values.country}</div>
+                <div>{values.venue.country}</div>
               </Form.Field>
             </Grid.Column>
 
@@ -224,7 +270,7 @@ const EventForm = (props) => {
               </Form.Field> */}
               <Form.Field>
                 <label>ZIP Code</label>
-                <div>-</div>
+                <div>{values.venue.postCode}</div>
                 {/* <div>{currentEvent && currentEvent.venue && currentEvent.venue.city}</div> */}
               </Form.Field>
               <Form.Field>
@@ -248,7 +294,7 @@ const EventForm = (props) => {
                   placeholder='Date'
                   value={values.date}
                   iconPosition='left'
-                  // onChange={this.handleChange}
+                // onChange={this.handleChange}
                 />
                 {/* <Input type='text' value={values.date} /> */}
                 *Event date and time is in the Event Location/Venue’s time zone
@@ -262,7 +308,7 @@ const EventForm = (props) => {
                   placeholder='Start time'
                   value={values.startTime}
                   iconPosition='left'
-                  // onChange={this.handleChange}
+                // onChange={this.handleChange}
                 />
               </Form.Field>
             </Grid.Column>
@@ -274,7 +320,7 @@ const EventForm = (props) => {
                   placeholder='End time'
                   value={values.endTime}
                   iconPosition='left'
-                  // onChange={this.handleChange}
+                // onChange={this.handleChange}
                 />
               </Form.Field>
             </Grid.Column>
