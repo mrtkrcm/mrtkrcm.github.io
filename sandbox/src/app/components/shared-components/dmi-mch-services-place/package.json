@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-services-place",
-  "version": "1.0.2-SNAPSHOT",
+  "version": "1.0.3-SNAPSHOT",
   "description": "DMI MCH Services place",
   "main": "index.js",
   "scripts": {
