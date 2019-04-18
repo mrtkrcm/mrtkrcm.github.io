@@ -2,14 +2,11 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
-// After loosing 3h of my life trying to use dayjs and datejs,
-// I can't help keep using moment.js. The others kept returning Invalid Date
+// Dayjs and datejs didn't work for the basic purpose below
 import moment from 'moment'
-// import { format, parse } from 'date-fns'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
-// import Event from 'dmi-mch-services-event'
-import Event from '../../dmi-mch-services-event/src'
+import Event from 'dmi-mch-services-event'
 
 import form from './form'
 
@@ -38,10 +35,6 @@ const EventFormContainer = (props) => {
     }
   }, [context, id])
 
-  // let selectedLocation = null
-  // if (addressessList.length > 0 && currentEvent) {
-  //   selectedLocation = addressessList.find(address => address.latitude === currentEvent.venue.latitude)
-  // }
   const newProps = {
     ...props,
     ...{
@@ -98,7 +91,10 @@ const FormRules = withFormik({
         endTime: values.endTime
       }
     ]
+<<<<<<< HEAD
     console.log('objectToSave', objectToSave)
+=======
+>>>>>>> MCHGB-2657: [FE] Add / Edit Event Form across MFP & CMS
     try {
       const event = new Event(props.context)
       const saveEvent = await event.set(props.id, objectToSave)

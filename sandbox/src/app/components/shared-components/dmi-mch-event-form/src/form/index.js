@@ -8,9 +8,8 @@ import Logger from 'dmi-mch-utils-logger'
 import Event from 'dmi-mch-services-event'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
-
-import Account from '../../../dmi-mch-services-account/src'
-import Place from '../../../dmi-mch-services-place/src'
+import Account from 'dmi-mch-services-account'
+import Place from 'dmi-mch-services-place'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])

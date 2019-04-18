@@ -4545,10 +4545,24 @@ dir-glob@^2.2.1:
   dependencies:
     path-type "^3.0.0"
 
-dmi-mch-services-event@^1.0.3:
-  version "1.0.3"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.3.tgz#663dbe34012b5489b93a278a2ad0281189847680"
-  integrity sha512-Z2jr+jSwZ55PSaK7/kkSkqQuJtdmbl1J0hsDRYrUG1E4DG2gGycIxEGfVOxF51QwkHFcEfB+GuZOn7RD/adClg==
+dmi-mch-services-account@^1.0.0:
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-account/-/dmi-mch-services-account-1.0.0.tgz#3ffbf80f6fe9764cdad616665867d6c9ce8d556d"
+  integrity sha512-8PL8YDfHAAXFM0mLMI/Udm7vvAo7de8OSfw0H2L5a8Ama/ezuQpKuFEE+mnrzSaQvP1olFsqSmn9k60HbhheoQ==
+  dependencies:
+    query-string "^6.2.0"
+
+dmi-mch-services-event@^1.0.4:
+  version "1.0.4"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.4.tgz#4acc36b893fb8fe772e56fc96c39bf89f1bab89b"
+  integrity sha512-xSOq2f9lYnNVyA/OKtOdWp771y/+w2wLxX1EPOeZR6wnogFRl8gLfttJXO/HHU+8ELJ2nGOZnpZFyw1eUK+90w==
+  dependencies:
+    query-string "^6.2.0"
+
+dmi-mch-services-place@^1.0.0:
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.0.tgz#170a0771333e77267f8183134bb3b2ce08101baf"
+  integrity sha512-quImWN2sXrtb/4+OLGzbpaVlUE5gBNDzUUjdx4tw5iQBTM7vbxGQyUSQwXqW66wcI1/nN3kZKIRpkDd+3z1+Lw==
   dependencies:
     query-string "^6.2.0"
 
