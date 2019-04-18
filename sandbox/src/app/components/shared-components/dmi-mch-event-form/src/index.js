@@ -76,10 +76,9 @@ const FormRules = withFormik({
 
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
-    // To be fixed in the API
-    // values.venue.timeZoneId = 'Asia/Macau'
+    // Adapting the object to be sent to Save API
     objectToSave.venue = values.venue
-    objectToSave.venue.timezoneId = values.venue.timeZoneId
+    objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
     objectToSave.cityId = props.currentEvent.cityId
     objectToSave.startDate = props.currentEvent.startDate
     objectToSave.openingDateTimes = [
@@ -100,19 +99,6 @@ const FormRules = withFormik({
     } catch (e) {
       Logger(e)
     }
-    // props.setFormSubmitting(true)
-    // const objectToSave = { ...values }
-    // delete objectToSave.place
-    // try {
-    //   const savedRecommendation = await RecommendationsService.set(props.recommendation.id, objectToSave)
-    //   if (validateAxiosResponse(savedRecommendation)) {
-    //     resetForm(objectToSave)
-    //     props.setIsFormSubmitted(true)
-    //     props.setFormSubmitting(false)
-    //   }
-    // } catch (e) {
-    //   logger(e)
-    // }
   },
   displayName: 'EventForm'
 })(form)

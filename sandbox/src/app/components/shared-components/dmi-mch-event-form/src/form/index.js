@@ -25,10 +25,16 @@ const EventForm = (props) => {
 
   // This function updates the fields in the location, parting from a placeId
   const updateVenueFromId = async (id) => {
-    const selectedPlace = await place.get(id)
-    if (ValidateAxiosResponse(selectedPlace)) {
-      props.setFieldValue('venue', selectedPlace.data)
-      props.setFieldValue('placeId', id)
+    props.setFieldValue('placeId', id)
+    if (id !== '0') {
+      setCustomLocationEnabled(false)
+      const selectedPlace = await place.get(id)
+      if (ValidateAxiosResponse(selectedPlace)) {
+        props.setFieldValue('venue', selectedPlace.data)
+      }
+    } else {
+      // props.setFieldValue('placeId', id)
+      setCustomLocationEnabled(true)
     }
   }
 
@@ -78,6 +84,8 @@ const EventForm = (props) => {
     // Fetching the list of locations, first fetching myAccount
     const account = new Account(context)
     const fetchMyAccount = async () => {
+      // Adding CUSTOM item to the dropdown array. We will fill the other items later
+      let locationsList = [{ locationId: 0, placeId: '0', name: '- CREATE CUSTOM LOCATION -' }]
       try {
         const myAcc = await account.getMine()
         if (ValidateAxiosResponse(myAcc)) {
@@ -89,11 +97,7 @@ const EventForm = (props) => {
             name: 'myAddress'
           }
           setAddressessList(myAddressesList.data)
-          let locationsList = [...myAddressesList.data.filter(location => location.placeId)]
-          locationsList = [
-            ...locationsList,
-            ...[{ locationId: 0, placeId: '0', name: '- CREATE CUSTOM LOCATION -' }]
-          ]
+          locationsList = [...myAddressesList.data.filter(location => location.placeId), ...locationsList]
           const dropdownOptions = buildSelectOptions(locationsList, selectItem)
           setMyAddresses(dropdownOptions)
         }
@@ -224,11 +228,7 @@ const EventForm = (props) => {
                 options={myAddresses}
                 value={values.placeId}
                 onChange={(e, { value }) => {
-                  if (value !== '0') {
-                    updateVenueFromId(value)
-                  } else {
-                    setCustomLocationEnabled(true)
-                  }
+                  updateVenueFromId(value)
                 }}
               />
               <Form.Field>
