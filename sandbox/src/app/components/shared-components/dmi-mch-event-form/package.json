@@ -34,6 +34,7 @@
     "form": "form"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "regenerator-runtime": "^0.13.2"
   }
 }
