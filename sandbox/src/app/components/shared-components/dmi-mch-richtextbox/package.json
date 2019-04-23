@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-richtextbox",
-  "version": "1.0.1-SNAPSHOT",
+  "version": "1.0.2-SNAPSHOT",
   "description": "DMI MCH Rich Text Box",
   "main": "index.js",
   "scripts": {
