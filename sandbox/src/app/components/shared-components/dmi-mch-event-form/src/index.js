@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
@@ -41,10 +41,11 @@ const EventForm = (props) => {
     }
   }
 
-  const handleResultSelect = async (e, { result }) => {
+  // Fired usually after selecting a new "custom" location in the autocomplete
+  const handleResultSelect = useCallback((e, { result }) => {
     setCustomLocationValue(result.title)
     updateVenueFromId(result.value)
-  }
+  }, [updateVenueFromId])
 
   const handleSearchChange = async (e, { value }) => {
     setCustomLocationValue(value)
@@ -52,10 +53,8 @@ const EventForm = (props) => {
 
     try {
       const matches = await place.autocomplete(value)
-      // console.log('matches', matches)
       if (ValidateAxiosResponse(matches)) {
         const remappedData = matches.data.map(item => ({ key: item.id, value: item.id, title: item.name }))
-        // console.log(remappedData)
         setLocationSuggestions(remappedData)
       }
     } catch (err) {
@@ -88,7 +87,7 @@ const EventForm = (props) => {
     const account = new Account(context)
     const fetchMyAccount = async () => {
       // Adding CUSTOM item to the dropdown array. We will fill the other items later
-      let locationsList = [{ locationId: 0, placeId: '0', name: '- CREATE CUSTOM LOCATION -' }]
+      let locationsList = [{ locationId: 0, placeId: '0', name: '- CUSTOM LOCATION -' }]
       try {
         const myAcc = await account.getMine()
         if (ValidateAxiosResponse(myAcc)) {
@@ -100,6 +99,7 @@ const EventForm = (props) => {
             name: 'myAddress'
           }
           setAddressessList(myAddressesList.data)
+          // Show only those that have a placeId
           locationsList = [...myAddressesList.data.filter(location => location.placeId), ...locationsList]
           const dropdownOptions = buildSelectOptions(locationsList, selectItem)
           setMyAddresses(dropdownOptions)
@@ -120,7 +120,8 @@ const EventForm = (props) => {
     handleChange,
     handleBlur,
     handleSubmit,
-    setFieldValue
+    setFieldValue,
+    id
     // description,
     // user,
     // setUser,
@@ -141,18 +142,11 @@ const EventForm = (props) => {
 
   return (
     <>
-      {/* {console.log(values.date && date(values.date, 'DD/MM/YYYY').format('DD/MM/YYYY'))} */}
-      <h2>New Event</h2>
-      {/* {console.log('customLocationId', customLocationId)} */}
+      <h2>{(id ? 'Edit Event' : 'Add Event')}</h2>
       <Form onSubmit={handleSubmit}>
         <Button type='submit'>Submit</Button>
         <h2>Key Information</h2>
         <Grid>
-          {/* {format(parse(values.date, 'DD/MM/YYYY'), 'YYYY-MM-DD')} */}
-          {/* {parse(values.date, 'DD/MM/YYYY')} */}
-          {/* <br/> */}
-          {/* {values.date} */}
-          {/* {console.log(currentEvent)} */}
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form.Field>
@@ -164,7 +158,6 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     setFieldValue('eventTypes', value)
                   }}
-                  // onBlur={handleBlur}
                   error={(errors.eventTypes && true) && touched.eventTypes && true}
                   multiple
                   value={values.eventTypes}
@@ -195,7 +188,8 @@ const EventForm = (props) => {
                   onBlur={handleBlur}
                   error={errors.shortParagraphText && touched.shortParagraphText}
                 />
-                {errors.imageCaption && touched.imageCaption && <p className='help is-danger'>{errors.imageCaption}</p>}
+                {errors.shortParagraphText && touched.shortParagraphText
+                  && <p className='help is-danger'>{errors.shortParagraphText}</p>}
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
@@ -207,6 +201,19 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>Image*</label>
                 <Image src={values.eventImage} />
+              </Form.Field>
+              <Form.Field>
+                <label>Image URL</label>
+                <Input
+                  type='text'
+                  name='eventImage'
+                  id='eventImage'
+                  value={values.eventImage}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.eventImage && touched.eventImage}
+                />
+                {errors.eventImage && touched.eventImage && <p className='help is-danger'>{errors.eventImage}</p>}
               </Form.Field>
               <Form.Field>
                 <label>Image caption</label>
@@ -234,7 +241,7 @@ const EventForm = (props) => {
                 label='Location*'
                 name='placeId'
                 options={myAddresses}
-                value={values.placeId}
+                value={myAddresses.find(address => address.value === values.placeId) ? values.placeId : '0'}
                 onChange={(e, { value }) => {
                   updateVenueFromId(value)
                 }}
