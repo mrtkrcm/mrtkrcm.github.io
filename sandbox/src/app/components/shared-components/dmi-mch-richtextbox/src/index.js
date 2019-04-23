@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import React from 'react'
 
 let CKEditor = null
 if (typeof window !== 'undefined') {
