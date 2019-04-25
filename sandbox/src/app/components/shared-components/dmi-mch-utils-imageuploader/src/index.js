@@ -1,5 +1,5 @@
 import Dropzone from 'react-dropzone'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, Button, Input } from 'semantic-ui-react'
 import axios from 'axios'
