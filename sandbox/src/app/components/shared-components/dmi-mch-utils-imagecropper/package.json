@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-imagecropper",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.1-SNAPSHOT",
   "description": "DMI MCH Utils Image Cropper",
   "main": "index.js",
   "scripts": {
