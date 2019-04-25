@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { Button, Modal } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 // import reactCrop from 'react-image-crop/dist/ReactCrop.css'
 
 // import cloudinaryUpload from '../utils/cloudinary-upload'
