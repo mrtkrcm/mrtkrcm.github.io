@@ -1,7 +1,7 @@
 {
-  "name": "dmi-mch-event-form",
-  "version": "1.0.30-SNAPSHOT",
-  "description": "DMI MCH Event form",
+  "name": "dmi-mch-utils-imagecropper",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "DMI MCH Utils Image Cropper",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,12 +9,6 @@
   },
   "author": "Josep",
   "peerDependencies": {
-    "dmi-mch-services-account": "latest",
-    "dmi-mch-services-event": "latest",
-    "dmi-mch-services-place": "latest",
-    "dmi-mch-utils-dropdown": "latest",
-    "dmi-mch-utils-logger": "latest",
-    "dmi-mch-utils-validate-axios-response": "latest",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
