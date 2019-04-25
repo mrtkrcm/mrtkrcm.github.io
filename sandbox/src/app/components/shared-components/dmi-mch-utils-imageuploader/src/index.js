@@ -5,7 +5,7 @@ import { Modal, Button, Input } from 'semantic-ui-react'
 import axios from 'axios'
 import styled from 'styled-components'
 import shortid from 'shortid'
-import * as loadImage from 'blueimp-load-image'
+import loadImage, { parseMetaData } from 'blueimp-load-image'
 
 
 // import { PressAcc as PressAccService } from '../services'
@@ -89,7 +89,7 @@ class Uploader extends React.Component {
           const { naturalWidth, naturalHeight } = loaded.path ? loaded.path[0] : loaded.target
           if (naturalWidth >= minWidth && naturalHeight >= minHeight) {
             const loadImageOptions = { canvas: true }
-            loadImage.parseMetaData(accepted[0], (data) => {
+            parseMetaData(accepted[0], (data) => {
               if (data.exif && data.exif.get('Orientation')) {
                 loadImageOptions.orientation = data.exif.get('Orientation')
               }
