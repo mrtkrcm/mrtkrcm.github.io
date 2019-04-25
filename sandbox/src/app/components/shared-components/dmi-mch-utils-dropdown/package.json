@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-dropdown",
-  "version": "1.0.3-SNAPSHOT",
+  "version": "1.0.4-SNAPSHOT",
   "description": "DMI MCH Utils Dropdown",
   "main": "index.js",
   "scripts": {
