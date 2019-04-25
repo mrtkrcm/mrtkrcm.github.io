@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-imageuploader",
-  "version": "1.0.30-SNAPSHOT",
+  "version": "1.0.0-SNAPSHOT",
   "description": "DMI MCH Utils Image Uploader",
   "main": "index.js",
   "scripts": {
@@ -9,12 +9,6 @@
   },
   "author": "Josep",
   "peerDependencies": {
-    "dmi-mch-services-account": "latest",
-    "dmi-mch-services-event": "latest",
-    "dmi-mch-services-place": "latest",
-    "dmi-mch-utils-dropdown": "latest",
-    "dmi-mch-utils-logger": "latest",
-    "dmi-mch-utils-validate-axios-response": "latest",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
@@ -29,9 +23,6 @@
   },
   "publishConfig": {
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
-  },
-  "directories": {
-    "form": "form"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
