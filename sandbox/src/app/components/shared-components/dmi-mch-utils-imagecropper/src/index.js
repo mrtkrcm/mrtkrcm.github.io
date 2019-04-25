@@ -4,7 +4,7 @@ import { Button, Modal } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Fragment } from 'react'
-import reactCrop from 'react-image-crop/dist/ReactCrop.css'
+// import reactCrop from 'react-image-crop/dist/ReactCrop.css'
 
 // import cloudinaryUpload from '../utils/cloudinary-upload'
 
@@ -22,9 +22,9 @@ const cloudinaryUpload = (file, preset) => {
 }
 
 
-const GlobalStyle = createGlobalStyle`
-  ${reactCrop}
-`
+// const GlobalStyle = createGlobalStyle`
+//   ${reactCrop}
+// `
 
 class ImageCropperModal extends React.Component {
   static propTypes = {
@@ -147,7 +147,7 @@ class ImageCropperModal extends React.Component {
               size='small'
             >Confirm
             </Button>
-            <GlobalStyle />
+            {/* <GlobalStyle /> */}
           </Modal.Actions>
         </Modal>
       </Fragment>
