@@ -748,6 +748,14 @@
     "@babel/helper-regex" "^7.0.0"
     regexpu-core "^4.1.3"
 
+"@babel/polyfill@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.4.3.tgz#332dc6f57b718017c3a8b37b4eea8aa6eeac1187"
+  integrity sha512-rkv8WIvJshA5Ev8iNMGgz5WZkRtgtiPexiT7w5qevGTuT7ZBfM3de9ox1y9JR5/OXb/sWGBbWlHNa7vQKqku3Q==
+  dependencies:
+    core-js "^2.6.5"
+    regenerator-runtime "^0.13.2"
+
 "@babel/preset-env@7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.1.0.tgz#e67ea5b0441cfeab1d6f41e9b5c79798800e8d11"
@@ -2487,6 +2495,13 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+attr-accept@^1.0.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.3.tgz#48230c79f93790ef2775fcec4f0db0f5db41ca52"
+  integrity sha512-iT40nudw8zmCweivz6j58g+RT33I4KbaIvRUhjNmDwO2WmsQUxFEZZYZ5w3vXe5x5MX9D7mfvA/XaLOZYFR9EQ==
+  dependencies:
+    core-js "^2.5.0"
+
 autodll-webpack-plugin@0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/autodll-webpack-plugin/-/autodll-webpack-plugin-0.4.2.tgz#36e98fbaf30c235d1d5d076330464ac80901415c"
@@ -2902,6 +2917,11 @@ bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.1, bluebird@^3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.3.tgz#7d01c6f9616c9a51ab0f8c549a79dfe6ec33efa7"
   integrity sha512-/qKPUQlaW1OyR51WeCPBvRnAlnZFUJkCSG5HzGnuIqhgyJtF+T94lFnn33eiazjRm2LAHVy2guNnaq48X9SJuw==
+
+blueimp-load-image@^2.19.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/blueimp-load-image/-/blueimp-load-image-2.21.0.tgz#aac5b65e9ed3325af4f4967fecb435cbf0bfe777"
+  integrity sha512-A+psaqgeYRepWous4OFL2H8XwonuMRs96JYgC9Ndmmnq+dosmiuReA6A16EpjK1cxntQC/RDWMr3s1sutX9dgg==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -3913,7 +3933,7 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.4.0, core-js@^2.5.7:
+core-js@^2.4.0, core-js@^2.5.7, core-js@^2.6.5:
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
   integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
@@ -4591,6 +4611,25 @@ dmi-mch-utils-dropdown@^1.0.2:
   version "1.0.2"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.2.tgz#5a364d8d69c189776193fb31b254c422cae938b1"
   integrity sha512-2mhZH6zkn34IF+K8fKGWmXfnA0dKjEc49PL6VYjRL/3mtlNbwBXooZw+tnV17kwXPLR6ncH9EHZPpJv8DttQjw==
+
+dmi-mch-utils-imagecropper@^1.0.3:
+  version "1.0.3"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.3.tgz#b2b451bf08233fec7b09b15ebc7167f6f2a8f882"
+  integrity sha512-J3LYzqiOc7u2dPHiCG7/F46tD840608YhTV2E7Xk7PKkXk7kiGFSklZ3Mzk1kigPwbauCtI0upE5aZoDW5OJDA==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
+dmi-mch-utils-imageuploader@^1.0.2:
+  version "1.0.2"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imageuploader/-/dmi-mch-utils-imageuploader-1.0.2.tgz#1fc84b0e09d608f9879218d6cbac20dd63b6f835"
+  integrity sha512-dqDOAq8RbQdgoqd7bX8DqdMUPJalSOtMFoSawACWkQetJ6x42ppLW7h7EI9JwfOwbSdW5qAdVGIiFr0+HHZuyA==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+    "@babel/polyfill" "^7.4.3"
+    blueimp-load-image "^2.19.0"
+    regenerator-runtime "^0.13.2"
 
 dmi-mch-utils-logger@^1.0.10:
   version "1.0.10"
@@ -9727,7 +9766,7 @@ prop-types@15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@>=15.5.8, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9982,6 +10021,14 @@ react-dropdown@^1.6.4:
   dependencies:
     classnames "^2.2.3"
 
+react-dropzone@4.2.8:
+  version "4.2.8"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.2.8.tgz#27ce163544d92c75734b0e1e54c471979587e737"
+  integrity sha512-L/q6ySfhdG9Md3P21jFumzlm92TxRT0FtYX6G793Nf8bt7Fzpwx6gJsPk0idV094koj/Y5vRpp0q9+e0bdsjxw==
+  dependencies:
+    attr-accept "^1.0.3"
+    prop-types "^15.5.7"
+
 react-error-overlay@5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.4.tgz#88dfb88857c18ceb3b9f95076f850d7121776991"
@@ -9991,6 +10038,13 @@ react-fast-compare@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
+react-image-crop@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-7.0.1.tgz#2df8541919e305ec528295a367fbb47bc43b6b73"
+  integrity sha512-11Ml7gp3MmmaJoSnItI0So/dyKmo80jYVZk5xvYWHFwDzZzhrZsBPpKANeK2ZISTpfk6dW7DxnoE6hs1iUPr7Q==
+  dependencies:
+    prop-types ">=15.5.8"
 
 react-input-autosize@^2.2.1:
   version "2.2.1"
@@ -10297,6 +10351,11 @@ regenerator-runtime@^0.12.0:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
   integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
+
+regenerator-runtime@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+  integrity sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==
 
 regenerator-transform@^0.13.4:
   version "0.13.4"

@@ -1,11 +1,19 @@
 /* eslint-disable max-len */
 import React from 'react'
+
+
 import http from '../../services/_http'
 import EventForm from '../shared-components/dmi-mch-event-form/src'
+// import Uploader from '../shared-components/dmi-mch-utils-imageuploader/src'
+
 
 const EventFormWrapper = () => (
   <EventForm
     id={8503}
+    cloudinary={{
+      apiKey: 949933597977335,
+      name: 'dqzqcuqf9'
+    }}
     context={{ http }}
     // context={{
     //   http: {

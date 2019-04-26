@@ -14,6 +14,9 @@ import Event from 'dmi-mch-services-event'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
+import Uploader from 'dmi-mch-utils-imageuploader'
+// import ImageCropperModal from 'dmi-mch-utils-imagecropper'
+import ImageCropperModal from '../../dmi-mch-utils-imagecropper/src'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
@@ -59,6 +62,12 @@ const EventForm = (props) => {
       }
     } catch (err) {
       Logger(err)
+    }
+  }
+
+  const onCropConfirmed = (image) => {
+    if (image && image.url) {
+      props.setFieldValue('eventImage', image.url)
     }
   }
 
@@ -121,7 +130,8 @@ const EventForm = (props) => {
     handleBlur,
     handleSubmit,
     setFieldValue,
-    id
+    id,
+    cloudinary
     // description,
     // user,
     // setUser,
@@ -199,12 +209,47 @@ const EventForm = (props) => {
 
             <Grid.Column>
               <Form.Field>
+                <Uploader
+                  accept='.jpg,.jpeg,.jpe,.png'
+                  maxSize={10485760}
+                  minWidth={400}
+                  minHeight={400}
+                  name='portraitPhoto'
+                  id='portraitPhoto'
+                >
+                  {(ref, file) => (
+                    <>
+                      <button
+                        type='button'
+                        size='small'
+                        onClick={() => {
+                          ref.open()
+                        }}
+                      >
+                        Upload image
+                      </button>
+                      {(file && file.length && ref) !== null && (
+                        <ImageCropperModal
+                          open
+                          fileUrl={file[0].preview}
+                          file={file[0]}
+                          resizeWidth={567}
+                          resizeHeight={567}
+                          uploadPreset='gb-press-profile-photo'
+                          cloudinary={cloudinary}
+                          onCropConfirmed={onCropConfirmed}
+                        />
+                      )}
+                    </>
+                  )}
+                </Uploader>
                 <label>Image*</label>
                 <Image src={values.eventImage} />
               </Form.Field>
               <Form.Field>
                 <label>Image URL</label>
                 <Input
+                  disabled
                   type='text'
                   name='eventImage'
                   id='eventImage'
@@ -399,6 +444,7 @@ EventForm.propTypes = {
   touched: PropTypes.object,
   errors: PropTypes.object,
   id: PropTypes.number,
+  cloudinary: PropTypes.object,
   setAddressessList: PropTypes.func,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,

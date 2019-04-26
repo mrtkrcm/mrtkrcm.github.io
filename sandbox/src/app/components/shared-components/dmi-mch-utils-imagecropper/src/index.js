@@ -5,15 +5,15 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import React, { Fragment } from 'react'
 
-const cloudinaryUpload = (file, preset) => {
+// TODO: IT'S ONLY USED HERE, BUT NICE TO HAVE AS A SEPARATED COMPONENT
+const cloudinaryUpload = (file, preset, cloudinaryObj) => {
   const formData = new FormData()
-  const { cloudinary } = getEnvConfig.fe
   formData.append('file', file)
   formData.append('upload_preset', preset)
-  formData.append('api_key', getEnvConfig.fe.cloudinary.apiKey)
+  formData.append('api_key', cloudinaryObj.apiKey)
   formData.append('timestamp', Date.now() / 1000)
 
-  return axios.post(`https://api.cloudinary.com/v1_1/${cloudinary.name}/image/upload`, formData, {
+  return axios.post(`https://api.cloudinary.com/v1_1/${cloudinaryObj.name}/image/upload`, formData, {
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
   })
 }
@@ -35,6 +35,7 @@ class ImageCropperModal extends React.Component {
   defaultState = {
     // eslint-disable-line react/sort-comp
     open: null,
+    cloudinary: null,
     crop: {
       x: 0,
       y: 0,
@@ -47,15 +48,14 @@ class ImageCropperModal extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ open: this.props.open })
+    this.setState({ open: this.props.open, cloudinary: this.props.cloudinary })
   }
 
   onConfirmCrop = async () => {
     this.setState({ processing: true })
-
-    cloudinaryUpload(this.props.file, this.props.uploadPreset).then((response) => {
+    cloudinaryUpload(this.props.file, this.props.uploadPreset, this.props.cloudinary).then((response) => {
       const { data } = response
-      const { x, y, width, height } = this.state.pixelCrop
+      const { x, y, width, height } = this.state.crop
       const { resizeWidth, resizeHeight } = this.props
 
       let resizeParams = []
@@ -70,7 +70,7 @@ class ImageCropperModal extends React.Component {
 
       const cropParams = `/x_${x},y_${y},c_crop,w_${width},h_${height}`
 
-      const CLOUDINARY_NAME = getEnvConfig.fe.cloudinary.name
+      const CLOUDINARY_NAME = this.props.cloudinary.name
       const imageUrl = `https://res.cloudinary.com/${CLOUDINARY_NAME}/image/upload${cropParams}${resizeParams}`
         + `/v${data.version}/${data.public_id}.${data.format}`
 
