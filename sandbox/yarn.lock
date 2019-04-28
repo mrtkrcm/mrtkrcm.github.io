@@ -9766,7 +9766,7 @@ prop-types@15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@>=15.5.8, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -10039,12 +10039,10 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-image-crop@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-7.0.1.tgz#2df8541919e305ec528295a367fbb47bc43b6b73"
-  integrity sha512-11Ml7gp3MmmaJoSnItI0So/dyKmo80jYVZk5xvYWHFwDzZzhrZsBPpKANeK2ZISTpfk6dW7DxnoE6hs1iUPr7Q==
-  dependencies:
-    prop-types ">=15.5.8"
+react-image-crop@3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-3.0.10.tgz#a1bced7ca608b17632da124cab63f5bad1877de0"
+  integrity sha512-gKTJQ83d956YvbGOBpxZYcgnnBGqkzXBWoR4DeTZ9pgBw3P/Iz3rdCdKVFckdhimCgXrdkTeM2Z9yEp00lZsHg==
 
 react-input-autosize@^2.2.1:
   version "2.2.1"

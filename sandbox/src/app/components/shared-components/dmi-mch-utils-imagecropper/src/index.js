@@ -33,7 +33,6 @@ class ImageCropperModal extends React.Component {
   state = { ...this.defaultState }
 
   defaultState = {
-    // eslint-disable-line react/sort-comp
     open: null,
     cloudinary: null,
     crop: {
@@ -48,14 +47,14 @@ class ImageCropperModal extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ open: this.props.open, cloudinary: this.props.cloudinary })
+    this.setState({ open: this.props.open })
   }
 
   onConfirmCrop = async () => {
     this.setState({ processing: true })
     cloudinaryUpload(this.props.file, this.props.uploadPreset, this.props.cloudinary).then((response) => {
       const { data } = response
-      const { x, y, width, height } = this.state.crop
+      const { x, y, width, height } = this.state.pixelCrop
       const { resizeWidth, resizeHeight } = this.props
 
       let resizeParams = []

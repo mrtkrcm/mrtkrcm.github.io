@@ -68,7 +68,7 @@
     "react-dom": "16.8.6",
     "react-dropdown": "^1.6.4",
     "react-dropzone": "4.2.8",
-    "react-image-crop": "^7.0.1",
+    "react-image-crop": "3.0.10",
     "react-loading-overlay": "^1.0.1",
     "react-no-ssr": "^1.1.0",
     "react-paginate": "^6.3.0",
