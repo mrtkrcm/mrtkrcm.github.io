@@ -35,6 +35,6 @@
     "dmi-mch-services-place": "latest",
     "dmi-mch-utils-dropdown": "latest",
     "dmi-mch-utils-logger": "latest",
-    "dmi-mch-utils-validate-axios-response": "latest",
+    "dmi-mch-utils-validate-axios-response": "latest"
   }
 }
