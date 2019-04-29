@@ -517,7 +517,6 @@ const EventFormContainer = (props) => {
     ...props,
     ...{
       currentEvent,
-      currentLocation: '210ae69b-12bb-e811-a96c-000d3ab9add5',
       setAddressessList
     }
   }
@@ -575,6 +574,9 @@ const FormRules = withFormik({
         startTime: values.startTime,
         endTime: values.endTime
       }
+    ],
+    objectToSave.whiteListAccessGroups = [
+      '2000103', '2000104'
     ]
     try {
       const event = new Event(props.context)
