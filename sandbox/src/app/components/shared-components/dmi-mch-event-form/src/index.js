@@ -15,8 +15,7 @@ import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
 import Uploader from 'dmi-mch-utils-imageuploader'
-// import ImageCropperModal from 'dmi-mch-utils-imagecropper'
-import ImageCropperModal from '../../dmi-mch-utils-imagecropper/src'
+import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])

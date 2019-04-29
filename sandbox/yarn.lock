@@ -4612,13 +4612,14 @@ dmi-mch-utils-dropdown@^1.0.2:
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.2.tgz#5a364d8d69c189776193fb31b254c422cae938b1"
   integrity sha512-2mhZH6zkn34IF+K8fKGWmXfnA0dKjEc49PL6VYjRL/3mtlNbwBXooZw+tnV17kwXPLR6ncH9EHZPpJv8DttQjw==
 
-dmi-mch-utils-imagecropper@^1.0.3:
-  version "1.0.3"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.3.tgz#b2b451bf08233fec7b09b15ebc7167f6f2a8f882"
-  integrity sha512-J3LYzqiOc7u2dPHiCG7/F46tD840608YhTV2E7Xk7PKkXk7kiGFSklZ3Mzk1kigPwbauCtI0upE5aZoDW5OJDA==
+dmi-mch-utils-imagecropper@^1.0.5:
+  version "1.0.5"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.5.tgz#a23a7538a2e459072129542303c5bccac1e6b9b1"
+  integrity sha512-bxNX+/DYqaAWEhhgUV3eYlVc6y4LzVbltyHHTvGFWq0uD0laYOdXpWfQisApTkP508YnsqwOFSvmLky1VUIdFQ==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     "@babel/polyfill" "^7.4.3"
+    react-image-crop "3.0.10"
     regenerator-runtime "^0.13.2"
 
 dmi-mch-utils-imageuploader@^1.0.2:

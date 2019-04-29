@@ -30,7 +30,7 @@
     "dmi-mch-services-event": "^1.0.4",
     "dmi-mch-services-place": "^1.0.2",
     "dmi-mch-utils-dropdown": "^1.0.2",
-    "dmi-mch-utils-imagecropper": "^1.0.3",
+    "dmi-mch-utils-imagecropper": "^1.0.5",
     "dmi-mch-utils-imageuploader": "^1.0.2",
     "dmi-mch-utils-logger": "^1.0.10",
     "dmi-mch-utils-validate-axios-response": "^1.0.2",
