@@ -9,6 +9,12 @@
   },
   "author": "Josep",
   "peerDependencies": {
+    "dmi-mch-services-account": "latest",
+    "dmi-mch-services-event": "latest",
+    "dmi-mch-services-place": "latest",
+    "dmi-mch-utils-dropdown": "latest",
+    "dmi-mch-utils-logger": "latest",
+    "dmi-mch-utils-validate-axios-response": "latest",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
@@ -29,12 +35,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
-    "regenerator-runtime": "^0.13.2",
-    "dmi-mch-services-account": "latest",
-    "dmi-mch-services-event": "latest",
-    "dmi-mch-services-place": "latest",
-    "dmi-mch-utils-dropdown": "latest",
-    "dmi-mch-utils-logger": "latest",
-    "dmi-mch-utils-validate-axios-response": "latest"
+    "regenerator-runtime": "^0.13.2"
   }
 }
