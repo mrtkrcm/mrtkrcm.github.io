@@ -394,41 +394,78 @@ const EventForm = (props) => {
         </Grid>
         <h2>Publishing</h2>
         <Grid>
-          <Grid.Row columns={6}>
+          <Grid.Row columns={8}>
             <Grid.Column>
               <Form.Field>
                 <label>Event is visible for</label>
-                <Radio id='public' name='publishing' label='Public' onChange={handleChange} />
+                <Radio
+                  id='publishPublic'
+                  name='publish'
+                  label='Public'
+                  onChange={handleChange}
+                  value='public'
+                  checked={values.publish === 'public'}
+                />
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
                 <label>&nbsp;</label>
-                <Radio id='viponly' name='publishing' label='VIPs only' onChange={handleChange} />
+                <Radio
+                  id='publishVips'
+                  name='publish'
+                  label='VIPs only'
+                  onChange={handleChange}
+                  value='vip'
+                  checked={values.publish === 'vip'}
+                />
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
                 <label>&nbsp;</label>
-                <Radio id='custom' name='publishing' label='Custom' onChange={handleChange} />
+                <Radio
+                  id='publishCustom'
+                  name='publish'
+                  label='Custom'
+                  onChange={handleChange}
+                  value='custom'
+                  checked={values.publish === 'custom'}
+                />
               </Form.Field>
             </Grid.Column>
 
 
           </Grid.Row>
         </Grid>
+
+
         <Grid>
-          <Grid.Row columns={11}>
+          <Grid.Row columns={8}>
             <Grid.Column>
               <Form.Field>
                 <label>Status</label>
-                <Radio id='radioOne' name='status' label='Draft' onChange={handleChange} />
+                <Radio
+                  id='statusDraft'
+                  name='status'
+                  label='Draft'
+                  onChange={handleChange}
+                  value='DRAFT'
+                  checked={values.status === 'DRAFT'}
+                />
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
                 <label>&nbsp;</label>
-                <Radio id='radioTwo' name='status' label='Live' onChange={handleChange} />
+                <Radio
+                  id='statusLive'
+                  name='status'
+                  label='Live'
+                  onChange={handleChange}
+                  value='LIVE'
+                  checked={values.status === 'LIVE'}
+                />
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -490,6 +527,7 @@ const EventFormContainer = (props) => {
 
 const FormRules = withFormik({
   mapPropsToValues: props => ({
+    // General information
     title: (props.currentEvent && props.currentEvent.title) || '',
     eventTypes: (props.currentEvent && props.currentEvent.eventTypes.map(item => item.id)) || [],
     eventImage: (props.currentEvent && props.currentEvent.eventImage) || '',
@@ -510,7 +548,13 @@ const FormRules = withFormik({
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].startTime) || '',
 
     endTime: (props.currentEvent && props.currentEvent.openingDateTimes
-      && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].endTime) || ''
+      && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].endTime) || '',
+
+    // publish
+    publish: (props.currentEvent && props.currentEvent.publish),
+
+    // status
+    status: (props.currentEvent && props.currentEvent.status)
   }),
   enableReinitialize: true,
   validationSchema: () => Yup.object().shape({
