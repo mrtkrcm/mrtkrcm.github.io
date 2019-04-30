@@ -3,7 +3,7 @@ import React from 'react'
 
 
 import http from '../../services/_http'
-import EventForm from '../shared-components/dmi-mch-event-form/src/lib'
+import EventForm from '../shared-components/dmi-mch-event-form/src'
 // import Uploader from '../shared-components/dmi-mch-utils-imageuploader/src'
 
 
