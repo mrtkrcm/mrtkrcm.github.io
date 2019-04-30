@@ -16,6 +16,7 @@ import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
 import Uploader from 'dmi-mch-utils-imageuploader'
 import ImageCropperModal from 'dmi-mch-utils-imagecropper'
+import UserGroupSelector from '../../dmi-mch-usergroupselector/src'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
@@ -433,12 +434,35 @@ const EventForm = (props) => {
                 />
               </Form.Field>
             </Grid.Column>
-
-
           </Grid.Row>
         </Grid>
-
-
+        <h2>Visibility</h2>
+        <Grid>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <Form.Field>
+                <UserGroupSelector
+                  name='whiteListAccessGroups'
+                  context={context}
+                  selected={values.whiteListAccessGroups}
+                  setFieldValue={setFieldValue}
+                  label='Visible for... (Whitelisting)'
+                />
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Field>
+                <UserGroupSelector
+                  name='blackListAccessGroups'
+                  context={context}
+                  selected={values.blackListAccessGroups}
+                  setFieldValue={setFieldValue}
+                  label='Hidden for... (Blacklisting)'
+                />
+              </Form.Field>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <Grid>
           <Grid.Row columns={8}>
             <Grid.Column>
@@ -550,6 +574,8 @@ const FormRules = withFormik({
 
     // publish
     publish: (props.currentEvent && props.currentEvent.publish),
+    whiteListAccessGroups: (props.currentEvent && props.currentEvent.whiteListAccessGroups) || [],
+    blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
     // status
     status: (props.currentEvent && props.currentEvent.status)
@@ -574,9 +600,6 @@ const FormRules = withFormik({
         startTime: values.startTime,
         endTime: values.endTime
       }
-    ],
-    objectToSave.whiteListAccessGroups = [
-      '2000103', '2000104'
     ]
     try {
       const event = new Event(props.context)
