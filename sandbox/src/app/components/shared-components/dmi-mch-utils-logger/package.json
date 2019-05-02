@@ -14,6 +14,6 @@
     "@babel/preset-env": "^7.1.6"
   },
   "publishConfig": {
-    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npmjs/"
+    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   }
 }
