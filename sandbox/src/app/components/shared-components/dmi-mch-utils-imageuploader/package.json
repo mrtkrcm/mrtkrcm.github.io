@@ -22,7 +22,7 @@
     "react-dom": "^16.8.6"
   },
   "publishConfig": {
-    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
+    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npmjs/"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
