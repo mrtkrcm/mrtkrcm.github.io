@@ -155,8 +155,8 @@ const EventForm = (props) => {
     <>
       <h2>{title}</h2>
       <Form onSubmit={handleSubmit}>
-        {submitButton.show &&
-          <Button type='submit'>Submit</Button>
+        {submitButton.show
+          && <Button type='submit'>Submit</Button>
         }
         <h2>Key Information</h2>
         <Grid>
@@ -212,32 +212,35 @@ const EventForm = (props) => {
 
             <Grid.Column>
               <Form.Field>
+                <label>Image*</label>
                 <Uploader
                   accept='.jpg,.jpeg,.jpe,.png'
                   maxSize={10485760}
                   minWidth={400}
                   minHeight={400}
-                  name='portraitPhoto'
-                  id='portraitPhoto'
+                  name='eventImage'
+                  id='eventImage'
                 >
                   {(ref, file) => (
                     <>
-                      <button
-                        type='button'
-                        size='small'
-                        onClick={() => {
-                          ref.open()
-                        }}
-                      >
-                        Upload image
-                      </button>
+                      <div
+                        onClick={() => { ref.open() }}
+                        style={{
+                          width: '300px',
+                          height: '200px',
+                          display: 'block',
+                          backgroundImage: `url(${values.eventImage})`,
+                          border: '1px dashed grey'
+                        }} />
+
                       {(file && file.length && ref) !== null && (
                         <ImageCropperModal
                           open
                           fileUrl={file[0].preview}
                           file={file[0]}
-                          resizeWidth={567}
-                          resizeHeight={567}
+                          resizeWidth={720}
+                          resizeHeight={576}
+                          // TODO: what is the right preset?
                           uploadPreset='gb-press-profile-photo'
                           cloudinary={cloudinary}
                           onCropConfirmed={onCropConfirmed}
@@ -246,22 +249,6 @@ const EventForm = (props) => {
                     </>
                   )}
                 </Uploader>
-                <label>Image*</label>
-                <Image src={values.eventImage} />
-              </Form.Field>
-              <Form.Field>
-                <label>Image URL</label>
-                <Input
-                  disabled
-                  type='text'
-                  name='eventImage'
-                  id='eventImage'
-                  value={values.eventImage}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.eventImage && touched.eventImage}
-                />
-                {errors.eventImage && touched.eventImage && <p className='help is-danger'>{errors.eventImage}</p>}
               </Form.Field>
               <Form.Field>
                 <label>Image caption</label>
