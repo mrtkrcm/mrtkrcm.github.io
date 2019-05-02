@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-logger",
-  "version": "1.0.14-SNAPSHOT",
+  "version": "1.0.15-SNAPSHOT",
   "description": "DMI MCH Utils logger",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
