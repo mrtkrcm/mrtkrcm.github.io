@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-richtextbox",
-  "version": "1.0.4-SNAPSHOT",
+  "version": "1.0.5-SNAPSHOT",
   "description": "DMI MCH Rich Text Box",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
