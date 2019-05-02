@@ -2,6 +2,7 @@
   "name": "dmi-mch-services-place",
   "version": "1.0.4-SNAPSHOT",
   "description": "DMI MCH Services place",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

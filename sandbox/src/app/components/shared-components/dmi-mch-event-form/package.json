@@ -2,6 +2,7 @@
   "name": "dmi-mch-event-form",
   "version": "1.0.38-SNAPSHOT",
   "description": "DMI MCH Event form",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

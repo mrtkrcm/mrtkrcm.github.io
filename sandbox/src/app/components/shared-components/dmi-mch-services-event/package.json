@@ -2,6 +2,7 @@
   "name": "dmi-mch-services-event",
   "version": "1.0.7-SNAPSHOT",
   "description": "DMI MCH Services event",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -2,6 +2,7 @@
   "name": "dmi-mch-services-usergroup",
   "version": "1.0.8-SNAPSHOT",
   "description": "DMI MCH Services User Group",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

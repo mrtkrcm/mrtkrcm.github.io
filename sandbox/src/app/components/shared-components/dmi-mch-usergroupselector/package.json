@@ -2,6 +2,7 @@
   "name": "dmi-mch-usergroupselector",
   "version": "1.0.1-SNAPSHOT",
   "description": "DMI MCH Rich User Group Selector",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
