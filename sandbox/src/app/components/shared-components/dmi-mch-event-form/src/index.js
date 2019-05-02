@@ -124,14 +124,15 @@ const EventForm = (props) => {
 
   const {
     values,
+    title,
     touched,
     errors,
     handleChange,
     handleBlur,
     handleSubmit,
     setFieldValue,
-    id,
-    cloudinary
+    cloudinary,
+    submitButton
     // description,
     // user,
     // setUser,
@@ -152,9 +153,11 @@ const EventForm = (props) => {
 
   return (
     <>
-      <h2>{(id ? 'Edit Event' : 'Add Event')}</h2>
+      <h2>{title}</h2>
       <Form onSubmit={handleSubmit}>
-        <Button type='submit'>Submit</Button>
+        {submitButton.show &&
+          <Button type='submit'>Submit</Button>
+        }
         <h2>Key Information</h2>
         <Grid>
           <Grid.Row columns={2}>
@@ -358,7 +361,9 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     props.setFieldValue('date', value)
                   }}
+                  error={errors.date && touched.date}
                 />
+                {errors.date && touched.date && <p className='help is-danger'>{errors.date}</p>}
                 *Event date and time is in the Event Location/Venue’s time zone
               </Form.Field>
             </Grid.Column>
@@ -373,7 +378,9 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     props.setFieldValue('startTime', value)
                   }}
+                  error={errors.startTime && touched.startTime}
                 />
+                {errors.startTime && touched.startTime && <p className='help is-danger'>{errors.startTime}</p>}
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
@@ -387,7 +394,9 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     props.setFieldValue('endTime', value)
                   }}
+                  error={errors.endTime && touched.endTime}
                 />
+                {errors.endTime && touched.endTime && <p className='help is-danger'>{errors.endTime}</p>}
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -509,7 +518,9 @@ EventForm.propTypes = {
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
   handleSubmit: PropTypes.func,
-  setFieldValue: PropTypes.func
+  setFieldValue: PropTypes.func,
+  submitButton: PropTypes.object,
+  title: PropTypes.string
 }
 
 const EventFormContainer = (props) => {
@@ -578,14 +589,21 @@ const FormRules = withFormik({
     blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
     // status
-    status: (props.currentEvent && props.currentEvent.status)
+    // By default is DRAFT
+    status: (props.currentEvent && props.currentEvent.status) || 'DRAFT'
   }),
+
   enableReinitialize: true,
+
   validationSchema: () => Yup.object().shape({
     eventTypes: Yup.array().min(1),
-    title: Yup.string().required()
+    title: Yup.string().required(),
+    date: Yup.string().required(),
+    startTime: Yup.string().required(),
+    endTime: Yup.string().required(),
+    eventImage: Yup.string().required()
   }),
-  // 14/06/2019
+
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
     // Adapting the object to be sent to Save API
