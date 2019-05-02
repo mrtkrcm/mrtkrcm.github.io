@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-imageuploader",
-  "version": "1.0.3-SNAPSHOT",
+  "version": "1.0.4-SNAPSHOT",
   "description": "DMI MCH Utils Image Uploader",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
