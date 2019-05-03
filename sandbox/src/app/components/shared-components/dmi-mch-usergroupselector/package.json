@@ -28,6 +28,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "regenerator-runtime": "^0.13.2",
-    "dmi-mch-services-usergroup": "^1.0.8"
+    "dmi-mch-services-usergroup": "^1.0.7"
   }
 }
