@@ -4585,6 +4585,14 @@ dir-glob@^2.2.1:
   dependencies:
     path-type "^3.0.0"
 
+dmi-mch-event-form@^1.0.38:
+  version "1.0.38"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-event-form/-/dmi-mch-event-form-1.0.38.tgz#94a67647cf121d1f753989b948f3a1b15394cca1"
+  integrity sha512-Is81bXkTyS+WGbHLSMqxgw8auD/9yMLpDMwGknbDggiZzP6JJlodSj7NFzUj45Rxbrca44SYtmhA6pW1DNAixA==
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
 dmi-mch-services-account@^1.0.0:
   version "1.0.0"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-account/-/dmi-mch-services-account-1.0.0.tgz#3ffbf80f6fe9764cdad616665867d6c9ce8d556d"

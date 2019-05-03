@@ -154,7 +154,7 @@ const EventForm = (props) => {
   return (
     <>
       <h2>{title}</h2>
-      <Form onSubmit={handleSubmit}>
+      <Form autoComplete='off' onSubmit={handleSubmit}>
         {submitButton.show
           && <Button type='submit'>Submit</Button>
         }
@@ -225,13 +225,17 @@ const EventForm = (props) => {
                     <>
                       <div
                         onClick={() => { ref.open() }}
+                        onKeyDown={() => { ref.open() }}
+                        role='button'
+                        tabIndex={0}
                         style={{
                           width: '300px',
                           height: '200px',
                           display: 'block',
                           backgroundImage: `url(${values.eventImage})`,
                           border: '1px dashed grey'
-                        }} />
+                        }}
+                      />
 
                       {(file && file.length && ref) !== null && (
                         <ImageCropperModal
@@ -339,7 +343,6 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>Date*</label>
                 <DateInput
-                  autoComplete='new-date'
                   name='date'
                   placeholder='Date'
                   value={values.date}
@@ -588,7 +591,8 @@ const FormRules = withFormik({
     date: Yup.string().required(),
     startTime: Yup.string().required(),
     endTime: Yup.string().required(),
-    eventImage: Yup.string().required()
+    eventImage: Yup.string().required(),
+    venue: Yup.string().required()
   }),
 
   handleSubmit: async (values, { props }) => {
@@ -596,8 +600,10 @@ const FormRules = withFormik({
     // Adapting the object to be sent to Save API
     objectToSave.venue = values.venue
     objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
-    objectToSave.cityId = props.currentEvent.cityId
-    objectToSave.startDate = props.currentEvent.startDate
+    // TODO: TBD, hardcoding to 11 temporarily
+    // objectToSave.cityId = props.currentEvent.cityId
+    objectToSave.cityId = props.currentEvent ? props.currentEvent.cityId : 11
+    objectToSave.startDate = props.currentEvent ? props.currentEvent.startDate : ''
     objectToSave.openingDateTimes = [
       {
         // YYYY-MM-DD is the format the API needs
@@ -606,10 +612,32 @@ const FormRules = withFormik({
         endTime: values.endTime
       }
     ]
+    // If Add mode, and MFP (No ID)
+    if (!props.id) {
+      // Some logic for Saving the publish status
+      const publishValue = values.publish
+      if (publishValue === 'publish') {
+        objectToSave.isVip = false
+      } else if (publishValue === 'vip') {
+        objectToSave.isVip = true
+        objectToSave.whiteListAccessGroups.push('2000162')
+      } else if (publishValue === 'custom') {
+        objectToSave.isVip = false
+        objectToSave.whiteListAccessGroups.push('Content User')
+      }
+    }
+
+    // console.log('values', values)
     try {
       const event = new Event(props.context)
-      const saveEvent = await event.set(props.id, objectToSave)
-      if (ValidateAxiosResponse(saveEvent)) {
+      let savedEvent = null
+      if (props.id) {
+        savedEvent = await event.put(props.id, objectToSave)
+      } else {
+        savedEvent = await event.post(props.id, objectToSave)
+      }
+
+      if (ValidateAxiosResponse(savedEvent)) {
         // resetForm(objectToSave)
         // props.setIsFormSubmitted(true)
         // props.setFormSubmitting(false)

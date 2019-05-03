@@ -21,8 +21,14 @@ class Event {
     return this.context.http.get(`/msvc/v1/events/event/${id}`)
   }
 
-  set(id, params) {
+  // Updates
+  put(id, params) {
     return this.context.http.put(`/msvc/v1/events/event/${id}`, params)
+  }
+
+  // Creates
+  post(id, params) {
+    return this.context.http.post(`/msvc/v1/events/event/${id}`, params)
   }
 }
 
