@@ -168,7 +168,6 @@ const EventForm = (props) => {
   return (
     <>
       <h2>{title}</h2>
-      Hello {console.log(String(AccesssPermission.PUBLIC))}
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {submitButton.show
           && <Button type='submit'>Submit</Button>
@@ -239,7 +238,6 @@ const EventForm = (props) => {
                 >
                   {(ref, file) => (
                     <>
-                      Inside {values.eventImage}
                       <div
                         onClick={() => { ref.open() }}
                         onKeyDown={() => { ref.open() }}
@@ -444,6 +442,7 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>&nbsp;</label>
                 <Radio
+                  disabled={true}
                   id='publishCustom'
                   name='publish'
                   label='Custom'
@@ -568,6 +567,18 @@ const EventFormContainer = (props) => {
   return (<FormRules {...newProps} />)
 }
 
+// Some logic for retrieve the publish status (rules in MCHGB-2940)
+const publishingStatus = (accesPermission, whiteListAccessGroups, blackListAccessGroups) => {
+  // To check public; as per ticket:
+  // If the event is not VIP and has no whitelist / blacklist, this radio button shows the "Public" option selected.
+  if (accesPermission === AccesssPermission.PUBLIC && whiteListAccessGroups.length === 0 && blackListAccessGroups.length === 0) {
+    return 'public'
+  } else if(accesPermission === AccesssPermission.VIP && whiteListAccessGroups.length === 1 && whiteListAccessGroups[0] === '2000162') {
+    return 'vip'
+  }
+  return 'custom'
+}
+
 const FormRules = withFormik({
   mapPropsToValues: props => ({
     // General information
@@ -594,7 +605,8 @@ const FormRules = withFormik({
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].endTime) || '',
 
     // publish
-    publish: (props.currentEvent && props.currentEvent.publish) || 'public',
+    // It's so complex to determine it's default status, that we better put in a separate function
+    publish: props.currentEvent && publishingStatus(props.currentEvent.accessPermission, props.currentEvent.whiteListAccessGroups, props.currentEvent.blackListAccessGroups),
     whiteListAccessGroups: (props.currentEvent && props.currentEvent.whiteListAccessGroups) || [],
     blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
@@ -637,7 +649,7 @@ const FormRules = withFormik({
     ]
     // If Add mode, and MFP (No ID)
     if (!props.id) {
-      // Some logic for Saving the publish status
+      // Some logic for Saving the publish status (rules in MCHGB-2940)
       const publishValue = values.publish
       if (publishValue === 'public') {
         objectToSave.accessPermission = AccesssPermission.PUBLIC
@@ -656,11 +668,13 @@ const FormRules = withFormik({
       const event = new Event(props.context)
       let savedEvent = null
       if (props.id) {
-        // Add
+        // Edit
         savedEvent = await event.put(props.id, objectToSave)
       } else {
-        // Edit
+        // Add
         savedEvent = await event.post(objectToSave)
+        // To be sent by API
+        window.location.href = `?id=${savedEvent.data.id}`
       }
 
       if (ValidateAxiosResponse(savedEvent)) {
