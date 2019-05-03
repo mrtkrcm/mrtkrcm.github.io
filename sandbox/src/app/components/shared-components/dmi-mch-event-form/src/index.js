@@ -6,7 +6,7 @@ import { withFormik } from 'formik'
 import * as Yup from 'yup'
 // Dayjs and datejs didn't work for the basic purpose below
 import moment from 'moment'
-import { Input, Form, Grid, TextArea, Button, Radio, Image, Search } from 'semantic-ui-react'
+import { Input, Form, Grid, TextArea, Button, Radio, Search } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
@@ -632,9 +632,11 @@ const FormRules = withFormik({
       const event = new Event(props.context)
       let savedEvent = null
       if (props.id) {
+        // Add
         savedEvent = await event.put(props.id, objectToSave)
       } else {
-        savedEvent = await event.post(props.id, objectToSave)
+        // Edit
+        savedEvent = await event.post(objectToSave)
       }
 
       if (ValidateAxiosResponse(savedEvent)) {

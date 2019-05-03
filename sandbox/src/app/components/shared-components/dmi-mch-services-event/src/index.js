@@ -28,7 +28,7 @@ class Event {
 
   // Creates
   post(id, params) {
-    return this.context.http.post(`/msvc/v1/events/event/${id}`, params)
+    return this.context.http.post('/msvc/v1/events/event', params)
   }
 }
 
