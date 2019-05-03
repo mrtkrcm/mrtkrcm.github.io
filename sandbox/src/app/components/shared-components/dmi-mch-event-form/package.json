@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-event-form",
-  "version": "1.0.46-SNAPSHOT",
+  "version": "1.0.47-SNAPSHOT",
   "description": "DMI MCH Event form",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
