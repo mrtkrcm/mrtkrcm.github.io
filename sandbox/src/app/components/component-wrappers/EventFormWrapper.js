@@ -9,7 +9,7 @@ import EventForm from '../shared-components/dmi-mch-event-form/src'
 
 
 const EventFormWrapper = () => {
-  const id = Router.router ? parseInt(Router.router.query.id, 0) : null
+  const id = (Router.router && parseInt(Router.router.query.id, 0)) || null
   return (
     <NoSSR>
       <EventForm

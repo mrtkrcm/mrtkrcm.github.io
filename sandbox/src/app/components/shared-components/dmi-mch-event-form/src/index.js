@@ -10,13 +10,15 @@ import { Input, Form, Grid, TextArea, Button, Radio, Search } from 'semantic-ui-
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
-import Event from 'dmi-mch-services-event'
+import Event from '../../dmi-mch-services-event/src'
+import City from '../../dmi-mch-services-city/src'
+import AccesssPermission from '../../dmi-mch-constants-accesspermission/src'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
 import Uploader from 'dmi-mch-utils-imageuploader'
 import ImageCropperModal from 'dmi-mch-utils-imagecropper'
-import UserGroupSelector from '../../dmi-mch-usergroupselector/src'
+import UserGroupSelector from 'dmi-mch-usergroupselector'
 
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
@@ -37,6 +39,7 @@ const EventForm = (props) => {
       const selectedPlace = await place.get(id)
       if (ValidateAxiosResponse(selectedPlace)) {
         props.setFieldValue('venue', selectedPlace.data)
+        updateCityId(selectedPlace.data.latitude, selectedPlace.data.longitude)
       }
     } else {
       // props.setFieldValue('placeId', id)
@@ -44,10 +47,21 @@ const EventForm = (props) => {
     }
   }
 
+  // Finds the closest cityId
+  const updateCityId = async (latitude, longitude) => {
+    const city = new City(context)
+    const closestCity = await city.closest({ latitude, longitude })
+    if (ValidateAxiosResponse(closestCity)) {
+      props.setFieldValue('cityId', closestCity.data.id)
+    }
+  }
+
   // Fired usually after selecting a new "custom" location in the autocomplete
   const handleResultSelect = useCallback((e, { result }) => {
     setCustomLocationValue(result.title)
     updateVenueFromId(result.value)
+
+    // updateVenueFromId(result.value)
   }, [updateVenueFromId])
 
   const handleSearchChange = async (e, { value }) => {
@@ -154,6 +168,7 @@ const EventForm = (props) => {
   return (
     <>
       <h2>{title}</h2>
+      Hello {console.log(String(AccesssPermission.PUBLIC))}
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {submitButton.show
           && <Button type='submit'>Submit</Button>
@@ -211,6 +226,7 @@ const EventForm = (props) => {
             </Grid.Column>
 
             <Grid.Column>
+              {values.eventImage}
               <Form.Field>
                 <label>Image*</label>
                 <Uploader
@@ -223,6 +239,7 @@ const EventForm = (props) => {
                 >
                   {(ref, file) => (
                     <>
+                      Inside {values.eventImage}
                       <div
                         onClick={() => { ref.open() }}
                         onKeyDown={() => { ref.open() }}
@@ -283,6 +300,9 @@ const EventForm = (props) => {
                 value={myAddresses.find(address => address.value === values.placeId) ? values.placeId : '0'}
                 onChange={(e, { value }) => {
                   updateVenueFromId(value)
+                  // console.log('value', value)
+                  // updateCityFromId(value)
+
                 }}
               />
               <Form.Field>
@@ -574,7 +594,7 @@ const FormRules = withFormik({
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].endTime) || '',
 
     // publish
-    publish: (props.currentEvent && props.currentEvent.publish),
+    publish: (props.currentEvent && props.currentEvent.publish) || 'public',
     whiteListAccessGroups: (props.currentEvent && props.currentEvent.whiteListAccessGroups) || [],
     blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
@@ -592,18 +612,21 @@ const FormRules = withFormik({
     startTime: Yup.string().required(),
     endTime: Yup.string().required(),
     eventImage: Yup.string().required(),
+    publish: Yup.string().required(),
     venue: Yup.string().required()
   }),
 
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
+    const startDate =
+      `${moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD')} ${values.startTime}`
     // Adapting the object to be sent to Save API
     objectToSave.venue = values.venue
     objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
     // TODO: TBD, hardcoding to 11 temporarily
     // objectToSave.cityId = props.currentEvent.cityId
-    objectToSave.cityId = props.currentEvent ? props.currentEvent.cityId : 11
-    objectToSave.startDate = props.currentEvent ? props.currentEvent.startDate : ''
+    objectToSave.cityId = props.currentEvent ? props.currentEvent.cityId : values.cityId
+    objectToSave.startDate = props.currentEvent ? props.currentEvent.startDate : startDate
     objectToSave.openingDateTimes = [
       {
         // YYYY-MM-DD is the format the API needs
@@ -616,18 +639,19 @@ const FormRules = withFormik({
     if (!props.id) {
       // Some logic for Saving the publish status
       const publishValue = values.publish
-      if (publishValue === 'publish') {
-        objectToSave.isVip = false
+      if (publishValue === 'public') {
+        objectToSave.accessPermission = AccesssPermission.PUBLIC
       } else if (publishValue === 'vip') {
-        objectToSave.isVip = true
+        objectToSave.accessPermission = AccesssPermission.VIP
         objectToSave.whiteListAccessGroups.push('2000162')
       } else if (publishValue === 'custom') {
-        objectToSave.isVip = false
+        objectToSave.accessPermission = AccesssPermission.PUBLIC
         objectToSave.whiteListAccessGroups.push('Content User')
       }
     }
 
-    // console.log('values', values)
+    console.log('values', values)
+    console.log('objectToSave', objectToSave)
     try {
       const event = new Event(props.context)
       let savedEvent = null
