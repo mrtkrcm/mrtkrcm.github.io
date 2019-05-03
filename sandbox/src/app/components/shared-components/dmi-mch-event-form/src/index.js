@@ -10,16 +10,18 @@ import { Input, Form, Grid, TextArea, Button, Radio, Search } from 'semantic-ui-
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
-import Event from '../../dmi-mch-services-event/src'
-import City from '../../dmi-mch-services-city/src'
-import AccesssPermission from '../../dmi-mch-constants-accesspermission/src'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
 import Uploader from 'dmi-mch-utils-imageuploader'
 import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
+import AccesssPermission from '../../dmi-mch-constants-accesspermission/src'
+import City from '../../dmi-mch-services-city/src'
+import Event from '../../dmi-mch-services-event/src'
 
+// TODO: As mentioned before, EventForm code should ideally be in a different file, but the current bundling
+// does not allow this. Needs more investigation
 const EventForm = (props) => {
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
@@ -31,9 +33,19 @@ const EventForm = (props) => {
   const { context, setAddressessList } = props
   const place = new Place(context)
 
+  // Finds the closest cityId
+  const updateCityId = async (latitude, longitude) => {
+    const city = new City(context)
+    const closestCity = await city.closest({ latitude, longitude })
+    if (ValidateAxiosResponse(closestCity)) {
+      props.setFieldValue('cityId', closestCity.data.id)
+    }
+  }
+
   // This function updates the fields in the location, parting from a placeId
   const updateVenueFromId = async (id) => {
     props.setFieldValue('placeId', id)
+    // If selecting CUSTOM LOCATION, we enable the search location field
     if (id !== '0') {
       setCustomLocationEnabled(false)
       const selectedPlace = await place.get(id)
@@ -44,15 +56,7 @@ const EventForm = (props) => {
     } else {
       // props.setFieldValue('placeId', id)
       setCustomLocationEnabled(true)
-    }
-  }
-
-  // Finds the closest cityId
-  const updateCityId = async (latitude, longitude) => {
-    const city = new City(context)
-    const closestCity = await city.closest({ latitude, longitude })
-    if (ValidateAxiosResponse(closestCity)) {
-      props.setFieldValue('cityId', closestCity.data.id)
+      props.setFieldValue('venue', {})
     }
   }
 
@@ -110,7 +114,7 @@ const EventForm = (props) => {
     const account = new Account(context)
     const fetchMyAccount = async () => {
       // Adding CUSTOM item to the dropdown array. We will fill the other items later
-      let locationsList = [{ locationId: 0, placeId: '0', name: '- CUSTOM LOCATION -' }]
+      let locationsList = [{ locationId: 0, placeId: '0', name: '[CUSTOM LOCATION]' }]
       try {
         const myAcc = await account.getMine()
         if (ValidateAxiosResponse(myAcc)) {
@@ -164,6 +168,12 @@ const EventForm = (props) => {
     // formControls,
     // maxCommentSize
   } = props
+
+  const uploadButtonReference = React.createRef()
+
+  function selectImage() {
+    uploadButtonReference.current.click()
+  }
 
   return (
     <>
@@ -225,9 +235,40 @@ const EventForm = (props) => {
             </Grid.Column>
 
             <Grid.Column>
-              {values.eventImage}
+              {/* {values.eventImage} */}
               <Form.Field>
                 <label>Image*</label>
+                <div
+                  onClick={selectImage}
+                  onKeyDown={selectImage}
+                  role='button'
+                  tabIndex={0}
+                  style={{
+                    width: '70%',
+                    border: '1px dashed grey',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {values.eventImage
+                    ? (
+                      <img
+                        src={values.eventImage}
+                        alt='Uploaded pic'
+                        style={{
+                          width: '100%'
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '200px',
+                          textAlign: 'center'
+                        }}
+                      >Upload image
+                      </div>
+                    )}
+                </div>
                 <Uploader
                   accept='.jpg,.jpeg,.jpe,.png'
                   maxSize={10485760}
@@ -239,17 +280,11 @@ const EventForm = (props) => {
                   {(ref, file) => (
                     <>
                       <div
+                        ref={uploadButtonReference}
                         onClick={() => { ref.open() }}
                         onKeyDown={() => { ref.open() }}
                         role='button'
                         tabIndex={0}
-                        style={{
-                          width: '300px',
-                          height: '200px',
-                          display: 'block',
-                          backgroundImage: `url(${values.eventImage})`,
-                          border: '1px dashed grey'
-                        }}
                       />
 
                       {(file && file.length && ref) !== null && (
@@ -268,6 +303,7 @@ const EventForm = (props) => {
                     </>
                   )}
                 </Uploader>
+                {/* {values.eventImage && <img src={values.eventImage} alt='Uploaded' />} */}
               </Form.Field>
               <Form.Field>
                 <label>Image caption</label>
@@ -300,7 +336,6 @@ const EventForm = (props) => {
                   updateVenueFromId(value)
                   // console.log('value', value)
                   // updateCityFromId(value)
-
                 }}
               />
               <Form.Field>
@@ -361,6 +396,7 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>Date*</label>
                 <DateInput
+                  onKeyDown={e => e.preventDefault()}
                   name='date'
                   placeholder='Date'
                   value={values.date}
@@ -369,6 +405,7 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     props.setFieldValue('date', value)
                   }}
+                  closable
                   error={errors.date && touched.date}
                 />
                 {errors.date && touched.date && <p className='help is-danger'>{errors.date}</p>}
@@ -379,6 +416,7 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>Start time*</label>
                 <TimeInput
+                  onKeyDown={e => e.preventDefault()}
                   name='startTime'
                   placeholder='Start time'
                   value={values.startTime}
@@ -386,6 +424,7 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     props.setFieldValue('startTime', value)
                   }}
+                  closable
                   error={errors.startTime && touched.startTime}
                 />
                 {errors.startTime && touched.startTime && <p className='help is-danger'>{errors.startTime}</p>}
@@ -395,6 +434,7 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>End time*</label>
                 <TimeInput
+                  onKeyDown={e => e.preventDefault()}
                   name='endTime'
                   placeholder='End time'
                   value={values.endTime}
@@ -402,6 +442,7 @@ const EventForm = (props) => {
                   onChange={(e, { value }) => {
                     props.setFieldValue('endTime', value)
                   }}
+                  closable
                   error={errors.endTime && touched.endTime}
                 />
                 {errors.endTime && touched.endTime && <p className='help is-danger'>{errors.endTime}</p>}
@@ -442,7 +483,7 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>&nbsp;</label>
                 <Radio
-                  disabled={true}
+                  disabled
                   id='publishCustom'
                   name='publish'
                   label='Custom'
@@ -571,13 +612,35 @@ const EventFormContainer = (props) => {
 const publishingStatus = (accesPermission, whiteListAccessGroups, blackListAccessGroups) => {
   // To check public; as per ticket:
   // If the event is not VIP and has no whitelist / blacklist, this radio button shows the "Public" option selected.
-  if (accesPermission === AccesssPermission.PUBLIC && whiteListAccessGroups.length === 0 && blackListAccessGroups.length === 0) {
+  if (accesPermission === AccesssPermission.PUBLIC
+    && whiteListAccessGroups.length === 0
+    && blackListAccessGroups.length === 0) {
     return 'public'
-  } else if(accesPermission === AccesssPermission.VIP && whiteListAccessGroups.length === 1 && whiteListAccessGroups[0] === '2000162') {
+  }
+
+  if (accesPermission === AccesssPermission.VIP
+    && whiteListAccessGroups.length === 1
+    && whiteListAccessGroups[0] === '2000162') {
     return 'vip'
   }
   return 'custom'
 }
+
+function isLaterTime(ref) {
+  return this.test({
+    name: 'equalTo',
+    exclusive: false,
+    message: 'End time must be bigger than start time',
+    params: {
+      reference: ref.path
+    },
+    test(value) {
+      return value > this.resolve(ref)
+    }
+  })
+}
+
+Yup.addMethod(Yup.string, 'isLaterTime', isLaterTime)
 
 const FormRules = withFormik({
   mapPropsToValues: props => ({
@@ -606,7 +669,9 @@ const FormRules = withFormik({
 
     // publish
     // It's so complex to determine it's default status, that we better put in a separate function
-    publish: props.currentEvent && publishingStatus(props.currentEvent.accessPermission, props.currentEvent.whiteListAccessGroups, props.currentEvent.blackListAccessGroups),
+    publish: props.currentEvent
+      && publishingStatus(props.currentEvent.accessPermission,
+        props.currentEvent.whiteListAccessGroups, props.currentEvent.blackListAccessGroups),
     whiteListAccessGroups: (props.currentEvent && props.currentEvent.whiteListAccessGroups) || [],
     blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
@@ -622,7 +687,8 @@ const FormRules = withFormik({
     title: Yup.string().required(),
     date: Yup.string().required(),
     startTime: Yup.string().required(),
-    endTime: Yup.string().required(),
+    endTime: Yup.string().required()
+      .isLaterTime(Yup.ref('startTime')),
     eventImage: Yup.string().required(),
     publish: Yup.string().required(),
     venue: Yup.string().required()
@@ -630,10 +696,10 @@ const FormRules = withFormik({
 
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
-    const startDate =
-      `${moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD')} ${values.startTime}`
+    const startDate = `${moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD')} ${values.startTime}`
     // Adapting the object to be sent to Save API
     objectToSave.venue = values.venue
+    // Careful with the typo in timezone. API unconsistency
     objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
     // TODO: TBD, hardcoding to 11 temporarily
     // objectToSave.cityId = props.currentEvent.cityId
