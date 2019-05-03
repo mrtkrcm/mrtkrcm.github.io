@@ -4,7 +4,7 @@ import { Form } from 'semantic-ui-react'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Logger from 'dmi-mch-utils-logger'
-import Usergroup from '../../dmi-mch-services-usergroup/src'
+import Usergroup from 'dmi-mch-services-usergroup'
 
 const UserGroupSelector = (props) => {
   const [userGroupsDropDown, setUserGroupsDropDown] = useState([])

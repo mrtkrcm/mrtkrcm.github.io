@@ -4600,12 +4600,12 @@ dmi-mch-services-account@^1.0.0:
   dependencies:
     query-string "^6.2.0"
 
-dmi-mch-services-event@^1.0.4:
-  version "1.0.4"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.4.tgz#4acc36b893fb8fe772e56fc96c39bf89f1bab89b"
-  integrity sha512-xSOq2f9lYnNVyA/OKtOdWp771y/+w2wLxX1EPOeZR6wnogFRl8gLfttJXO/HHU+8ELJ2nGOZnpZFyw1eUK+90w==
+dmi-mch-services-event@^1.0.8:
+  version "1.0.8"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.8.tgz#927944b4a3fadcf01b64ee1cefa81b5382b985a5"
+  integrity sha512-T3VRWGik1rNkH9BYHrVYnhdq2T5LByyW70qVayqdEtIPH2dQYbv0D3o0nFjsYWidNVEj9BL1NiA3/yoRtxdHDQ==
   dependencies:
-    query-string "^6.2.0"
+    query-string "4.3.4"
 
 dmi-mch-services-place@^1.0.2:
   version "1.0.2"
@@ -4614,6 +4614,14 @@ dmi-mch-services-place@^1.0.2:
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     query-string "4.3.4"
+
+dmi-mch-usergroupselector@^1.0.1:
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.1.tgz#7769e90b6a4af5d196446aefd5d7831750967641"
+  integrity sha512-WVFs1jCJCvVJrfw6d7LV+RDHOCfr6AAxoDDAazOz+ucWepzX6zP2qQI4Evp9zErAhNkX628cVc3p7uXI1oHGeQ==
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
 
 dmi-mch-utils-dropdown@^1.0.2:
   version "1.0.2"
