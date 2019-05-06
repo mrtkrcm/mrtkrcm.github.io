@@ -150,7 +150,8 @@ const EventForm = (props) => {
     handleSubmit,
     setFieldValue,
     configuration,
-    submitButton
+    submitButton,
+    showVisibilityPanel
     // description,
     // user,
     // setUser,
@@ -180,7 +181,7 @@ const EventForm = (props) => {
       <h2>{title}</h2>
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {submitButton && submitButton.show
-          && <Button type='submit'>Submit</Button>
+          && <Button type='submit'>Save</Button>
         }
         <h2>Key Information</h2>
         <Grid>
@@ -487,7 +488,6 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>&nbsp;</label>
                 <Radio
-                  disabled
                   id='publishCustom'
                   name='publish'
                   label='Custom'
@@ -500,63 +500,69 @@ const EventForm = (props) => {
           </Grid.Row>
           {errors.publish && touched.publish && <p className='help is-danger'>{errors.publish}</p>}
         </Grid>
-        <h2>Visibility</h2>
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Form.Field>
-                <UserGroupSelector
-                  name='whiteListAccessGroups'
-                  context={context}
-                  selected={values.whiteListAccessGroups}
-                  setFieldValue={setFieldValue}
-                  label='Visible for... (Whitelisting)'
-                />
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <UserGroupSelector
-                  name='blackListAccessGroups'
-                  context={context}
-                  selected={values.blackListAccessGroups}
-                  setFieldValue={setFieldValue}
-                  label='Hidden for... (Blacklisting)'
-                />
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Grid>
-          <Grid.Row columns={8}>
-            <Grid.Column>
-              <Form.Field>
-                <label>Status</label>
-                <Radio
-                  id='statusDraft'
-                  name='status'
-                  label='Draft'
-                  onChange={handleChange}
-                  value='DRAFT'
-                  checked={values.status === 'DRAFT'}
-                />
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>&nbsp;</label>
-                <Radio
-                  id='statusLive'
-                  name='status'
-                  label='Live'
-                  onChange={handleChange}
-                  value='LIVE'
-                  checked={values.status === 'LIVE'}
-                />
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        {showVisibilityPanel
+        && (
+        <>
+          <h2>Visibility</h2>
+          <Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column>
+                <Form.Field>
+                  <UserGroupSelector
+                    name='whiteListAccessGroups'
+                    context={context}
+                    selected={values.whiteListAccessGroups}
+                    setFieldValue={setFieldValue}
+                    label='Visible for... (Whitelisting)'
+                  />
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column>
+                <Form.Field>
+                  <UserGroupSelector
+                    name='blackListAccessGroups'
+                    context={context}
+                    selected={values.blackListAccessGroups}
+                    setFieldValue={setFieldValue}
+                    label='Hidden for... (Blacklisting)'
+                  />
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Grid>
+            <Grid.Row columns={8}>
+              <Grid.Column>
+                <Form.Field>
+                  <label>Status</label>
+                  <Radio
+                    id='statusDraft'
+                    name='status'
+                    label='Draft'
+                    onChange={handleChange}
+                    value='DRAFT'
+                    checked={values.status === 'DRAFT'}
+                  />
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column>
+                <Form.Field>
+                  <label>&nbsp;</label>
+                  <Radio
+                    id='statusLive'
+                    name='status'
+                    label='Live'
+                    onChange={handleChange}
+                    value='LIVE'
+                    checked={values.status === 'LIVE'}
+                  />
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </>
+        )
+        }
       </Form>
     </>
   )
@@ -575,7 +581,8 @@ EventForm.propTypes = {
   handleSubmit: PropTypes.func,
   setFieldValue: PropTypes.func,
   submitButton: PropTypes.object,
-  title: PropTypes.string
+  title: PropTypes.string,
+  showVisibilityPanel: PropTypes.bool
 }
 
 const EventFormContainer = (props) => {
@@ -613,7 +620,7 @@ const EventFormContainer = (props) => {
   return (<FormRules {...newProps} />)
 }
 
-// Some logic to mark the publish status radiobuttons (rules in MCHGB-2940)
+// How to show the publishing panel when loading the page in MFP Edit mode? (rules in MCHGB-2940)
 const publishingStatus = (accessPermission, whiteListAccessGroups, blackListAccessGroups) => {
   // If the event is not VIP and has no whitelist / blacklist, this radio button shows the "Public" option selected.
   if (accessPermission === AccesssPermission.PUBLIC
@@ -621,7 +628,7 @@ const publishingStatus = (accessPermission, whiteListAccessGroups, blackListAcce
     && blackListAccessGroups.length === 0) {
     return 'public'
   }
-
+  // If the event is VIP and has only the whitelist WAG 2000162, the VIP option is selected.
   if (accessPermission === AccesssPermission.VIP
     && whiteListAccessGroups.length === 1
     && whiteListAccessGroups[0] === '2000162') {
@@ -723,11 +730,14 @@ const FormRules = withFormik({
       }
     ]
     // If Add mode, and MFP (No ID)
-    if (!props.id) {
+    if (!props.showVisibilityPanel) {
       // Some logic for Saving the publish status (rules in MCHGB-2940)
       const publishValue = values.publish
       if (publishValue === 'public') {
         objectToSave.accessPermission = AccesssPermission.PUBLIC
+        // Clearing the access group array
+        objectToSave.whiteListAccessGroups = []
+        objectToSave.blackListAccessGroups = []
       } else if (publishValue === 'vip') {
         objectToSave.accessPermission = AccesssPermission.VIP
         objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)

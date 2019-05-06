@@ -17,6 +17,7 @@ const EventFormWrapper = () => {
         submitButton={{
           show: true
         }}
+        showVisibilityPanel={false}
         // In Sandbox
         // configuration={
         //   getEnvConfig.fe
