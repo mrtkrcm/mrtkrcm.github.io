@@ -39,6 +39,6 @@
     "formik": "1.5.1",
     "semantic-ui-calendar-react": "^0.14.4",
     "dmi-mch-constants-accesspermission": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-constants-accesspermission/-/dmi-mch-constants-accesspermission-1.0.0.tgz",
-    "dmi-mch-services-account": "https://nexus.dminc-gtc.com/nexus/repository/npm-registrydmi-mch-services-account/-/dmi-mch-services-account-1.0.3.tgz"
+    "dmi-mch-services-account": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-account/-/dmi-mch-services-account-1.0.3.tgz"
   }
 }
