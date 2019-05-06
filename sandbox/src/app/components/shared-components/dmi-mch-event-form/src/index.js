@@ -149,7 +149,7 @@ const EventForm = (props) => {
     handleBlur,
     handleSubmit,
     setFieldValue,
-    cloudinary,
+    configuration,
     submitButton
     // description,
     // user,
@@ -179,7 +179,7 @@ const EventForm = (props) => {
     <>
       <h2>{title}</h2>
       <Form autoComplete='off' onSubmit={handleSubmit}>
-        {submitButton.show
+        {submitButton && submitButton.show
           && <Button type='submit'>Submit</Button>
         }
         <h2>Key Information</h2>
@@ -293,7 +293,7 @@ const EventForm = (props) => {
                           fileUrl={file[0].preview}
                           file={file[0]}
                           uploadPreset='mfp-fe-gallery-event-image'
-                          cloudinary={cloudinary}
+                          cloudinary={configuration.cloudinary}
                           onCropConfirmed={onCropConfirmed}
                           cropProperties={{
                             x: 20,
@@ -568,7 +568,7 @@ EventForm.propTypes = {
   touched: PropTypes.object,
   errors: PropTypes.object,
   id: PropTypes.number,
-  cloudinary: PropTypes.object,
+  configuration: PropTypes.object,
   setAddressessList: PropTypes.func,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
@@ -730,10 +730,10 @@ const FormRules = withFormik({
         objectToSave.accessPermission = AccesssPermission.PUBLIC
       } else if (publishValue === 'vip') {
         objectToSave.accessPermission = AccesssPermission.VIP
-        objectToSave.whiteListAccessGroups.push('2000162')
+        objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
       } else if (publishValue === 'custom') {
         objectToSave.accessPermission = AccesssPermission.PUBLIC
-        objectToSave.whiteListAccessGroups.push('Content User')
+        objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.custom)
       }
     }
 

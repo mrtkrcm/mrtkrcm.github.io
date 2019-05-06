@@ -5,7 +5,6 @@ import NoSSR from 'react-no-ssr'
 
 import http from '../../services/_http'
 import EventForm from '../shared-components/dmi-mch-event-form/src'
-// import Uploader from '../shared-components/dmi-mch-utils-imageuploader/src'
 
 
 const EventFormWrapper = () => {
@@ -18,9 +17,24 @@ const EventFormWrapper = () => {
         submitButton={{
           show: true
         }}
-        cloudinary={{
-          apiKey: 949933597977335,
-          name: 'dqzqcuqf9'
+        // In Sandbox
+        // configuration={
+        //   getEnvConfig.fe
+        // }
+        // .wag.whitelist.vip
+        configuration={{
+          eventsandexhibitions: {
+            wag: {
+              whitelist: {
+                vip: '2000162',
+                custom: '2000045'
+              }
+            }
+          },
+          cloudinary: {
+            apiKey: 949933597977335,
+            name: 'dqzqcuqf9'
+          }
         }}
         context={{ http }}
       />

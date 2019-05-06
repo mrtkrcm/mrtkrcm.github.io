@@ -40,7 +40,7 @@ class ImageCropperModal extends React.Component {
     crop: {
       x: 0,
       y: 0,
-      aspect: 1,
+      aspect: 1.6,
       width: 0,
       height: 0
     },
