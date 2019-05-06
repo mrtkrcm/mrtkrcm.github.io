@@ -1,7 +1,7 @@
 {
-  "name": "dmi-mch-services-cities",
+  "name": "dmi-mch-services-city",
   "version": "1.0.1-SNAPSHOT",
-  "description": "DMI MCH Services cities",
+  "description": "DMI MCH Services city",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
