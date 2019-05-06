@@ -15,6 +15,7 @@
     "dmi-mch-services-place": "latest",
     "dmi-mch-utils-dropdown": "latest",
     "dmi-mch-utils-logger": "latest",
+    "dmi-mch-constants-accesspermission": "1.0.0",
     "dmi-mch-utils-validate-axios-response": "latest",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
