@@ -39,6 +39,6 @@
     "regenerator-runtime": "^0.13.2",
     "formik": "1.5.1",
     "semantic-ui-calendar-react": "^0.14.4",
-    "dmi-mch-constants-accesspermission": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-event-form/-/dmi-mch-event-form-1.0.52.tgz"
+    "dmi-mch-constants-accesspermission": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-constants-accesspermission/-/dmi-mch-constants-accesspermission-1.0.0.tgz"
   }
 }
