@@ -15,6 +15,9 @@
     "dmi-mch-utils-dropdown": "1.0.4",
     "dmi-mch-utils-logger": "1.0.14",
     "dmi-mch-utils-validate-axios-response": "1.0.4",
+    "dmi-mch-usergroupselector": "1.0.2",
+    "dmi-mch-utils-imagecropper": "1.0.8",
+    "dmi-mch-utils-imageuploader": "1.0.4",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
