@@ -10,6 +10,11 @@
   "author": "Josep",
   "peerDependencies": {
     "dmi-mch-services-account": "1.0.3",
+    "dmi-mch-services-event": "1.0.10",
+    "dmi-mch-services-place": "1.0.4",
+    "dmi-mch-utils-dropdown": "1.0.4",
+    "dmi-mch-utils-logger": "1.0.14",
+    "dmi-mch-utils-validate-axios-response": "1.0.4",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
