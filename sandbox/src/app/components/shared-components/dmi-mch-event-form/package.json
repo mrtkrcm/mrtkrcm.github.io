@@ -2,7 +2,7 @@
   "name": "dmi-mch-event-form",
   "version": "1.0.48-SNAPSHOT",
   "description": "DMI MCH Event form",
-  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npm-registry",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,7 +29,7 @@
     "react-dom": "^16.8.6"
   },
   "publishConfig": {
-    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npmjs/"
+    "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
   "directories": {
     "form": "form"
@@ -37,7 +37,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "regenerator-runtime": "^0.13.2",
-    "formik": "1.5.1",
-    "semantic-ui-calendar-react": "^0.14.4"
+    "formik": "1.5.1"
   }
 }
