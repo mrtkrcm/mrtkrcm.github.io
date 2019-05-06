@@ -4585,6 +4585,14 @@ dir-glob@^2.2.1:
   dependencies:
     path-type "^3.0.0"
 
+dmi-mch-constants-accesspermission@^1.0.0:
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-constants-accesspermission/-/dmi-mch-constants-accesspermission-1.0.0.tgz#0303dd9952669ad7d93591a7a4f39aa56188ff8d"
+  integrity sha512-SSU+gG2xqPalB1GWN2RfYoi7+0BJ9gTje5gpyJ16am7YHIQEVtGu8piFG9Lhzwnw+pdpd+BiSs+FZ652vtx9dA==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+    query-string "4.3.4"
+
 dmi-mch-event-form@^1.0.38:
   version "1.0.38"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-event-form/-/dmi-mch-event-form-1.0.38.tgz#94a67647cf121d1f753989b948f3a1b15394cca1"
@@ -4608,6 +4616,14 @@ dmi-mch-services-account@^1.0.0:
   integrity sha512-8PL8YDfHAAXFM0mLMI/Udm7vvAo7de8OSfw0H2L5a8Ama/ezuQpKuFEE+mnrzSaQvP1olFsqSmn9k60HbhheoQ==
   dependencies:
     query-string "^6.2.0"
+
+dmi-mch-services-city@^1.0.1:
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-city/-/dmi-mch-services-city-1.0.1.tgz#b428c1bc97a53239bd6d89ba8dcb64acf2f4eb20"
+  integrity sha512-iBg3tLJl3MXCWMTy7RHX8Q0kxsyeFw0P2odJn8IT9bXYnFCLGCnj5tp8PJfXyQVfWBHMDGceffaFm/xFdeHpTQ==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+    query-string "4.3.4"
 
 dmi-mch-services-event@^1.0.8:
   version "1.0.8"

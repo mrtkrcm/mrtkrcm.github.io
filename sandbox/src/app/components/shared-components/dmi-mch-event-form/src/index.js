@@ -14,11 +14,11 @@ import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
 import Uploader from 'dmi-mch-utils-imageuploader'
-import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
-import AccesssPermission from '../../dmi-mch-constants-accesspermission/src'
-import City from '../../dmi-mch-services-city/src'
-import Event from '../../dmi-mch-services-event/src'
+import ImageCropperModal from 'dmi-mch-utils-imagecropper'
+import AccesssPermission from 'dmi-mch-constants-accesspermission'
+import City from 'dmi-mch-services-city'
+import Event from 'dmi-mch-services-event'
 
 // TODO: As mentioned before, EventForm code should ideally be in a different file, but the current bundling
 // does not allow this. Needs more investigation
@@ -244,7 +244,7 @@ const EventForm = (props) => {
                   role='button'
                   tabIndex={0}
                   style={{
-                    width: '70%',
+                    width: '316px',
                     border: '1px dashed grey',
                     cursor: 'pointer'
                   }}
@@ -261,8 +261,8 @@ const EventForm = (props) => {
                     ) : (
                       <div
                         style={{
-                          width: '100%',
-                          height: '200px',
+                          width: '316px',
+                          minHeight: '168px',
                           textAlign: 'center'
                         }}
                       >Upload image
@@ -292,12 +292,16 @@ const EventForm = (props) => {
                           open
                           fileUrl={file[0].preview}
                           file={file[0]}
-                          resizeWidth={720}
-                          resizeHeight={576}
-                          // TODO: what is the right preset?
-                          uploadPreset='gb-press-profile-photo'
+                          uploadPreset='mfp-fe-gallery-event-image'
                           cloudinary={cloudinary}
                           onCropConfirmed={onCropConfirmed}
+                          cropProperties={{
+                            x: 20,
+                            y: 20,
+                            width: 160,
+                            height: 100,
+                            aspect: 1.6
+                          }}
                         />
                       )}
                     </>
@@ -494,6 +498,7 @@ const EventForm = (props) => {
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
+          {errors.publish && touched.publish && <p className='help is-danger'>{errors.publish}</p>}
         </Grid>
         <h2>Visibility</h2>
         <Grid>
@@ -608,24 +613,28 @@ const EventFormContainer = (props) => {
   return (<FormRules {...newProps} />)
 }
 
-// Some logic for retrieve the publish status (rules in MCHGB-2940)
-const publishingStatus = (accesPermission, whiteListAccessGroups, blackListAccessGroups) => {
-  // To check public; as per ticket:
+// Some logic to mark the publish status radiobuttons (rules in MCHGB-2940)
+const publishingStatus = (accessPermission, whiteListAccessGroups, blackListAccessGroups) => {
   // If the event is not VIP and has no whitelist / blacklist, this radio button shows the "Public" option selected.
-  if (accesPermission === AccesssPermission.PUBLIC
+  if (accessPermission === AccesssPermission.PUBLIC
     && whiteListAccessGroups.length === 0
     && blackListAccessGroups.length === 0) {
     return 'public'
   }
 
-  if (accesPermission === AccesssPermission.VIP
+  if (accessPermission === AccesssPermission.VIP
     && whiteListAccessGroups.length === 1
     && whiteListAccessGroups[0] === '2000162') {
     return 'vip'
   }
+
+  if (!accessPermission) {
+    return ''
+  }
   return 'custom'
 }
 
+// Checks if a date is later than other
 function isLaterTime(ref) {
   return this.test({
     name: 'equalTo',
@@ -669,9 +678,9 @@ const FormRules = withFormik({
 
     // publish
     // It's so complex to determine it's default status, that we better put in a separate function
-    publish: props.currentEvent
+    publish: (props.currentEvent
       && publishingStatus(props.currentEvent.accessPermission,
-        props.currentEvent.whiteListAccessGroups, props.currentEvent.blackListAccessGroups),
+        props.currentEvent.whiteListAccessGroups, props.currentEvent.blackListAccessGroups)),
     whiteListAccessGroups: (props.currentEvent && props.currentEvent.whiteListAccessGroups) || [],
     blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
@@ -690,7 +699,7 @@ const FormRules = withFormik({
     endTime: Yup.string().required()
       .isLaterTime(Yup.ref('startTime')),
     eventImage: Yup.string().required(),
-    publish: Yup.string().required(),
+    publish: Yup.string().required('This field is required'),
     venue: Yup.string().required()
   }),
 
@@ -728,8 +737,6 @@ const FormRules = withFormik({
       }
     }
 
-    console.log('values', values)
-    console.log('objectToSave', objectToSave)
     try {
       const event = new Event(props.context)
       let savedEvent = null
