@@ -38,11 +38,6 @@
     "@babel/polyfill": "^7.4.3",
     "regenerator-runtime": "^0.13.2",
     "formik": "1.5.1",
-    "semantic-ui-calendar-react": "^0.14.4",
-    "dmi-mch-usergroupselector": "latest",
-    "dmi-mch-services-city": "latest",
-    "dmi-mch-services-usergroup": "latest",
-    "dmi-mch-utils-imagecropper": "latest",
-    "dmi-mch-utils-imageuploader": "latest"
+    "semantic-ui-calendar-react": "^0.14.4"
   }
 }
