@@ -26,6 +26,6 @@
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
   "dependencies": {
-    "ckeditor4-react": "ckeditor/ckeditor4-react#master"
+    "ckeditor4-react": "^0.1.0"
   }
 }
