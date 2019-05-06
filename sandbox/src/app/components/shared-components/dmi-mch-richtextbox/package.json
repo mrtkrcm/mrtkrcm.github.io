@@ -26,8 +26,6 @@
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "regenerator-runtime": "^0.13.2",
-    "ckeditor4-react": "^0.1.0"
+    "ckeditor4-react": "ckeditor/ckeditor4-react#master"
   }
 }
