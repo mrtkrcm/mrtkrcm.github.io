@@ -1,9 +1,9 @@
+/* eslint-disable react/destructuring-assignment */
 import Dropzone from 'react-dropzone'
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Button, Input } from 'semantic-ui-react'
+import { Modal, Button, Input, CrossIcon } from 'semantic-ui-react'
 import axios from 'axios'
-import styled from 'styled-components'
 import shortid from 'shortid'
 import loadImage, { parseMetaData } from 'blueimp-load-image'
 
@@ -94,7 +94,7 @@ class Uploader extends React.Component {
                 loadImageOptions.orientation = data.exif.get('Orientation')
               }
               loadImage(accepted[0], (canvas) => {
-                accepted[0].preview = canvas.toDataURL(accepted[0].type) // eslint-disable-line
+                accepted[0].preview = canvas.toDataURL(accepted[0].type) // eslint-disable-line no-param-reassign
                 this.setState({ file: accepted })
               }, loadImageOptions)
             })
@@ -196,33 +196,6 @@ class Uploader extends React.Component {
     })
   }
 
-  // todo: isolate this method
-  uploadFilesToFuturetek = () => {
-    this.setState({ uploadInProgress: true })
-
-    const { api, apiHeaders } = this.props
-    const { name, size, type } = this.state.file[0]
-
-    let headers = {
-      Accept: '*/*',
-      'X-Requested-With': 'XMLHttpRequest',
-      'File-Name': encodeURIComponent(name),
-      'Content-disposition': `attachment; filename=${encodeURIComponent(name)}`,
-      'File-Size': size,
-      'Content-Type': type
-    }
-
-    if (apiHeaders) {
-      headers = { headers, ...apiHeaders }
-    }
-
-    PressAccService.uploadDocument(this.state.file[0], headers, api)
-      .then(() => {
-        this.setState({ uploadedFile: this.state.file, uploadInProgress: false })
-        typeof this.props.onFileUploadSuccess === 'function' && this.props.onFileUploadSuccess(this.props)
-      })
-  }
-
   onMessageModalClose = () => {
     this.setState({ message: { ...this.defaultMessageState } })
   }
@@ -243,7 +216,6 @@ class Uploader extends React.Component {
 
   render() {
     const { props, state } = this
-    const ErrorModalContent = state.message.content || ''
     const documentName = (state.uploadedFile && (state.file && state.file[0].name)) || props.defaultInputValue || ''
 
     return (
@@ -318,7 +290,15 @@ class Uploader extends React.Component {
           actions={[
             { key: 'ok', content: 'OK' }
           ]}
-          closeIcon={<div className='modal-icon-close' onClick={this.closeModal} />}
+          closeIcon={(
+            <div
+              role='button'
+              tabIndex={0}
+              className='modal-icon-close'
+              onClick={this.closeModal}
+              onKeyDown={this.closeModal}
+            />
+          )}
         />
       </div>
     )
