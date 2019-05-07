@@ -153,28 +153,16 @@ const EventForm = (props) => {
     configuration,
     submitButton,
     showAdvancedVisibilityPanel
-    // description,
-    // user,
-    // setUser,
-    // autocompleteUserOptions,
-    // autocompletePlaceOptions,
-    // handlePlaceChange,
-    // setPlace,
-    // statusesDropdown,
-    // categoriesDropdown,
-    // place,
-    // actionBarTitle,
-    // pageTitle,
-    // isFormSubmitted,
-    // setIsFormSubmitted,
-    // formControls,
-    // maxCommentSize
   } = props
 
   const uploadButtonReference = React.createRef()
 
-  function selectImage() {
-    uploadButtonReference.current.click()
+  const selectImage = () => {
+    if (values.eventImage) {
+      props.setFieldValue('eventImage', '')
+    } else {
+      uploadButtonReference.current.click()
+    }
   }
 
   return (
@@ -243,7 +231,6 @@ const EventForm = (props) => {
             </Grid.Column>
 
             <Grid.Column>
-              {/* {values.eventImage} */}
               <Form.Field>
                 <label>Image*</label>
                 <div
@@ -252,26 +239,42 @@ const EventForm = (props) => {
                   role='button'
                   tabIndex={0}
                   style={{
+                    position: 'relative',
                     width: '316px',
-                    border: '1px dashed grey',
+                    border: '1px dashed lightgrey',
                     cursor: 'pointer'
                   }}
                 >
                   {values.eventImage
                     ? (
-                      <img
-                        src={values.eventImage}
-                        alt='Uploaded pic'
-                        style={{
-                          width: '100%'
+                      <>
+                        <div style={{
+                          position: 'absolute',
+                          color: 'white',
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: 'rgba(0, 0, 0, .4)',
+                          textAlign: 'center',
+                          paddingTop: '90px'
                         }}
-                      />
+                        >Delete image
+                        </div>
+                        <img
+                          src={values.eventImage}
+                          alt='Uploaded pic'
+                          style={{
+                            width: '100%'
+                          }}
+                        />
+                      </>
                     ) : (
                       <div
                         style={{
                           width: '316px',
                           minHeight: '168px',
-                          textAlign: 'center'
+                          textAlign: 'center',
+                          paddingTop: '70px',
+                          color: 'grey'
                         }}
                       >Upload image
                       </div>
@@ -315,7 +318,6 @@ const EventForm = (props) => {
                     </>
                   )}
                 </Uploader>
-                {/* {values.eventImage && <img src={values.eventImage} alt='Uploaded' />} */}
               </Form.Field>
               <Form.Field>
                 <label>Image caption</label>

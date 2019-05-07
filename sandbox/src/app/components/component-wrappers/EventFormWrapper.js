@@ -17,12 +17,7 @@ const EventFormWrapper = () => {
         submitButton={{
           show: true
         }}
-        showVisibilityPanel={false}
-        // In Sandbox
-        // configuration={
-        //   getEnvConfig.fe
-        // }
-        // .wag.whitelist.vip
+        showAdvancedVisibilityPanel
         configuration={{
           eventsandexhibitions: {
             wag: {
