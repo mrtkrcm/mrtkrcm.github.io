@@ -33,13 +33,15 @@ const Module = () => {
   }, [])
 
   return (
-    <RichTextEditor
-      name='test'
-      data='test'
-      customHandler={(e) => {
-        e.editor.getData()
-      }}
-    />
+    {!isLoading && (
+      <RichTextEditor
+        name='test'
+        data='test'
+        customHandler={(e) => {
+          e.editor.getData()
+        }}
+      />
+    )}
   )
 }
 
