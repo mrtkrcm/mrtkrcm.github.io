@@ -2,7 +2,7 @@
   "name": "dmi-mch-richtextbox",
   "version": "1.0.9-SNAPSHOT",
   "description": "DMI MCH Rich Text Box",
-  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
+  "repository":"https://nexus.dminc-gtc.com/nexus/repository/npm-registry/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,6 +26,6 @@
     "registry": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/"
   },
   "dependencies": {
-    "ckeditor4-react": "^0.1.0"
+    "ckeditor4-react": "https://nexus.dminc-gtc.com/nexus/repository/npmjs/ckeditor4-react/-/ckeditor4-react-0.1.0.tgz"
   }
 }
