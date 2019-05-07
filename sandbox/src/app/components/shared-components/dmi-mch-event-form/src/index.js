@@ -24,6 +24,7 @@ import RichTextEditor from 'dmi-mch-richtextbox'
 // TODO: As mentioned before, EventForm code should ideally be in a different file, but the current bundling
 // does not allow this. Needs more investigation
 const EventForm = (props) => {
+  const [isLoading, setIsLoading] = useState(true)
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
   const [isCustomLocationEnabled, setCustomLocationEnabled] = useState(false)
@@ -139,6 +140,7 @@ const EventForm = (props) => {
 
     fetchEventAttributes()
     fetchMyAccount()
+    setIsLoading(false)
   }, [context, setAddressessList])
 
   const {
@@ -220,13 +222,15 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
-                <RichTextEditor
-                  name='longParagraphText'
-                  data={values.longParagraphText}
-                  customHandler={(e) => {
-                    props.setFieldValue('longParagraphText', e.editor.getData())
-                  }}
-                />
+                {!isLoading && (
+                  <RichTextEditor
+                    name='longParagraphText'
+                    data={values.longParagraphText}
+                    customHandler={(e) => {
+                      props.setFieldValue('longParagraphText', e.editor.getData())
+                    }}
+                  />
+                )}
               </Form.Field>
             </Grid.Column>
 
