@@ -152,7 +152,7 @@ const EventForm = (props) => {
     setFieldValue,
     configuration,
     submitButton,
-    showVisibilityPanel
+    showAdvancedVisibilityPanel
     // description,
     // user,
     // setUser,
@@ -462,52 +462,58 @@ const EventForm = (props) => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <h2>Publishing</h2>
-        <Grid>
-          <Grid.Row columns={8}>
-            <Grid.Column>
-              <Form.Field>
-                <label>Event is visible for</label>
-                <Radio
-                  id='publishPublic'
-                  name='publish'
-                  label='Public'
-                  onChange={handleChange}
-                  value='public'
-                  checked={values.publish === 'public'}
-                />
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>&nbsp;</label>
-                <Radio
-                  id='publishVips'
-                  name='publish'
-                  label='VIPs only'
-                  onChange={handleChange}
-                  value='vip'
-                  checked={values.publish === 'vip'}
-                />
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>&nbsp;</label>
-                <Radio
-                  id='publishCustom'
-                  name='publish'
-                  label='Custom'
-                  onChange={handleChange}
-                  value='custom'
-                  checked={values.publish === 'custom'}
-                />
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-          {errors.publish && touched.publish && <p className='help is-danger'>{errors.publish}</p>}
-        </Grid>
-        {showVisibilityPanel
+        {!showAdvancedVisibilityPanel
+          && (
+            <>
+              <h2>Publishing</h2>
+              <Grid>
+                <Grid.Row columns={8}>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Event is visible for</label>
+                      <Radio
+                        id='publishPublic'
+                        name='publish'
+                        label='Public'
+                        onChange={handleChange}
+                        value='public'
+                        checked={values.publish === 'public'}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>&nbsp;</label>
+                      <Radio
+                        id='publishVips'
+                        name='publish'
+                        label='VIPs only'
+                        onChange={handleChange}
+                        value='vip'
+                        checked={values.publish === 'vip'}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>&nbsp;</label>
+                      <Radio
+                        id='publishCustom'
+                        name='publish'
+                        label='Custom'
+                        onChange={handleChange}
+                        value='custom'
+                        checked={values.publish === 'custom'}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                {errors.publish && touched.publish && <p className='help is-danger'>{errors.publish}</p>}
+              </Grid>
+            </>
+          )}
+
+        {showAdvancedVisibilityPanel
         && (
         <>
           <h2>Visibility</h2>
@@ -537,39 +543,38 @@ const EventForm = (props) => {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid>
-            <Grid.Row columns={8}>
-              <Grid.Column>
-                <Form.Field>
-                  <label>Status</label>
-                  <Radio
-                    id='statusDraft'
-                    name='status'
-                    label='Draft'
-                    onChange={handleChange}
-                    value='DRAFT'
-                    checked={values.status === 'DRAFT'}
-                  />
-                </Form.Field>
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Field>
-                  <label>&nbsp;</label>
-                  <Radio
-                    id='statusLive'
-                    name='status'
-                    label='Live'
-                    onChange={handleChange}
-                    value='LIVE'
-                    checked={values.status === 'LIVE'}
-                  />
-                </Form.Field>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
         </>
-        )
-        }
+        )}
+        <Grid>
+          <Grid.Row columns={8}>
+            <Grid.Column>
+              <Form.Field>
+                <label>Status</label>
+                <Radio
+                  id='statusDraft'
+                  name='status'
+                  label='Draft'
+                  onChange={handleChange}
+                  value='DRAFT'
+                  checked={values.status === 'DRAFT'}
+                />
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Field>
+                <label>&nbsp;</label>
+                <Radio
+                  id='statusLive'
+                  name='status'
+                  label='Live'
+                  onChange={handleChange}
+                  value='LIVE'
+                  checked={values.status === 'LIVE'}
+                />
+              </Form.Field>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Form>
     </>
   )
@@ -589,7 +594,7 @@ EventForm.propTypes = {
   setFieldValue: PropTypes.func,
   submitButton: PropTypes.object,
   title: PropTypes.string,
-  showVisibilityPanel: PropTypes.bool
+  showAdvancedVisibilityPanel: PropTypes.bool
 }
 
 const EventFormContainer = (props) => {
@@ -705,7 +710,7 @@ const FormRules = withFormik({
 
   enableReinitialize: true,
 
-  validationSchema: () => Yup.object().shape({
+  validationSchema: props => Yup.object().shape({
     eventTypes: Yup.array().min(1),
     title: Yup.string().required(),
     date: Yup.string().required(),
@@ -713,7 +718,7 @@ const FormRules = withFormik({
     endTime: Yup.string().required()
       .isLaterTime(Yup.ref('startTime')),
     eventImage: Yup.string().required(),
-    publish: Yup.string().required('This field is required'),
+    publish: props.showAdvancedVisibilityPanel && Yup.string().required('This field is required'),
     venue: Yup.string().required()
   }),
 
@@ -736,10 +741,10 @@ const FormRules = withFormik({
         endTime: values.endTime
       }
     ]
-    // If Add mode, and MFP (No ID)
-    if (!props.showVisibilityPanel) {
+    const publishValue = values.publish
+    // If MFP (No ID)
+    if (!props.showAdvancedVisibilityPanel) {
       // Some logic for Saving the publish status (rules in MCHGB-2940)
-      const publishValue = values.publish
       if (publishValue === 'public') {
         objectToSave.accessPermission = AccesssPermission.PUBLIC
         // Clearing the access group array
@@ -747,12 +752,22 @@ const FormRules = withFormik({
         objectToSave.blackListAccessGroups = []
       } else if (publishValue === 'vip') {
         objectToSave.accessPermission = AccesssPermission.VIP
+        objectToSave.whiteListAccessGroups = []
+        objectToSave.blackListAccessGroups = []
         objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
       } else if (publishValue === 'custom') {
         objectToSave.accessPermission = AccesssPermission.PUBLIC
+        objectToSave.whiteListAccessGroups = []
+        objectToSave.blackListAccessGroups = []
         objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.custom)
       }
+    // If CMS
+    } else if (publishValue === 'custom') {
+      objectToSave.accessPermission = AccesssPermission.PUBLIC
+      objectToSave.whiteListAccessGroups = values.whiteListAccessGroups
+      objectToSave.blackListAccessGroups = values.blackListAccessGroups
     }
+
 
     try {
       const event = new Event(props.context)
