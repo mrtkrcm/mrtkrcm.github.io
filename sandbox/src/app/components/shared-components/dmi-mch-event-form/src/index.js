@@ -6,7 +6,7 @@ import { withFormik } from 'formik'
 import * as Yup from 'yup'
 // Dayjs and datejs didn't work for the basic purpose below
 import moment from 'moment'
-import { Input, Form, Grid, TextArea, Button, Radio, Search } from 'semantic-ui-react'
+import { Input, Form, Grid, Button, Radio, Search } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
@@ -19,6 +19,7 @@ import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 import AccesssPermission from 'dmi-mch-constants-accesspermission'
 import City from 'dmi-mch-services-city'
 import Event from 'dmi-mch-services-event'
+import RichTextEditor from 'dmi-mch-richtextbox'
 
 // TODO: As mentioned before, EventForm code should ideally be in a different file, but the current bundling
 // does not allow this. Needs more investigation
@@ -231,7 +232,13 @@ const EventForm = (props) => {
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
-                <TextArea name='longParagraphText' type='text' value={values.longParagraphText} />
+                <RichTextEditor
+                  name='longParagraphText'
+                  data={values.longParagraphText}
+                  customHandler={(e) => {
+                    props.setFieldValue('longParagraphText', e.editor.getData())
+                  }}
+                />
               </Form.Field>
             </Grid.Column>
 
