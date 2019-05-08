@@ -12,7 +12,8 @@
   "peerDependencies": {
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
-    "semantic-ui-react": "^0.86.0"
+    "semantic-ui-react": "^0.86.0",
+    "react-dropzone": "4.2.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
@@ -29,6 +30,7 @@
     "@babel/polyfill": "^7.4.3",
     "regenerator-runtime": "^0.13.2",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "blueimp-load-image": "^2.19.0"
+    "blueimp-load-image": "^2.19.0",
+    "react-dropzone": "4.2.8"
   }
 }
