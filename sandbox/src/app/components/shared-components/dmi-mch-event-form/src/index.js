@@ -500,19 +500,6 @@ const EventForm = (props) => {
                       />
                     </Form.Field>
                   </Grid.Column>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>&nbsp;</label>
-                      <Radio
-                        id='publishCustom'
-                        name='publish'
-                        label='Custom'
-                        onChange={handleChange}
-                        value='custom'
-                        checked={values.publish === 'custom'}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
                 </Grid.Row>
                 {errors.publish && touched.publish && <p className='help is-danger'>{errors.publish}</p>}
               </Grid>
