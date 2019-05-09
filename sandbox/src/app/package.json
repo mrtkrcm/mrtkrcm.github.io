@@ -28,6 +28,7 @@
     "cssnano": "^4.1.8",
     "dmi-mch-constants-accesspermission": "^1.0.0",
     "dmi-mch-event-form": "^1.0.44",
+    "dmi-mch-richtextbox": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz",
     "dmi-mch-services-account": "^1.0.0",
     "dmi-mch-services-city": "^1.0.1",
     "dmi-mch-services-event": "^1.0.8",

@@ -663,6 +663,24 @@ function isLaterTime(ref) {
 
 Yup.addMethod(Yup.string, 'isLaterTime', isLaterTime)
 
+const validationSchema = (props) => {
+  let shape = {
+    eventTypes: Yup.array().min(1),
+    title: Yup.string().required(),
+    date: Yup.string().required(),
+    startTime: Yup.string().required(),
+    endTime: Yup.string().required()
+      .isLaterTime(Yup.ref('startTime')),
+    eventImage: Yup.string().required(),
+
+    venue: Yup.string().required()
+  }
+  if (props.showAdvancedVisibilityPanel) {
+    shape = { ...shape, ...{ publish: Yup.string().required('This field is required') } }
+  }
+  Yup.object().shape(shape)
+}
+
 const FormRules = withFormik({
   mapPropsToValues: props => ({
     // General information
@@ -703,17 +721,7 @@ const FormRules = withFormik({
 
   enableReinitialize: true,
 
-  validationSchema: props => Yup.object().shape({
-    eventTypes: Yup.array().min(1),
-    title: Yup.string().required(),
-    date: Yup.string().required(),
-    startTime: Yup.string().required(),
-    endTime: Yup.string().required()
-      .isLaterTime(Yup.ref('startTime')),
-    eventImage: Yup.string().required(),
-    publish: props.showAdvancedVisibilityPanel && Yup.string().required('This field is required'),
-    venue: Yup.string().required()
-  }),
+  validationSchema: props => validationSchema(props),
 
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
