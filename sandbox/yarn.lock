@@ -3436,6 +3436,14 @@ ckeditor4-react@^0.1.0:
     load-script "^1.0.0"
     prop-types "^15.6.2"
 
+"ckeditor4-react@https://nexus.dminc-gtc.com/nexus/repository/npmjs/ckeditor4-react/-/ckeditor4-react-0.1.0.tgz":
+  version "0.1.0"
+  uid d2fdff7c94cd561792ff360fcc74fd227422ee27
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npmjs/ckeditor4-react/-/ckeditor4-react-0.1.0.tgz#d2fdff7c94cd561792ff360fcc74fd227422ee27"
+  dependencies:
+    load-script "^1.0.0"
+    prop-types "^15.6.2"
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -4609,6 +4617,12 @@ dmi-mch-event-form@^1.0.44:
     "@babel/polyfill" "^7.4.3"
     formik "1.5.1"
     regenerator-runtime "^0.13.2"
+
+"dmi-mch-richtextbox@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz":
+  version "1.0.9"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz#d1b1ad3268aae0ad60310ef79fa66dde34a4ca5d"
+  dependencies:
+    ckeditor4-react "https://nexus.dminc-gtc.com/nexus/repository/npmjs/ckeditor4-react/-/ckeditor4-react-0.1.0.tgz"
 
 dmi-mch-services-account@^1.0.0:
   version "1.0.0"
