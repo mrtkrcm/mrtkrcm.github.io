@@ -4618,6 +4618,13 @@ dmi-mch-event-form@^1.0.44:
     formik "1.5.1"
     regenerator-runtime "^0.13.2"
 
+"dmi-mch-inputfeedback@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz":
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz#ff3ee627a711303ea6018a65c0acb5a31a78f923"
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
 "dmi-mch-richtextbox@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz":
   version "1.0.9"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz#d1b1ad3268aae0ad60310ef79fa66dde34a4ca5d"

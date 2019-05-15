@@ -9,15 +9,28 @@ import EventForm from '../shared-components/dmi-mch-event-form/src'
 
 const EventFormWrapper = () => {
   const id = (Router.router && parseInt(Router.router.query.id, 0)) || null
+
+  let submitEventForm = null
+
+  const handleSubmitEventForm = (e) => {
+    if (submitEventForm) {
+      submitEventForm(e)
+    }
+  }
+
+  const bindSubmitForm = (submitForm) => {
+    submitEventForm = submitForm
+  }
+
   return (
     <NoSSR>
+      <button onClick={handleSubmitEventForm} type='button'>Submit from outside</button>
       <EventForm
         id={id}
         title={id ? `Edit Event #${id}` : 'Add Event'}
-        submitButton={{
-          show: true
-        }}
-        showAdvancedVisibilityPanel
+        showSubmitButton={false}
+        bindSubmitForm={bindSubmitForm}
+        showAdvancedVisibilityPanel={false}
         configuration={{
           eventsandexhibitions: {
             wag: {
