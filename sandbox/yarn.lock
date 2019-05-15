@@ -4653,6 +4653,12 @@ dmi-mch-services-event@^1.0.8:
   dependencies:
     query-string "4.3.4"
 
+"dmi-mch-services-label@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz":
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz#2e6ed06d6ebb560ad0ca79c96cd266b341d6ce8a"
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+
 dmi-mch-services-place@^1.0.2:
   version "1.0.2"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.2.tgz#dcc0ffe9a5f282f4e3245278ec18ea4163db8794"
@@ -4678,6 +4684,10 @@ dmi-mch-utils-dropdown@^1.0.2:
   version "1.0.2"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.2.tgz#5a364d8d69c189776193fb31b254c422cae938b1"
   integrity sha512-2mhZH6zkn34IF+K8fKGWmXfnA0dKjEc49PL6VYjRL/3mtlNbwBXooZw+tnV17kwXPLR6ncH9EHZPpJv8DttQjw==
+
+"dmi-mch-utils-gettranslation@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz":
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz#007175f284487b847e79f5905b62f3cebe181691"
 
 dmi-mch-utils-imagecropper@^1.0.5:
   version "1.0.5"

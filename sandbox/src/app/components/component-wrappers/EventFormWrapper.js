@@ -31,6 +31,7 @@ const EventFormWrapper = () => {
         showSubmitButton={false}
         bindSubmitForm={bindSubmitForm}
         showAdvancedVisibilityPanel={false}
+        language='en'
         configuration={{
           eventsandexhibitions: {
             wag: {
