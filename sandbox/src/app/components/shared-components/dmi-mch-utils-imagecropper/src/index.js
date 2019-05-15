@@ -96,7 +96,7 @@ class ImageCropperModal extends React.Component {
 
     return (
       <Fragment>
-        <Modal open={state.open} onClose={onModalClose} closeOnEscape={false} closeonrootnodeclick='false'>
+        <Modal open={state.open} onClose={onModalClose} closeOnEscape={false}>
           <Modal.Content className={props.className}>
             {props.fileUrl && (
               <ReactCrop

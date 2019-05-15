@@ -285,7 +285,6 @@ class Uploader extends React.Component {
           content='Text content'
           size='small'
           closeOnEscape
-          closeOnRootNodeClick
           onClose={this.onMessageModalClose}
           actions={[
             { key: 'ok', content: 'OK' }
