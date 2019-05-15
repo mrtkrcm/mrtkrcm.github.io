@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-gettranslation",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.1-SNAPSHOT",
   "description": "DMI MCH Utils Get Translation",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
