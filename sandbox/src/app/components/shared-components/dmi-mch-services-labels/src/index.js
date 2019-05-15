@@ -4,6 +4,9 @@ class Label {
     this.headers = { 'cache-control': 'no-cache' }
   }
 
+  getByEntityId = entityId => this.context.http
+    .get(`/msvc/v1/translations/Label/${entityId}`, null, this.headers)
+
   get = (entityId, fieldName) => this.context.http
     .get(`/msvc/v1/translations/Label/${entityId}/${fieldName}`, null, this.headers)
 
