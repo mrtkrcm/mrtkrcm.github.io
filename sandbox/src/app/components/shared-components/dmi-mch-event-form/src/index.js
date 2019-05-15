@@ -156,7 +156,7 @@ const EventForm = (props) => {
     handleSubmit,
     setFieldValue,
     configuration,
-    submitButton,
+    showSubmitButton,
     showAdvancedVisibilityPanel,
     className,
     bindSubmitForm
@@ -178,7 +178,7 @@ const EventForm = (props) => {
     <section className={className}>
       <h3>{title}</h3>
       <Form autoComplete='off' onSubmit={handleSubmit}>
-        {submitButton && submitButton.show
+        {showSubmitButton
           && <Button type='submit'>Save</Button>
         }
         <h3>Key Information</h3>
@@ -592,7 +592,7 @@ EventForm.propTypes = {
   handleSubmit: PropTypes.func,
   bindSubmitForm: PropTypes.func,
   setFieldValue: PropTypes.func,
-  submitButton: PropTypes.object,
+  showSubmitButton: PropTypes.bool,
   title: PropTypes.string,
   showAdvancedVisibilityPanel: PropTypes.bool
 }
