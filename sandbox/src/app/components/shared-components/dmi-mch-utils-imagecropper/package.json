@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-imagecropper",
-  "version": "1.0.9-SNAPSHOT",
+  "version": "1.0.10-SNAPSHOT",
   "description": "DMI MCH Utils Image Cropper",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
