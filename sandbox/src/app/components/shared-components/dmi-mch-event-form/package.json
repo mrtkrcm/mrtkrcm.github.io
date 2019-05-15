@@ -23,6 +23,7 @@
     "dmi-mch-inputfeedback": "1.0.1",
     "dmi-mch-services-label": "1.0.0",
     "dmi-mch-utils-gettranslation": "1.0.0",
+    "dmi-mch-text": "1.0.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
@@ -58,6 +59,7 @@
     "dmi-mch-richtextbox": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz",
     "dmi-mch-inputfeedback": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz",
     "dmi-mch-services-label": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz",
-    "dmi-mch-services-gettranslation": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz"
+    "dmi-mch-services-gettranslation": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz",
+    "dmi-mch-text": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.0.tgz"
   }
 }

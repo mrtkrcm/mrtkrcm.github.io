@@ -1,10 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+
+// SOME NOTES:
+// For submit button outside of form
+// https://stackoverflow.com/questions/49525057/react-formik-use-submitform-outside-formik
+
+// EventForm component should ideally be in a different file, but the current bundling
+// I couldn't find the way to do it. Needs more investigation, but should be possible with little effort.
+// Dayjs and datejs didn't work for the basic purpose below
+
 import React, { useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
-// Dayjs and datejs didn't work for the basic purpose below
 import moment from 'moment'
 import { Input, Form, Grid, Button, Radio, Search } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
@@ -22,19 +30,19 @@ import City from 'dmi-mch-services-city'
 import Event from 'dmi-mch-services-event'
 import RichTextEditor from 'dmi-mch-richtextbox'
 import InputFeedback from 'dmi-mch-inputfeedback'
+import Label from 'dmi-mch-services-label'
+import getTranslationByName from 'dmi-mch-utils-gettranslation'
+import Text from 'dmi-mch-text'
 
-// https://stackoverflow.com/questions/49525057/react-formik-use-submitform-outside-formik
-// TODO: As mentioned before, EventForm code should ideally be in a different file, but the current bundling
-// does not allow this. Needs more investigation
 const EventForm = (props) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [labels, setLabels] = useState([])
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
   const [isCustomLocationEnabled, setCustomLocationEnabled] = useState(false)
   const [customLocationValue, setCustomLocationValue] = useState('')
-  // const [customLocationId, setCustomLocationId] = useState(null)
   const [locationSuggestions, setLocationSuggestions] = useState([])
-
+  const labelsEntityId = 'EventsAndExhibitionsForm'
   const { context, setAddressessList } = props
   const place = new Place(context)
 
@@ -95,8 +103,21 @@ const EventForm = (props) => {
   }
 
   useEffect(() => {
-    const event = new Event(context)
+    // Fetching CMS Labels
+    const label = new Label(context)
+    const fetchLabels = async () => {
+      try {
+        const labelsList = await label.getByEntityId(labelsEntityId)
+        if (ValidateAxiosResponse(labelsList)) {
+          setLabels(labelsList.data)
+        }
+      } catch (e) {
+        Logger(e)
+      }
+    }
+
     // Fetching Event Attributes
+    const event = new Event(context)
     const fetchEventAttributes = async () => {
       try {
         const attributes = await event.getAttributes()
@@ -141,10 +162,11 @@ const EventForm = (props) => {
       }
     }
 
+    fetchLabels()
     fetchEventAttributes()
     fetchMyAccount()
     setIsLoading(false)
-  }, [context, setAddressessList])
+  }, [context, labelsEntityId, setAddressessList])
 
   const {
     values,
@@ -159,7 +181,8 @@ const EventForm = (props) => {
     showSubmitButton,
     showAdvancedVisibilityPanel,
     className,
-    bindSubmitForm
+    bindSubmitForm,
+    language
   } = props
 
   const uploadButtonReference = React.createRef()
@@ -168,11 +191,15 @@ const EventForm = (props) => {
 
   const selectImage = () => {
     if (values.eventImage) {
-      props.setFieldValue('eventImage', '')
+      props.setFieldValue('eventImage')
     } else {
       uploadButtonReference.current.click()
     }
   }
+
+  // This function just shortens the call to getTranslationByName
+  const translate = (entity, defaultValue = '') => getTranslationByName(labels, language, labelsEntityId, entity)
+    || defaultValue
 
   return (
     <section className={className}>
@@ -181,7 +208,7 @@ const EventForm = (props) => {
         {showSubmitButton
           && <Button type='submit'>Save</Button>
         }
-        <h3>Key Information</h3>
+        <h3>{translate('KeyInformationTitle')}</h3>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -189,7 +216,7 @@ const EventForm = (props) => {
                 <Form.Select
                   name='eventTypes'
                   fluid
-                  label='Type of Event*'
+                  label={`${translate('TypeFieldTitle')}*`}
                   options={eventAttributesDropdown}
                   onChange={(e, { value }) => {
                     setFieldValue('eventTypes', value)
@@ -201,7 +228,7 @@ const EventForm = (props) => {
                 {errors.eventTypes && touched.eventTypes && <InputFeedback>{errors.eventTypes}</InputFeedback>}
               </Form.Field>
               <Form.Field error={errors.title && touched.title}>
-                <label htmlFor='title'>Title*</label>
+                <label htmlFor='title'>{translate('TitleFieldTitle')}*</label>
                 <Input
                   type='text'
                   name='title'
@@ -215,7 +242,7 @@ const EventForm = (props) => {
                 {errors.title && touched.title && <InputFeedback>{errors.title}</InputFeedback> }
               </Form.Field>
               <Form.Field>
-                <label>Sub-Title</label>
+                <label>{translate('SubTitleFieldTitle')}</label>
                 <Input
                   type='text'
                   name='shortParagraphText'
@@ -229,7 +256,7 @@ const EventForm = (props) => {
                   && <InputFeedback>{errors.shortParagraphText}</InputFeedback>}
               </Form.Field>
               <Form.Field>
-                <label>Description</label>
+                <label>{translate('DescriptionFieldTitle')}</label>
                 {!isLoading && (
                   <RichTextEditor
                     name='longParagraphText'
@@ -241,10 +268,9 @@ const EventForm = (props) => {
                 )}
               </Form.Field>
             </Grid.Column>
-
             <Grid.Column>
               <Form.Field>
-                <label>Image*</label>
+                <label>{translate('ImageFieldTitle')}*</label>
                 <div
                   onClick={selectImage}
                   onKeyDown={selectImage}
@@ -269,7 +295,7 @@ const EventForm = (props) => {
                           textAlign: 'center',
                           paddingTop: '90px'
                         }}
-                        >Delete image
+                        >{translate('DeleteImage')}
                         </div>
                         <img
                           src={values.eventImage}
@@ -288,7 +314,8 @@ const EventForm = (props) => {
                           paddingTop: '70px',
                           color: 'grey'
                         }}
-                      >Upload image
+                      >{translate('UploadImage')}<br />
+                        <Text isHtml isSmall>{translate('ImageDimensionsPlaceholder')}</Text>
                       </div>
                     )}
                 </div>
@@ -332,7 +359,7 @@ const EventForm = (props) => {
                 </Uploader>
               </Form.Field>
               <Form.Field>
-                <label>Image caption</label>
+                <label>{translate('ImageCaptionFieldTitle')}</label>
                 <Input
                   type='text'
                   name='imageCaption'
@@ -347,13 +374,13 @@ const EventForm = (props) => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <h3>Venue</h3>
+        <h3>{translate('VenueInformationTitle')}</h3>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form.Select
                 fluid
-                label='Location*'
+                label={`${translate('LocationFieldTitle')}*`}
                 name='placeId'
                 options={myAddresses}
                 value={myAddresses.find(address => address.value === values.placeId) ? values.placeId : '0'}
@@ -362,7 +389,7 @@ const EventForm = (props) => {
                 }}
               />
               <Form.Field>
-                <label>Search Location / Venue</label>
+                <label>{translate('SearchTitle')}</label>
                 <Search
                   disabled={!isCustomLocationEnabled}
                   onResultSelect={handleResultSelect}
@@ -376,45 +403,45 @@ const EventForm = (props) => {
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form.Field>
-                <label>Venue Name</label>
+                <label>{translate('VenueNameTitle')}</label>
                 <div>{values.venue.name}</div>
               </Form.Field>
               <Form.Field>
-                <label>Address Line</label>
+                <label>{translate('AdressLineTitle')}</label>
                 <div>{values.venue.street || '-'}</div>
               </Form.Field>
               <Form.Field>
-                <label>City</label>
+                <label>{translate('CityTitle')}</label>
                 <div>{values.venue.city}</div>
               </Form.Field>
               <Form.Field>
-                <label>Country</label>
+                <label>{translate('CountryTitle')}</label>
                 <div>{values.venue.country}</div>
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
-                <label>ZIP Code</label>
+                <label>{translate('ZIPCodeTitle')}</label>
                 <div>{values.venue.postCode}</div>
               </Form.Field>
               <Form.Field>
-                <label>State (U.S Only</label>
+                <label>{translate('StateTitle')}</label>
                 <div>-</div>
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
           {errors.venue && touched.venue && <InputFeedback>{errors.venue}</InputFeedback>}
         </Grid>
-        <h3>Date &amp; Time</h3>
+        <h3>{translate('DateTimeTitle')}</h3>
         <Grid>
           <Grid.Row columns={3}>
             <Grid.Column>
               <Form.Field>
-                <label>Date*</label>
+                <label>{translate('EventDateTimeTitle')}</label>
                 <DateInput
                   onKeyDown={e => e.preventDefault()}
                   name='date'
-                  placeholder='Date'
+                  placeholder={translate('EventDateTimeTitle')}
                   value={values.date}
                   iconPosition='left'
                   dateFormat='DD/MM/YYYY'
@@ -429,11 +456,11 @@ const EventForm = (props) => {
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
-                <label>Start time*</label>
+                <label>{translate('EventStartTimeTitle')}*</label>
                 <TimeInput
                   onKeyDown={e => e.preventDefault()}
                   name='startTime'
-                  placeholder='Start time'
+                  placeholder={translate('EventStartTimeTitle')}
                   value={values.startTime}
                   iconPosition='left'
                   onChange={(e, { value }) => {
@@ -447,11 +474,11 @@ const EventForm = (props) => {
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
-                <label>End time*</label>
+                <label>{translate('EventEndTitle')}*</label>
                 <TimeInput
                   onKeyDown={e => e.preventDefault()}
                   name='endTime'
-                  placeholder='End time'
+                  placeholder={translate('EventEndTitle')}
                   value={values.endTime}
                   iconPosition='left'
                   onChange={(e, { value }) => {
@@ -463,18 +490,18 @@ const EventForm = (props) => {
                 {errors.endTime && touched.endTime && <InputFeedback>{errors.endTime}</InputFeedback>}
               </Form.Field>
             </Grid.Column>
-            <div>*Event date and time is in the Event Location/Venue’s time zone</div>
           </Grid.Row>
+          <Text isSmall textColor='grey'>{translate('DateWarningLabelTitle')}</Text>
         </Grid>
         {!showAdvancedVisibilityPanel
           && (
             <>
-              <h3>Publishing</h3>
+              <h3>{translate('PublishingTitle')}</h3>
               <Grid className='radiobuttons'>
                 <Grid.Row className='radiobuttons__title'>
                   <Grid.Column>
                     <Form.Field>
-                      <label>Event is visible for</label>
+                      <label>{translate('VisibilityFieldTitle')}</label>
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -485,7 +512,7 @@ const EventForm = (props) => {
                         style={{ width: 'auto' }}
                         id='publishPublic'
                         name='publish'
-                        label='Public'
+                        label={`${translate('VisibilityFieldValuePublic')}`}
                         onChange={handleChange}
                         value='public'
                         checked={values.publish === 'public'}
@@ -495,9 +522,8 @@ const EventForm = (props) => {
                       <Radio
                         id='publishVips'
                         name='publish'
-                        label='VIPs only'
+                        label={`${translate('VisibilityFieldValueVIP')}`}
                         onChange={handleChange}
-                        value='vip'
                         checked={values.publish === 'vip'}
                       />
                     </Form.Field>
@@ -511,7 +537,7 @@ const EventForm = (props) => {
         {showAdvancedVisibilityPanel
         && (
         <>
-          <h3>Visibility</h3>
+          <h3>{translate('StatusFieldTitle', 'Type of event')}</h3>
           <Grid>
             <Grid.Row columns={2}>
               <Grid.Column>
@@ -521,7 +547,7 @@ const EventForm = (props) => {
                     context={context}
                     selected={values.whiteListAccessGroups}
                     setFieldValue={setFieldValue}
-                    label='Visible for... (Whitelisting)'
+                    label={`${translate('Location')}*`}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -532,7 +558,7 @@ const EventForm = (props) => {
                     context={context}
                     selected={values.blackListAccessGroups}
                     setFieldValue={setFieldValue}
-                    label='Hidden for... (Blacklisting)'
+                    label={`${translate('Location')}*`}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -544,7 +570,7 @@ const EventForm = (props) => {
           <Grid.Row className='radiobuttons__title'>
             <Grid.Column>
               <Form.Field>
-                <label>Event is visible for</label>
+                <label>{translate('StatusFieldTitle')}</label>
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -554,7 +580,7 @@ const EventForm = (props) => {
                 <Radio
                   id='statusDraft'
                   name='status'
-                  label='Draft'
+                  label={translate('VisibilityFieldValueDraft')}
                   onChange={handleChange}
                   value='DRAFT'
                   checked={values.status === 'DRAFT'}
@@ -564,7 +590,7 @@ const EventForm = (props) => {
                 <Radio
                   id='statusLive'
                   name='status'
-                  label='Live'
+                  label={translate('VisibilityFieldValueLive')}
                   onChange={handleChange}
                   value='LIVE'
                   checked={values.status === 'LIVE'}
@@ -594,7 +620,8 @@ EventForm.propTypes = {
   setFieldValue: PropTypes.func,
   showSubmitButton: PropTypes.bool,
   title: PropTypes.string,
-  showAdvancedVisibilityPanel: PropTypes.bool
+  showAdvancedVisibilityPanel: PropTypes.bool,
+  language: PropTypes.string
 }
 
 const EventFormContainer = (props) => {
