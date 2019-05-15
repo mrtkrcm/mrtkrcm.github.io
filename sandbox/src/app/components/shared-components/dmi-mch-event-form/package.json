@@ -52,6 +52,7 @@
     "dmi-mch-usergroupselector": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.2.tgz",
     "dmi-mch-utils-imagecropper": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.8.tgz",
     "dmi-mch-utils-imageuploader": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imageuploader/-/dmi-mch-utils-imageuploader-1.0.4.tgz",
-    "dmi-mch-richtextbox": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz"
+    "dmi-mch-richtextbox": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz",
+    "dmi-mch-inputfeedback": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz -W"
   }
 }

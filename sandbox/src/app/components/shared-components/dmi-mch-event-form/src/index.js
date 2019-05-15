@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import moment from 'moment'
 import { Input, Form, Grid, Button, Radio, Search } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
+import styled from 'styled-components'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
 import Logger from 'dmi-mch-utils-logger'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
@@ -20,7 +21,9 @@ import AccesssPermission from 'dmi-mch-constants-accesspermission'
 import City from 'dmi-mch-services-city'
 import Event from 'dmi-mch-services-event'
 import RichTextEditor from 'dmi-mch-richtextbox'
+import InputFeedback from 'dmi-mch-inputfeedback'
 
+// https://stackoverflow.com/questions/49525057/react-formik-use-submitform-outside-formik
 // TODO: As mentioned before, EventForm code should ideally be in a different file, but the current bundling
 // does not allow this. Needs more investigation
 const EventForm = (props) => {
@@ -154,10 +157,14 @@ const EventForm = (props) => {
     setFieldValue,
     configuration,
     submitButton,
-    showAdvancedVisibilityPanel
+    showAdvancedVisibilityPanel,
+    className,
+    bindSubmitForm
   } = props
 
   const uploadButtonReference = React.createRef()
+
+  bindSubmitForm(handleSubmit)
 
   const selectImage = () => {
     if (values.eventImage) {
@@ -168,13 +175,13 @@ const EventForm = (props) => {
   }
 
   return (
-    <>
-      <h2>{title}</h2>
+    <section className={className}>
+      <h3>{title}</h3>
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {submitButton && submitButton.show
           && <Button type='submit'>Save</Button>
         }
-        <h2>Key Information</h2>
+        <h3>Key Information</h3>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -191,7 +198,7 @@ const EventForm = (props) => {
                   multiple
                   value={values.eventTypes}
                 />
-                {errors.eventTypes && touched.eventTypes && <p className='help is-danger'>{errors.eventTypes}</p>}
+                {errors.eventTypes && touched.eventTypes && <InputFeedback>{errors.eventTypes}</InputFeedback>}
               </Form.Field>
               <Form.Field error={errors.title && touched.title}>
                 <label htmlFor='title'>Title*</label>
@@ -204,7 +211,8 @@ const EventForm = (props) => {
                   onBlur={handleBlur}
                   error={errors.title && touched.title}
                 />
-                {errors.title && touched.title && <p className='help is-danger'>{errors.title}</p>}
+
+                {errors.title && touched.title && <InputFeedback>{errors.title}</InputFeedback> }
               </Form.Field>
               <Form.Field>
                 <label>Sub-Title</label>
@@ -218,7 +226,7 @@ const EventForm = (props) => {
                   error={errors.shortParagraphText && touched.shortParagraphText}
                 />
                 {errors.shortParagraphText && touched.shortParagraphText
-                  && <p className='help is-danger'>{errors.shortParagraphText}</p>}
+                  && <InputFeedback>{errors.shortParagraphText}</InputFeedback>}
               </Form.Field>
               <Form.Field>
                 <label>Description</label>
@@ -334,13 +342,12 @@ const EventForm = (props) => {
                   onBlur={handleBlur}
                   error={errors.imageCaption && touched.imageCaption}
                 />
-                {errors.imageCaption && touched.imageCaption && <p className='help is-danger'>{errors.imageCaption}</p>}
+                {errors.imageCaption && touched.imageCaption && <InputFeedback>{errors.imageCaption}</InputFeedback>}
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
-        <h2>Venue</h2>
+        <h3>Venue</h3>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -352,8 +359,6 @@ const EventForm = (props) => {
                 value={myAddresses.find(address => address.value === values.placeId) ? values.placeId : '0'}
                 onChange={(e, { value }) => {
                   updateVenueFromId(value)
-                  // console.log('value', value)
-                  // updateCityFromId(value)
                 }}
               />
               <Form.Field>
@@ -387,27 +392,20 @@ const EventForm = (props) => {
                 <div>{values.venue.country}</div>
               </Form.Field>
             </Grid.Column>
-
             <Grid.Column>
-              {/* <Form.Field>
-                <label>Location detail (optional)</label>
-                <Input disabled type='text' />
-              </Form.Field> */}
               <Form.Field>
                 <label>ZIP Code</label>
                 <div>{values.venue.postCode}</div>
-                {/* <div>{currentEvent && currentEvent.venue && currentEvent.venue.city}</div> */}
               </Form.Field>
               <Form.Field>
                 <label>State (U.S Only</label>
                 <div>-</div>
-                {/* <div>{currentEvent && currentEvent.venue && currentEvent.venue.city}</div> */}
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
+          {errors.venue && touched.venue && <InputFeedback>{errors.venue}</InputFeedback>}
         </Grid>
-
-        <h2>Date &amp; Time</h2>
+        <h3>Date &amp; Time</h3>
         <Grid>
           <Grid.Row columns={3}>
             <Grid.Column>
@@ -426,8 +424,7 @@ const EventForm = (props) => {
                   closable
                   error={errors.date && touched.date}
                 />
-                {errors.date && touched.date && <p className='help is-danger'>{errors.date}</p>}
-                *Event date and time is in the Event Location/Venue’s time zone
+                {errors.date && touched.date && <InputFeedback>{errors.date}</InputFeedback>}
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
@@ -445,7 +442,7 @@ const EventForm = (props) => {
                   closable
                   error={errors.startTime && touched.startTime}
                 />
-                {errors.startTime && touched.startTime && <p className='help is-danger'>{errors.startTime}</p>}
+                {errors.startTime && touched.startTime && <InputFeedback>{errors.startTime}</InputFeedback>}
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
@@ -463,21 +460,29 @@ const EventForm = (props) => {
                   closable
                   error={errors.endTime && touched.endTime}
                 />
-                {errors.endTime && touched.endTime && <p className='help is-danger'>{errors.endTime}</p>}
+                {errors.endTime && touched.endTime && <InputFeedback>{errors.endTime}</InputFeedback>}
               </Form.Field>
             </Grid.Column>
+            <div>*Event date and time is in the Event Location/Venue’s time zone</div>
           </Grid.Row>
         </Grid>
         {!showAdvancedVisibilityPanel
           && (
             <>
-              <h2>Publishing</h2>
-              <Grid>
-                <Grid.Row columns={8}>
+              <h3>Publishing</h3>
+              <Grid className='radiobuttons'>
+                <Grid.Row className='radiobuttons__title'>
                   <Grid.Column>
                     <Form.Field>
                       <label>Event is visible for</label>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row className='radiobuttons__group'>
+                  <Form.Group inline>
+                    <Form.Field>
                       <Radio
+                        style={{ width: 'auto' }}
                         id='publishPublic'
                         name='publish'
                         label='Public'
@@ -486,10 +491,7 @@ const EventForm = (props) => {
                         checked={values.publish === 'public'}
                       />
                     </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column>
                     <Form.Field>
-                      <label>&nbsp;</label>
                       <Radio
                         id='publishVips'
                         name='publish'
@@ -499,9 +501,9 @@ const EventForm = (props) => {
                         checked={values.publish === 'vip'}
                       />
                     </Form.Field>
-                  </Grid.Column>
+                  </Form.Group>
                 </Grid.Row>
-                {errors.publish && touched.publish && <p className='help is-danger'>{errors.publish}</p>}
+                {errors.publish && touched.publish && <InputFeedback>{errors.publish}</InputFeedback>}
               </Grid>
             </>
           )}
@@ -509,7 +511,7 @@ const EventForm = (props) => {
         {showAdvancedVisibilityPanel
         && (
         <>
-          <h2>Visibility</h2>
+          <h3>Visibility</h3>
           <Grid>
             <Grid.Row columns={2}>
               <Grid.Column>
@@ -538,11 +540,17 @@ const EventForm = (props) => {
           </Grid>
         </>
         )}
-        <Grid>
-          <Grid.Row columns={8}>
+        <Grid className='radiobuttons'>
+          <Grid.Row className='radiobuttons__title'>
             <Grid.Column>
               <Form.Field>
-                <label>Status</label>
+                <label>Event is visible for</label>
+              </Form.Field>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row className='radiobuttons__group'>
+            <Form.Group inline>
+              <Form.Field>
                 <Radio
                   id='statusDraft'
                   name='status'
@@ -552,10 +560,7 @@ const EventForm = (props) => {
                   checked={values.status === 'DRAFT'}
                 />
               </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
               <Form.Field>
-                <label>&nbsp;</label>
                 <Radio
                   id='statusLive'
                   name='status'
@@ -565,11 +570,11 @@ const EventForm = (props) => {
                   checked={values.status === 'LIVE'}
                 />
               </Form.Field>
-            </Grid.Column>
+            </Form.Group>
           </Grid.Row>
         </Grid>
       </Form>
-    </>
+    </section>
   )
 }
 
@@ -580,10 +585,12 @@ EventForm.propTypes = {
   errors: PropTypes.object,
   id: PropTypes.number,
   configuration: PropTypes.object,
+  className: PropTypes.string,
   setAddressessList: PropTypes.func,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
   handleSubmit: PropTypes.func,
+  bindSubmitForm: PropTypes.func,
   setFieldValue: PropTypes.func,
   submitButton: PropTypes.object,
   title: PropTypes.string,
@@ -663,23 +670,19 @@ function isLaterTime(ref) {
 
 Yup.addMethod(Yup.string, 'isLaterTime', isLaterTime)
 
-const validationSchema = (props) => {
-  let shape = {
-    eventTypes: Yup.array().min(1),
-    title: Yup.string().required(),
-    date: Yup.string().required(),
-    startTime: Yup.string().required(),
-    endTime: Yup.string().required()
-      .isLaterTime(Yup.ref('startTime')),
-    eventImage: Yup.string().required(),
-
-    venue: Yup.string().required()
-  }
-  if (props.showAdvancedVisibilityPanel) {
-    shape = { ...shape, ...{ publish: Yup.string().required('This field is required') } }
-  }
-  Yup.object().shape(shape)
+// Checks if vanue has necessary fields
+function isVenueCorrect() {
+  return this.test({
+    name: 'isObject',
+    exclusive: false,
+    message: 'No venue selected',
+    test(value) {
+      return typeof value === 'object'
+    }
+  })
 }
+
+Yup.addMethod(Yup.object, 'isVenueCorrect', isVenueCorrect)
 
 const FormRules = withFormik({
   mapPropsToValues: props => ({
@@ -721,7 +724,23 @@ const FormRules = withFormik({
 
   enableReinitialize: true,
 
-  validationSchema: props => validationSchema(props),
+
+  validationSchema: (props) => {
+    let schema = {
+      eventTypes: Yup.array().min(1),
+      title: Yup.string().required(),
+      date: Yup.string().required(),
+      startTime: Yup.string().required(),
+      endTime: Yup.string().required()
+        .isLaterTime(Yup.ref('startTime')),
+      eventImage: Yup.string().required(),
+      venue: Yup.object().isVenueCorrect()
+    }
+    if (!props.showAdvancedVisibilityPanel) {
+      schema = { ...schema, ...{ publish: Yup.string().required('This field is required') } }
+    }
+    return Yup.object().shape(schema)
+  },
 
   handleSubmit: async (values, { props }) => {
     const objectToSave = { ...values }
@@ -730,8 +749,6 @@ const FormRules = withFormik({
     objectToSave.venue = values.venue
     // Careful with the typo in timezone. API unconsistency
     objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
-    // TODO: TBD, hardcoding to 11 temporarily
-    // objectToSave.cityId = props.currentEvent.cityId
     objectToSave.cityId = props.currentEvent ? props.currentEvent.cityId : values.cityId
     objectToSave.startDate = props.currentEvent ? props.currentEvent.startDate : startDate
     objectToSave.openingDateTimes = [
@@ -801,4 +818,21 @@ EventFormContainer.propTypes = {
   setAddressessList: PropTypes.func
 }
 
-export default EventFormContainer
+export default styled(EventFormContainer)`
+  margin-bottom: 40px;
+
+  .radiobuttons {
+    &__title {
+      padding: 16px 0 10px !important;
+    }
+
+    &__group {
+      margin-left: 15px;
+      padding-top: 0 !important;
+    }
+  }
+
+  .row > .column .ui.grid .row {
+    padding: inherit;
+  }
+`
