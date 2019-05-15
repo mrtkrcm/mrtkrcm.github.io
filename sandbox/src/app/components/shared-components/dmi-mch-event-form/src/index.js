@@ -198,12 +198,22 @@ const EventForm = (props) => {
   }
 
   // This function just shortens the call to getTranslationByName
-  const translate = (entity, defaultValue = '') => getTranslationByName(labels, language, labelsEntityId, entity)
-    || defaultValue
+  const translate = (entity) => {
+    const label = (labels.length > 0
+      ? getTranslationByName(labels, language, labelsEntityId, entity)
+      : null)
+
+    if (label === null && labels.length > 0) {
+      return `##${entity}##`
+    }
+
+    return label
+  }
 
   return (
     <section className={className}>
       <h3>{title}</h3>
+      {console.log('lbae', labels)}
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {showSubmitButton
           && <Button type='submit'>Save</Button>
@@ -311,7 +321,7 @@ const EventForm = (props) => {
                           width: '316px',
                           minHeight: '168px',
                           textAlign: 'center',
-                          paddingTop: '70px',
+                          paddingTop: '50px',
                           color: 'grey'
                         }}
                       >{translate('UploadImage')}<br />
