@@ -22,7 +22,7 @@ import Logger from 'dmi-mch-utils-logger'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
-import Uploader from 'dmi-mch-utils-imageuploader'
+// import Uploader from 'dmi-mch-utils-imageuploader'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
 import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 import AccesssPermission from 'dmi-mch-constants-accesspermission'
@@ -33,6 +33,7 @@ import InputFeedback from 'dmi-mch-inputfeedback'
 import Label from 'dmi-mch-services-label'
 import getTranslationByName from 'dmi-mch-utils-gettranslation'
 import Text from 'dmi-mch-text'
+import Uploader from '../../dmi-mch-utils-imageuploader/src/index'
 
 const EventForm = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -42,6 +43,7 @@ const EventForm = (props) => {
   const [isCustomLocationEnabled, setCustomLocationEnabled] = useState(false)
   const [customLocationValue, setCustomLocationValue] = useState('')
   const [locationSuggestions, setLocationSuggestions] = useState([])
+  const [cropConfirmed, setCropConfirmed] = useState(null)
   const labelsEntityId = 'EventsAndExhibitionsForm'
   const { context, setAddressessList } = props
   const place = new Place(context)
@@ -98,6 +100,7 @@ const EventForm = (props) => {
 
   const onCropConfirmed = (image) => {
     if (image && image.url) {
+      setCropConfirmed(true)
       props.setFieldValue('eventImage', image.url)
     }
   }
@@ -185,15 +188,14 @@ const EventForm = (props) => {
     language
   } = props
 
-  const uploadButtonReference = React.createRef()
-
   bindSubmitForm(handleSubmit)
 
-  const selectImage = () => {
+  const selectImage = (ref) => {
     if (values.eventImage) {
       props.setFieldValue('eventImage')
     } else {
-      uploadButtonReference.current.click()
+      setCropConfirmed(false)
+      ref.open()
     }
   }
 
@@ -280,59 +282,6 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Field>
                 <label>{translate('ImageFieldTitle')}*</label>
-                <div
-                  onClick={selectImage}
-                  onKeyDown={selectImage}
-                  role='button'
-                  tabIndex={0}
-                  style={{
-                    position: 'relative',
-                    width: '316px',
-                    border: '1px dashed lightgrey',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {values.eventImage
-                    ? (
-                      <>
-                        <div style={{
-                          position: 'absolute',
-                          color: 'white',
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: 'rgba(0, 0, 0, .4)',
-                          textAlign: 'center',
-                          paddingTop: '90px'
-                        }}
-                        >
-                          <Icon name='trash' />
-                        </div>
-                        <img
-                          src={values.eventImage}
-                          alt='Uploaded pic'
-                          style={{
-                            width: '100%'
-                          }}
-                        />
-                      </>
-                    ) : (
-                      <div
-                        style={{
-                          width: '316px',
-                          minHeight: '168px',
-                          textAlign: 'center',
-                          paddingTop: '50px',
-                          color: 'grey',
-                          fontSize: '30px',
-                          cursor: 'pointer'
-                        }}
-                      >+<br />
-                        <Text isHtml isSmall textColor='#bdbdbd' lineHeight='17px'>
-                          {translate('ImageDimensionsPlaceholder')}
-                        </Text>
-                      </div>
-                    )}
-                </div>
                 <Uploader
                   accept='.jpg,.jpeg,.jpe,.png'
                   maxSize={10485760}
@@ -340,20 +289,75 @@ const EventForm = (props) => {
                   minHeight={400}
                   name='eventImage'
                   id='eventImage'
+                  updateProp={values.eventImage}
                 >
                   {(ref, file) => (
                     <>
                       <div
+                        onClick={() => selectImage(ref)}
+                        onKeyDown={() => selectImage(ref)}
+                        role='button'
+                        tabIndex={0}
+                        style={{
+                          position: 'relative',
+                          width: '316px',
+                          border: '1px dashed lightgrey',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {values.eventImage
+                          ? (
+                            <>
+                              <div style={{
+                                position: 'absolute',
+                                color: 'white',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0, 0, 0, .4)',
+                                textAlign: 'center',
+                                paddingTop: '90px'
+                              }}
+                              >
+                                <Icon name='trash' />
+                              </div>
+                              <img
+                                src={values.eventImage}
+                                alt='Uploaded pic'
+                                style={{
+                                  width: '100%'
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <div
+                              style={{
+                                width: '316px',
+                                minHeight: '168px',
+                                textAlign: 'center',
+                                paddingTop: '50px',
+                                color: 'grey',
+                                fontSize: '30px',
+                                cursor: 'pointer'
+                              }}
+                            >+<br />
+                              <Text isHtml isSmall textColor='#bdbdbd' lineHeight='17px'>
+                                {translate('ImageDimensionsPlaceholder')}
+                              </Text>
+                            </div>
+                          )}
+                      </div>
+
+                      {/* <div
                         ref={uploadButtonReference}
                         onClick={() => { ref.open() }}
                         onKeyDown={() => { ref.open() }}
                         role='button'
                         tabIndex={0}
-                      />
+                      /> */}
 
                       {(file && file.length && ref) !== null && (
                         <ImageCropperModal
-                          open
+                          open={!cropConfirmed}
                           fileUrl={file[0].preview}
                           file={file[0]}
                           uploadPreset='mfp-fe-gallery-event-image'

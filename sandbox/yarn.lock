@@ -4706,14 +4706,14 @@ dmi-mch-utils-imagecropper@^1.0.5:
     react-image-crop "3.0.10"
     regenerator-runtime "^0.13.2"
 
-dmi-mch-utils-imageuploader@^1.0.2:
-  version "1.0.2"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imageuploader/-/dmi-mch-utils-imageuploader-1.0.2.tgz#1fc84b0e09d608f9879218d6cbac20dd63b6f835"
-  integrity sha512-dqDOAq8RbQdgoqd7bX8DqdMUPJalSOtMFoSawACWkQetJ6x42ppLW7h7EI9JwfOwbSdW5qAdVGIiFr0+HHZuyA==
+"dmi-mch-utils-imageuploader@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imageuploader/-/dmi-mch-utils-imageuploader-1.0.8.tgz":
+  version "1.0.8"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imageuploader/-/dmi-mch-utils-imageuploader-1.0.8.tgz#c754d55e00b20ebf50e4ba9f2da991d55e09cd5f"
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     "@babel/polyfill" "^7.4.3"
     blueimp-load-image "^2.19.0"
+    react-dropzone "4.2.8"
     regenerator-runtime "^0.13.2"
 
 dmi-mch-utils-logger@^1.0.10:
