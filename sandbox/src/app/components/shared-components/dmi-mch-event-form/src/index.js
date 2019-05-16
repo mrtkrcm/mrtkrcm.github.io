@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
-import { Input, Form, Grid, Button, Radio, Search } from 'semantic-ui-react'
+import { Input, Form, Grid, Button, Radio, Search, Icon } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import styled from 'styled-components'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
@@ -305,7 +305,8 @@ const EventForm = (props) => {
                           textAlign: 'center',
                           paddingTop: '90px'
                         }}
-                        >{translate('DeleteImage')}
+                        >
+                          <Icon name='trash' />
                         </div>
                         <img
                           src={values.eventImage}
@@ -322,10 +323,11 @@ const EventForm = (props) => {
                           minHeight: '168px',
                           textAlign: 'center',
                           paddingTop: '50px',
-                          color: 'grey'
+                          color: 'grey',
+                          fontSize: '30px'
                         }}
-                      >{translate('UploadImage')}<br />
-                        <Text isHtml isSmall>{translate('ImageDimensionsPlaceholder')}</Text>
+                      >+<br />
+                        <Text isHtml isSmall textColor='#bdbdbd'>{translate('ImageDimensionsPlaceholder')}</Text>
                       </div>
                     )}
                 </div>
