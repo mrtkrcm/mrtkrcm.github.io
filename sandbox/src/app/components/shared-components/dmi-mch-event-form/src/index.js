@@ -22,7 +22,7 @@ import Logger from 'dmi-mch-utils-logger'
 import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
-// import Uploader from 'dmi-mch-utils-imageuploader'
+import Uploader from 'dmi-mch-utils-imageuploader'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
 import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 import AccesssPermission from 'dmi-mch-constants-accesspermission'
@@ -33,7 +33,6 @@ import InputFeedback from 'dmi-mch-inputfeedback'
 import Label from 'dmi-mch-services-label'
 import getTranslationByName from 'dmi-mch-utils-gettranslation'
 import Text from 'dmi-mch-text'
-import Uploader from '../../dmi-mch-utils-imageuploader/src/index'
 
 const EventForm = (props) => {
   const [isLoading, setIsLoading] = useState(true)
