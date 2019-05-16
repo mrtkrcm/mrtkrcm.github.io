@@ -56,6 +56,9 @@ class Uploader extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
+      return true
+    }
     if (this.state.ref === null && nextState.ref !== null) {
       return true
     }
