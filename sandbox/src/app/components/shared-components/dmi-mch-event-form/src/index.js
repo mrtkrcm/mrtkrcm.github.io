@@ -11,6 +11,7 @@
 // There are some in-line styles, should be moved to a Component or styled component
 
 import React, { useEffect, useState, useCallback } from 'react'
+import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
@@ -24,7 +25,6 @@ import { buildSelectOptions } from 'dmi-mch-utils-dropdown'
 import Account from 'dmi-mch-services-account'
 import Place from 'dmi-mch-services-place'
 import Uploader from 'dmi-mch-utils-imageuploader'
-import UserGroupSelector from 'dmi-mch-usergroupselector'
 import ImageCropperModal from 'dmi-mch-utils-imagecropper'
 import AccesssPermission from 'dmi-mch-constants-accesspermission'
 import City from 'dmi-mch-services-city'
@@ -34,6 +34,7 @@ import InputFeedback from 'dmi-mch-inputfeedback'
 import Label from 'dmi-mch-services-label'
 import getTranslationByName from 'dmi-mch-utils-gettranslation'
 import Text from 'dmi-mch-text'
+import UserGroupSelector from 'dmi-mch-usergroupselector'
 
 const EventForm = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -47,6 +48,23 @@ const EventForm = (props) => {
   const labelsEntityId = 'EventsAndExhibitionsForm'
   const { context, setAddressessList } = props
   const place = new Place(context)
+
+  const deleteEvent = async () => {
+    const event = new Event(context)
+    try {
+      const deletedEvent = await event.del(props.id)
+      if (ValidateAxiosResponse(deletedEvent)) {
+        props.setMessage({
+          show: true,
+          color: 'olive',
+          header: 'Event deleted successfully'
+        })
+        Router.push('/')
+      }
+    } catch (e) {
+      Logger(e)
+    }
+  }
 
   // Finds the closest cityId
   const updateCityId = async (latitude, longitude) => {
@@ -181,15 +199,18 @@ const EventForm = (props) => {
     handleSubmit,
     setFieldValue,
     configuration,
-    showSubmitButton,
+    showControls,
     showAdvancedVisibilityPanel,
     className,
     bindSubmitForm,
+    bindDeleteForm,
     language,
-    showSaveMessage
+    showMessage,
+    dirty
   } = props
 
   bindSubmitForm(handleSubmit)
+  bindDeleteForm(deleteEvent)
 
   const selectImage = (ref) => {
     if (values.eventImage) {
@@ -215,11 +236,12 @@ const EventForm = (props) => {
 
   return (
     <section className={className}>
-      {showSaveMessage
+      {showMessage.show
         // TODO: Can be converted to a Module
         && (
         <Message
-          positive
+          header={showMessage.header}
+          color={showMessage.color}
           style={{
             position: 'fixed',
             top: '8px',
@@ -228,15 +250,18 @@ const EventForm = (props) => {
             left: '50%',
             marginLeft: '-200px'
           }}
-        >
-          <Message.Header>Event saved successfully</Message.Header>
-        </Message>
+        />
         )
       }
       <h3>{title}</h3>
       <Form autoComplete='off' onSubmit={handleSubmit}>
-        {showSubmitButton
-          && <Button type='submit'>Save</Button>
+        {showControls
+          && (
+          <>
+            <Button type='submit' disabled={!dirty}>Save</Button>
+            <Button type='button' onClick={deleteEvent}>Delete</Button>
+          </>
+          )
         }
         <h3>{translate('KeyInformationTitle')}</h3>
         <Grid>
@@ -246,7 +271,7 @@ const EventForm = (props) => {
                 <Form.Select
                   name='eventTypes'
                   fluid
-                  label={`${translate('TypeFieldTitle')}*`}
+                  label={`${translate('TypeFieldTitle') || ''}*`}
                   options={eventAttributesDropdown}
                   onChange={(e, { value }) => {
                     setFieldValue('eventTypes', value)
@@ -337,7 +362,7 @@ const EventForm = (props) => {
                                 paddingTop: '90px'
                               }}
                               >
-                                <Icon name='trash' />
+                                <Icon name='trash' size='large' />
                               </div>
                               <img
                                 src={values.eventImage}
@@ -366,14 +391,6 @@ const EventForm = (props) => {
                           )}
                       </div>
 
-                      {/* <div
-                        ref={uploadButtonReference}
-                        onClick={() => { ref.open() }}
-                        onKeyDown={() => { ref.open() }}
-                        role='button'
-                        tabIndex={0}
-                      /> */}
-
                       {(file && file.length && ref) !== null && (
                         <ImageCropperModal
                           open={!cropConfirmed}
@@ -395,6 +412,7 @@ const EventForm = (props) => {
                   )}
                 </Uploader>
               </Form.Field>
+              {errors.eventImage && touched.eventImage && <InputFeedback>{errors.eventImage}</InputFeedback>}
               <Form.Field>
                 <label>{translate('ImageCaptionFieldTitle')}</label>
                 <Input
@@ -406,7 +424,6 @@ const EventForm = (props) => {
                   onBlur={handleBlur}
                   error={errors.imageCaption && touched.imageCaption}
                 />
-                {errors.imageCaption && touched.imageCaption && <InputFeedback>{errors.imageCaption}</InputFeedback>}
               </Form.Field>
             </Grid.Column>
           </Grid.Row>
@@ -417,7 +434,7 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Select
                 fluid
-                label={`${translate('LocationFieldTitle')}*`}
+                label={`${translate('LocationFieldTitle') || ''}*`}
                 name='placeId'
                 options={myAddresses}
                 value={myAddresses.find(address => address.value === values.placeId) ? values.placeId : '0'}
@@ -584,7 +601,7 @@ const EventForm = (props) => {
                     context={context}
                     selected={values.whiteListAccessGroups}
                     setFieldValue={setFieldValue}
-                    label={`${translate('Location')}*`}
+                    label={`${translate('VisibilityFieldTitle') || ''}*`}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -595,7 +612,7 @@ const EventForm = (props) => {
                     context={context}
                     selected={values.blackListAccessGroups}
                     setFieldValue={setFieldValue}
-                    label={`${translate('Location')}*`}
+                    label={`${translate('nolabel') || ''}*`}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -654,17 +671,20 @@ EventForm.propTypes = {
   handleBlur: PropTypes.func,
   handleSubmit: PropTypes.func,
   bindSubmitForm: PropTypes.func,
+  bindDeleteForm: PropTypes.func,
   setFieldValue: PropTypes.func,
-  showSaveMessage: PropTypes.func,
-  showSubmitButton: PropTypes.bool,
+  showMessage: PropTypes.object,
+  setMessage: PropTypes.func,
+  showControls: PropTypes.bool,
   title: PropTypes.string,
   showAdvancedVisibilityPanel: PropTypes.bool,
-  language: PropTypes.string
+  language: PropTypes.string,
+  dirty: PropTypes.bool
 }
 
 const EventFormContainer = (props) => {
   const [currentEvent, setCurrentEvent] = useState(null)
-  const [showSaveMessage, setShowSaveMessage] = useState(false)
+  const [showMessage, setMessage] = useState({})
   // TODO: review this part
   const [, setAddressessList] = useState([])
   const { context, id } = props
@@ -692,8 +712,8 @@ const EventFormContainer = (props) => {
     ...props,
     ...{
       currentEvent,
-      showSaveMessage,
-      setShowSaveMessage,
+      showMessage,
+      setMessage,
       setAddressessList
     }
   }
@@ -810,7 +830,7 @@ const FormRules = withFormik({
     return Yup.object().shape(schema)
   },
 
-  handleSubmit: async (values, { props }) => {
+  handleSubmit: async (values, { resetForm, props }) => {
     const objectToSave = { ...values }
     const startDate = `${moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD')} ${values.startTime}`
     // Adapting the object to be sent to Save API
@@ -856,23 +876,29 @@ const FormRules = withFormik({
 
 
     try {
+      const saveMessage = {
+        show: true,
+        color: 'olive',
+        header: 'Event saved successfully'
+      }
       const event = new Event(props.context)
       let savedEvent = null
       if (props.id) {
         // Edit
         savedEvent = await event.put(props.id, objectToSave)
-        props.setShowSaveMessage(true)
+        props.setMessage(saveMessage)
         setTimeout(() => {
-          props.setShowSaveMessage(false)
+          props.setMessage({})
+          resetForm(values)
+          // Router.push('/')
         }, 3000)
       } else {
-        // console.log('objectToSave', objectToSave)
         // Add
         savedEvent = await event.post(objectToSave)
-        props.setShowSaveMessage(true)
+        props.setMessage(saveMessage)
         setTimeout(() => {
-          props.setShowSaveMessage(false)
-          // Router.push(`/?id=${savedEvent.data.id}&page=add`)
+          props.setMessage({})
+          Router.push(`/?id=${savedEvent.data.id}&page=event`)
         }, 3000)
       }
 

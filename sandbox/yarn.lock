@@ -4646,9 +4646,9 @@ dmi-mch-services-city@^1.0.1:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     query-string "4.3.4"
 
-"dmi-mch-services-event@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.11.tgz":
-  version "1.0.11"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.11.tgz#f2b42236ff9a18f5dd25afaeaef88ed0fdf62e81"
+"dmi-mch-services-event@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.14.tgz":
+  version "1.0.14"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.14.tgz#97ce754c8026c556f60dd3b0814c12c562863cca"
   dependencies:
     query-string "4.3.4"
 
@@ -4678,10 +4678,9 @@ dmi-mch-services-usergroup@^1.0.8:
     "@babel/polyfill" "^7.4.3"
     regenerator-runtime "^0.13.2"
 
-dmi-mch-usergroupselector@^1.0.2:
-  version "1.0.2"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.2.tgz#6e2b3e02bc741a3185ff9ca041989c533f802df6"
-  integrity sha512-TFp9XmG8ZdyaYITHNG9XpEL9+uON9g/mohHtHCOud0PqKmtxffWJ0smrr6thxmg+TInleRrbOpYvDQMqpB8gQg==
+"dmi-mch-usergroupselector@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.4.tgz":
+  version "1.0.4"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.4.tgz#a65f6c6e1f9a13c242c49058a16dea4ef367187a"
   dependencies:
     "@babel/polyfill" "^7.4.3"
     regenerator-runtime "^0.13.2"

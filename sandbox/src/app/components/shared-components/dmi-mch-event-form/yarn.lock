@@ -1103,6 +1103,13 @@ detect-libc@^1.0.2:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     query-string "4.3.4"
 
+"dmi-mch-inputfeedback@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz":
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz#ff3ee627a711303ea6018a65c0acb5a31a78f923"
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
 "dmi-mch-richtextbox@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz":
   version "1.0.9"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz#d1b1ad3268aae0ad60310ef79fa66dde34a4ca5d"
@@ -1128,6 +1135,12 @@ detect-libc@^1.0.2:
   dependencies:
     query-string "4.3.4"
 
+"dmi-mch-services-label@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz":
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz#2e6ed06d6ebb560ad0ca79c96cd266b341d6ce8a"
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+
 "dmi-mch-services-place@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.4.tgz":
   version "1.0.4"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.4.tgz#5d0f02ecfb07e55c398360b7f8e8ec9b1abc807a"
@@ -1139,6 +1152,13 @@ detect-libc@^1.0.2:
   version "1.0.8"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-usergroup/-/dmi-mch-services-usergroup-1.0.8.tgz#96411d397147a67ded4ecf130fad572637d9341b"
 
+"dmi-mch-text@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.0.tgz":
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.0.tgz#d7f4295dafc61893496a5e2b65676b5e3b821ca9"
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
 "dmi-mch-usergroupselector@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.2.tgz":
   version "1.0.2"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.2.tgz#6e2b3e02bc741a3185ff9ca041989c533f802df6"
@@ -1149,6 +1169,10 @@ detect-libc@^1.0.2:
 "dmi-mch-utils-dropdown@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.4.tgz":
   version "1.0.4"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.4.tgz#ca3a20904487b657ac9afad4e9e0b2ba8b85d5e8"
+
+"dmi-mch-utils-gettranslation@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz":
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz#007175f284487b847e79f5905b62f3cebe181691"
 
 "dmi-mch-utils-imagecropper@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.8.tgz":
   version "1.0.8"

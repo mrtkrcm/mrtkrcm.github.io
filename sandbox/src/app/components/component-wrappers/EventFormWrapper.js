@@ -11,6 +11,7 @@ const EventFormWrapper = () => {
   const id = (Router.router && parseInt(Router.router.query.id, 0)) || null
 
   let submitEventForm = null
+  let deleteEventForm = null
 
   const handleSubmitEventForm = (e) => {
     if (submitEventForm) {
@@ -22,14 +23,26 @@ const EventFormWrapper = () => {
     submitEventForm = submitForm
   }
 
+  const handleDeleteEventForm = (e) => {
+    if (deleteEventForm) {
+      deleteEventForm(e)
+    }
+  }
+
+  const bindDeleteForm = (submitForm) => {
+    deleteEventForm = submitForm
+  }
+
   return (
     <NoSSR>
       <button onClick={handleSubmitEventForm} type='button'>Submit from outside</button>
+      <button onClick={handleDeleteEventForm} type='button'>Delete from outside</button>
       <EventForm
         id={id}
         title={id ? `Edit Event #${id}` : 'Add Event'}
-        showSubmitButton={false}
+        showControls
         bindSubmitForm={bindSubmitForm}
+        bindDeleteForm={bindDeleteForm}
         showAdvancedVisibilityPanel={false}
         language='en'
         configuration={{
