@@ -4672,9 +4672,9 @@ dmi-mch-services-usergroup@^1.0.8:
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-usergroup/-/dmi-mch-services-usergroup-1.0.8.tgz#96411d397147a67ded4ecf130fad572637d9341b"
   integrity sha512-PblmNSin9nXxBkbs6iX3V7/bsi3QG7WKYUvKugJ6XGYd8sR7ODphzc1ankdm7gjUfLUx0qLeDxilDfMMDTr5Dw==
 
-"dmi-mch-text@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.0.tgz":
-  version "1.0.0"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.0.tgz#d7f4295dafc61893496a5e2b65676b5e3b821ca9"
+"dmi-mch-text@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.1.tgz":
+  version "1.0.1"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.1.tgz#ff372661a3e931d107d1bd089db0967652f9d163"
   dependencies:
     "@babel/polyfill" "^7.4.3"
     regenerator-runtime "^0.13.2"
