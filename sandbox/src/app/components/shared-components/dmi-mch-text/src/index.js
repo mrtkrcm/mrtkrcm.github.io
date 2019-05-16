@@ -9,6 +9,10 @@ function respectHtml(html) {
 const createStyledText = (as, props) => styled(as, props)`
   font-size: ${props.isSmall ? '12px' : '16px'};
   color: ${props.textColor ? props.textColor : 'inherit'};
+
+  * {
+    line-height: ${props.lineHeight ? props.lineHeight : null};
+  }
 `
 
 const Text = ({ as, isHtml, className, children, ...props }) => {

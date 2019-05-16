@@ -213,7 +213,6 @@ const EventForm = (props) => {
   return (
     <section className={className}>
       <h3>{title}</h3>
-      {console.log('lbae', labels)}
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {showSubmitButton
           && <Button type='submit'>Save</Button>
@@ -324,10 +323,13 @@ const EventForm = (props) => {
                           textAlign: 'center',
                           paddingTop: '50px',
                           color: 'grey',
-                          fontSize: '30px'
+                          fontSize: '30px',
+                          cursor: 'pointer'
                         }}
                       >+<br />
-                        <Text isHtml isSmall textColor='#bdbdbd'>{translate('ImageDimensionsPlaceholder')}</Text>
+                        <Text isHtml isSmall textColor='#bdbdbd' lineHeight='17px'>
+                          {translate('ImageDimensionsPlaceholder')}
+                        </Text>
                       </div>
                     )}
                 </div>
