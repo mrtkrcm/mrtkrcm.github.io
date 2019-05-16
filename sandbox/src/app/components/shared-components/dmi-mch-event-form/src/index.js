@@ -8,13 +8,14 @@
 // EventForm component should ideally be in a different file, but the current bundling
 // I couldn't find the way to do it. Needs more investigation, but should be possible with little effort.
 // Dayjs and datejs didn't work for the basic purpose below
+// There are some in-line styles, should be moved to a Component or styled component
 
 import React, { useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
-import { Input, Form, Grid, Button, Radio, Search, Icon } from 'semantic-ui-react'
+import { Input, Form, Grid, Button, Radio, Search, Icon, Message } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import styled from 'styled-components'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
@@ -184,7 +185,8 @@ const EventForm = (props) => {
     showAdvancedVisibilityPanel,
     className,
     bindSubmitForm,
-    language
+    language,
+    showSaveMessage
   } = props
 
   bindSubmitForm(handleSubmit)
@@ -213,6 +215,24 @@ const EventForm = (props) => {
 
   return (
     <section className={className}>
+      {showSaveMessage
+        // TODO: Can be converted to a Module
+        && (
+        <Message
+          positive
+          style={{
+            position: 'fixed',
+            top: '8px',
+            textAlign: 'center',
+            width: '400px',
+            left: '50%',
+            marginLeft: '-200px'
+          }}
+        >
+          <Message.Header>Event saved successfully</Message.Header>
+        </Message>
+        )
+      }
       <h3>{title}</h3>
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {showSubmitButton
@@ -546,7 +566,7 @@ const EventForm = (props) => {
                     </Form.Field>
                   </Form.Group>
                 </Grid.Row>
-                {errors.publish && touched.publish && <InputFeedback>{errors.publish}</InputFeedback>}
+                {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
               </Grid>
             </>
           )}
@@ -635,6 +655,7 @@ EventForm.propTypes = {
   handleSubmit: PropTypes.func,
   bindSubmitForm: PropTypes.func,
   setFieldValue: PropTypes.func,
+  showSaveMessage: PropTypes.func,
   showSubmitButton: PropTypes.bool,
   title: PropTypes.string,
   showAdvancedVisibilityPanel: PropTypes.bool,
@@ -643,6 +664,7 @@ EventForm.propTypes = {
 
 const EventFormContainer = (props) => {
   const [currentEvent, setCurrentEvent] = useState(null)
+  const [showSaveMessage, setShowSaveMessage] = useState(false)
   // TODO: review this part
   const [, setAddressessList] = useState([])
   const { context, id } = props
@@ -670,6 +692,8 @@ const EventFormContainer = (props) => {
     ...props,
     ...{
       currentEvent,
+      showSaveMessage,
+      setShowSaveMessage,
       setAddressessList
     }
   }
@@ -837,11 +861,19 @@ const FormRules = withFormik({
       if (props.id) {
         // Edit
         savedEvent = await event.put(props.id, objectToSave)
+        props.setShowSaveMessage(true)
+        setTimeout(() => {
+          props.setShowSaveMessage(false)
+        }, 3000)
       } else {
+        // console.log('objectToSave', objectToSave)
         // Add
         savedEvent = await event.post(objectToSave)
-        // To be sent by API
-        window.location.href = `?id=${savedEvent.data.id}`
+        props.setShowSaveMessage(true)
+        setTimeout(() => {
+          props.setShowSaveMessage(false)
+          // Router.push(`/?id=${savedEvent.data.id}&page=add`)
+        }, 3000)
       }
 
       if (ValidateAxiosResponse(savedEvent)) {

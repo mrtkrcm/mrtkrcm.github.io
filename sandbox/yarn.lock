@@ -4646,10 +4646,9 @@ dmi-mch-services-city@^1.0.1:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     query-string "4.3.4"
 
-dmi-mch-services-event@^1.0.8:
-  version "1.0.8"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.8.tgz#927944b4a3fadcf01b64ee1cefa81b5382b985a5"
-  integrity sha512-T3VRWGik1rNkH9BYHrVYnhdq2T5LByyW70qVayqdEtIPH2dQYbv0D3o0nFjsYWidNVEj9BL1NiA3/yoRtxdHDQ==
+"dmi-mch-services-event@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.11.tgz":
+  version "1.0.11"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.11.tgz#f2b42236ff9a18f5dd25afaeaef88ed0fdf62e81"
   dependencies:
     query-string "4.3.4"
 
