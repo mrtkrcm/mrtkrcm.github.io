@@ -32,7 +32,7 @@ class Event {
   }
 
   del(id) {
-    return this.context.http.delete(`/msvc/v1/events/event/${id}`)
+    return this.context.http.del(`/msvc/v1/events/event/${id}`)
   }
 }
 
