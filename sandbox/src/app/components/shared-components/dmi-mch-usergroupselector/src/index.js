@@ -32,6 +32,7 @@ const UserGroupSelector = (props) => {
 
   return (
     <Form.Select
+      search
       name={name}
       fluid
       label={label}
