@@ -30,6 +30,10 @@ class Event {
   post(params) {
     return this.context.http.post('/msvc/v1/events/event', params)
   }
+
+  delete(id) {
+    return this.context.http.delete(`/msvc/v1/events/event/${id}`)
+  }
 }
 
 export default Event
