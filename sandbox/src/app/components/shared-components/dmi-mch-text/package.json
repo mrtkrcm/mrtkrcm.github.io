@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-text",
-  "version": "1.0.1-SNAPSHOT",
+  "version": "1.0.2-SNAPSHOT",
   "description": "DMI MCH Text",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
