@@ -41,7 +41,6 @@ const EventForm = (props) => {
   const [labels, setLabels] = useState([])
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
   const [myAddresses, setMyAddresses] = useState([])
-  const [isCustomLocationEnabled, setCustomLocationEnabled] = useState(false)
   const [customLocationValue, setCustomLocationValue] = useState('')
   const [locationSuggestions, setLocationSuggestions] = useState([])
   const [cropConfirmed, setCropConfirmed] = useState(null)
@@ -66,7 +65,7 @@ const EventForm = (props) => {
     }
   }
 
-  // Finds the closest cityId
+  // Finds the closest cityId. This doesn't represent in the screen, but it saves in background
   const updateCityId = async (latitude, longitude) => {
     const city = new City(context)
     const closestCity = await city.closest({ latitude, longitude })
@@ -75,30 +74,26 @@ const EventForm = (props) => {
     }
   }
 
-  // This function updates the fields in the location, parting from a placeId
+  // This function updates the information in the location area (city, country, etc), parting from a placeId
   const updateVenueFromId = async (id) => {
     props.setFieldValue('placeId', id)
-    // If selecting CUSTOM LOCATION, we enable the search location field
-    if (id !== '0') {
-      setCustomLocationEnabled(false)
+    if (id === '0') {
+      // If CUSTOM LOCATION is selected , we enable the search location field
+      props.setFieldValue('venue', null)
+    } else {
+      // If a Location in the list is selected, we show all the info related in the location area (city, country, etc)
       const selectedPlace = await place.get(id)
       if (ValidateAxiosResponse(selectedPlace)) {
         props.setFieldValue('venue', selectedPlace.data)
         updateCityId(selectedPlace.data.latitude, selectedPlace.data.longitude)
       }
-    } else {
-      // props.setFieldValue('placeId', id)
-      setCustomLocationEnabled(true)
-      props.setFieldValue('venue', {})
     }
   }
 
-  // Fired usually after selecting a new "custom" location in the autocomplete
+  // Fired when a result in the autocomplete of places is clicked
   const handleResultSelect = useCallback((e, { result }) => {
-    setCustomLocationValue(result.title)
-    updateVenueFromId(result.value)
-
-    // updateVenueFromId(result.value)
+    setCustomLocationValue(result.title) // Updates the value in the autocomplete
+    updateVenueFromId(result.value) // Updates all the info in the area (city, country, etc)
   }, [updateVenueFromId])
 
   const handleSearchChange = async (e, { value }) => {
@@ -248,12 +243,13 @@ const EventForm = (props) => {
             textAlign: 'center',
             width: '400px',
             left: '50%',
-            marginLeft: '-200px'
+            marginLeft: '-200px',
+            zIndex: '10'
           }}
         />
         )
       }
-      <h3>{title}</h3>
+      {title && <h3>{title}</h3>}
       <Form autoComplete='off' onSubmit={handleSubmit}>
         {showControls
           && (
@@ -437,7 +433,14 @@ const EventForm = (props) => {
                 label={`${translate('LocationFieldTitle') || ''}*`}
                 name='placeId'
                 options={myAddresses}
-                value={myAddresses.find(address => address.value === values.placeId) ? values.placeId : '0'}
+                // this code purpose is to put a value in the locations dropdown (this dropdown is a bit "funny",
+                // doesn't correspond to any field in the event object or DB, so just helps in UX)
+                // If the placeId of the event matches one item in the list of gallery addresses, it will show it as
+                // selected in the dropdown
+                // If can't find anything, but there is a venue, it will show "CUSTOM LOCATION" option
+                // If can't find anything, and there is no venue, it will show empty.
+                value={(myAddresses.find(address => address.value === values.placeId) && values.placeId)
+                  || (values.venue ? '0' : null)}
                 onChange={(e, { value }) => {
                   updateVenueFromId(value)
                 }}
@@ -445,7 +448,7 @@ const EventForm = (props) => {
               <Form.Field>
                 <label>{translate('SearchTitle')}</label>
                 <Search
-                  disabled={!isCustomLocationEnabled}
+                  disabled={!!myAddresses.find(address => (values.placeId !== '0' && address.value === values.placeId))}
                   onResultSelect={handleResultSelect}
                   onSearchChange={handleSearchChange}
                   results={locationSuggestions}
@@ -458,25 +461,25 @@ const EventForm = (props) => {
             <Grid.Column>
               <Form.Field>
                 <label>{translate('VenueNameTitle')}</label>
-                <div>{values.venue.name}</div>
+                <div>{values.venue ? values.venue.name : '-'}</div>
               </Form.Field>
               <Form.Field>
                 <label>{translate('AdressLineTitle')}</label>
-                <div>{values.venue.street || '-'}</div>
+                <div>{values.venue ? values.venue.street : '-'}</div>
               </Form.Field>
               <Form.Field>
                 <label>{translate('CityTitle')}</label>
-                <div>{values.venue.city}</div>
+                <div>{values.venue ? values.venue.city : '-'}</div>
               </Form.Field>
               <Form.Field>
                 <label>{translate('CountryTitle')}</label>
-                <div>{values.venue.country}</div>
+                <div>{values.venue ? values.venue.country : '-'}</div>
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
               <Form.Field>
                 <label>{translate('ZIPCodeTitle')}</label>
-                <div>{values.venue.postCode}</div>
+                <div>{values.venue ? values.venue.postCode : '-'}</div>
               </Form.Field>
               <Form.Field>
                 <label>{translate('StateTitle')}</label>
