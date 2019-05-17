@@ -71,6 +71,8 @@ const EventForm = (props) => {
     const closestCity = await city.closest({ latitude, longitude })
     if (ValidateAxiosResponse(closestCity)) {
       props.setFieldValue('cityId', closestCity.data.id)
+    } else {
+      props.setFieldValue('cityId', null)
     }
   }
 
@@ -197,15 +199,18 @@ const EventForm = (props) => {
     showControls,
     showAdvancedVisibilityPanel,
     className,
-    bindSubmitForm,
-    bindDeleteForm,
-    language,
+    language = '',
     showMessage,
-    dirty
+    dirty,
+    // Functions visible from the outside world
+    bindSubmitForm = () => {},
+    bindDeleteForm = () => {},
+    isDirty = () => {}
   } = props
 
   bindSubmitForm(handleSubmit)
   bindDeleteForm(deleteEvent)
+  isDirty(dirty)
 
   const selectImage = (ref) => {
     if (values.eventImage) {
@@ -682,7 +687,8 @@ EventForm.propTypes = {
   title: PropTypes.string,
   showAdvancedVisibilityPanel: PropTypes.bool,
   language: PropTypes.string,
-  dirty: PropTypes.bool
+  dirty: PropTypes.bool,
+  isDirty: PropTypes.func
 }
 
 const EventFormContainer = (props) => {
@@ -840,7 +846,7 @@ const FormRules = withFormik({
     objectToSave.venue = values.venue
     // Careful with the typo in timezone. API unconsistency
     objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
-    objectToSave.cityId = props.currentEvent ? props.currentEvent.cityId : values.cityId
+    objectToSave.cityId = values.cityId
     objectToSave.startDate = props.currentEvent ? props.currentEvent.startDate : startDate
     objectToSave.openingDateTimes = [
       {

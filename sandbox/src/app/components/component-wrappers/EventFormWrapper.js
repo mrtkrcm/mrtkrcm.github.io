@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react'
+import React, { useState } from 'react'
 import Router from 'next/router'
 import NoSSR from 'react-no-ssr'
 
@@ -8,6 +8,7 @@ import EventForm from '../shared-components/dmi-mch-event-form/src'
 
 
 const EventFormWrapper = () => {
+  const [isDirty, setDirty] = useState(false)
   const id = (Router.router && parseInt(Router.router.query.id, 0)) || null
 
   let submitEventForm = null
@@ -33,14 +34,19 @@ const EventFormWrapper = () => {
     deleteEventForm = submitForm
   }
 
+  const isFormDirty = (dirt) => {
+    setDirty(dirt)
+  }
+
   return (
     <NoSSR>
-      <button onClick={handleSubmitEventForm} type='button'>Submit from outside</button>
+      <button onClick={handleSubmitEventForm} disabled={!isDirty} type='button'>Submit from outside</button>
       <button onClick={handleDeleteEventForm} type='button'>Delete from outside</button>
       <EventForm
         id={id}
         title={id ? `Edit Event #${id}` : 'Add Event'}
         showControls
+        isDirty={isFormDirty}
         bindSubmitForm={bindSubmitForm}
         bindDeleteForm={bindDeleteForm}
         showAdvancedVisibilityPanel={false}
