@@ -268,7 +268,7 @@ const EventForm = (props) => {
           )
         }
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
-          <PanelForm.Header>{translate('KeyInformationTitle')}</PanelForm.Header>
+          <PanelForm.Header><h4>{translate('KeyInformationTitle')}</h4></PanelForm.Header>
           <PanelForm.Block>
             <Grid>
               <Grid.Row columns={2}>
@@ -350,7 +350,7 @@ const EventForm = (props) => {
                             tabIndex={0}
                             style={{
                               position: 'relative',
-                              width: '316px',
+                              width: '476px',
                               border: '1px dashed lightgrey',
                               cursor: 'pointer'
                             }}
@@ -365,7 +365,7 @@ const EventForm = (props) => {
                                     height: '100%',
                                     backgroundColor: 'rgba(0, 0, 0, .4)',
                                     textAlign: 'center',
-                                    paddingTop: '90px'
+                                    paddingTop: '120px'
                                   }}
                                   >
                                     <Icon name='trash' size='large' />
@@ -381,10 +381,9 @@ const EventForm = (props) => {
                               ) : (
                                 <div
                                   style={{
-                                    width: '316px',
-                                    minHeight: '168px',
+                                    minHeight: '298px',
                                     textAlign: 'center',
-                                    paddingTop: '50px',
+                                    paddingTop: '110px',
                                     color: 'grey',
                                     fontSize: '30px',
                                     cursor: 'pointer'
@@ -438,7 +437,7 @@ const EventForm = (props) => {
         </PanelForm>
 
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
-          <PanelForm.Header>{translate('VenueInformationTitle')}</PanelForm.Header>
+          <PanelForm.Header><h4>{translate('VenueInformationTitle')}</h4></PanelForm.Header>
           <PanelForm.Block>
             <Grid>
               <Grid.Row columns={2}>
@@ -463,7 +462,7 @@ const EventForm = (props) => {
                   <Form.Field>
                     <label>{translate('SearchTitle')}</label>
                     <Search
-                      disabled={myAddresses
+                      disabled={!!myAddresses
                         .find(address => (values.placeId !== '0' && address.value === values.placeId))}
                       onResultSelect={handleResultSelect}
                       onSearchChange={handleSearchChange}
@@ -510,7 +509,7 @@ const EventForm = (props) => {
         </PanelForm>
 
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
-          <PanelForm.Header>{translate('DateTimeTitle')}</PanelForm.Header>
+          <PanelForm.Header><h4>{translate('DateTimeTitle')}</h4></PanelForm.Header>
           <PanelForm.Block>
             <Grid>
               <Grid.Row columns={3}>
@@ -575,7 +574,7 @@ const EventForm = (props) => {
           </PanelForm.Block>
         </PanelForm>
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
-          <PanelForm.Header>{translate('PublishingTitle')}</PanelForm.Header>
+          <PanelForm.Header><h4>{translate('PublishingTitle')}</h4></PanelForm.Header>
           <PanelForm.Block>
             {!showAdvancedVisibilityPanel
           && (
@@ -606,6 +605,7 @@ const EventForm = (props) => {
                       name='publish'
                       label={`${translate('VisibilityFieldValueVIP')}`}
                       onChange={handleChange}
+                      value='vip'
                       checked={values.publish === 'vip'}
                     />
                   </Form.Field>

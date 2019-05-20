@@ -39,11 +39,11 @@ const StyledPanelForm = styled(PanelFormComponent).withConfig({ componentId: 'dm
     border-bottom: 1px solid ${props => props.headerseparatorcolor};
     font-weight: 700;
     font-size: 16px;
-    padding: 16px 16px 16px 30px;
+    padding: 16px 16px 16px 42px;
   }
 
   .block {
-    padding: 8px 30px 30px;
+    padding: 8px 30px 30px 42px;
     background: ${props => props.bodycolor};
     border-bottom: none;
     border-left: none;
