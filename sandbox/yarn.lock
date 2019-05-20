@@ -4593,7 +4593,7 @@ dir-glob@^2.2.1:
   dependencies:
     path-type "^3.0.0"
 
-dmi-mch-constants-accesspermission@^1.0.0:
+dmi-mch-constants-accesspermission@^1.0.0, "dmi-mch-constants-accesspermission@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-constants-accesspermission/-/dmi-mch-constants-accesspermission-1.0.0.tgz":
   version "1.0.0"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-constants-accesspermission/-/dmi-mch-constants-accesspermission-1.0.0.tgz#0303dd9952669ad7d93591a7a4f39aa56188ff8d"
   integrity sha512-SSU+gG2xqPalB1GWN2RfYoi7+0BJ9gTje5gpyJ16am7YHIQEVtGu8piFG9Lhzwnw+pdpd+BiSs+FZ652vtx9dA==
@@ -4609,18 +4609,42 @@ dmi-mch-event-form@^1.0.38:
     "@babel/polyfill" "^7.4.3"
     regenerator-runtime "^0.13.2"
 
-dmi-mch-event-form@^1.0.44:
-  version "1.0.44"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-event-form/-/dmi-mch-event-form-1.0.44.tgz#3270292895a5459705b49d5a6c1a4dc164b0a9cb"
-  integrity sha512-QJtH782GrhUUA9PoaUM94dQdlOfKd2mScchL+4kQUN56QqzHh/dlhsYd5xVtHX2hx7gNwuCsGPzo4eD0oSwrAQ==
+"dmi-mch-event-form@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-event-form/-/dmi-mch-event-form-1.0.80.tgz":
+  version "1.0.80"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-event-form/-/dmi-mch-event-form-1.0.80.tgz#f89f03f6f151fa7f520c853704424bec30424dd4"
   dependencies:
     "@babel/polyfill" "^7.4.3"
+    dmi-mch-constants-accesspermission "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-constants-accesspermission/-/dmi-mch-constants-accesspermission-1.0.0.tgz"
+    dmi-mch-inputfeedback "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz"
+    dmi-mch-richtextbox "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz"
+    dmi-mch-services-account "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-account/-/dmi-mch-services-account-1.0.3.tgz"
+    dmi-mch-services-city "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-city/-/dmi-mch-services-city-1.0.1.tgz"
+    dmi-mch-services-event "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.14.tgz"
+    dmi-mch-services-label "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz"
+    dmi-mch-services-place "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.4.tgz"
+    dmi-mch-services-usergroup "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-usergroup/-/dmi-mch-services-usergroup-1.0.8.tgz"
+    dmi-mch-text "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.1.tgz"
+    dmi-mch-usergroupselector "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.4.tgz"
+    dmi-mch-utils-dropdown "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.4.tgz"
+    dmi-mch-utils-gettranslation "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz"
+    dmi-mch-utils-imagecropper "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.8.tgz"
+    dmi-mch-utils-imageuploader "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imageuploader/-/dmi-mch-utils-imageuploader-1.0.8.tgz"
+    dmi-mch-utils-logger "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.14.tgz"
+    dmi-mch-utils-validate-axios-response "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-validate-axios-response/-/dmi-mch-utils-validate-axios-response-1.0.4.tgz"
     formik "1.5.1"
     regenerator-runtime "^0.13.2"
+    semantic-ui-calendar-react "^0.14.4"
 
 "dmi-mch-inputfeedback@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz":
   version "1.0.1"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-inputfeedback/-/dmi-mch-inputfeedback-1.0.1.tgz#ff3ee627a711303ea6018a65c0acb5a31a78f923"
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
+"dmi-mch-panel@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-panel/-/dmi-mch-panel-1.0.0.tgz":
+  version "1.0.0"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-panel/-/dmi-mch-panel-1.0.0.tgz#f2204b629870c3a6b26f1bfc917e2ebede4c8b09"
   dependencies:
     "@babel/polyfill" "^7.4.3"
     regenerator-runtime "^0.13.2"
@@ -4638,7 +4662,13 @@ dmi-mch-services-account@^1.0.0:
   dependencies:
     query-string "^6.2.0"
 
-dmi-mch-services-city@^1.0.1:
+"dmi-mch-services-account@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-account/-/dmi-mch-services-account-1.0.3.tgz":
+  version "1.0.3"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-account/-/dmi-mch-services-account-1.0.3.tgz#0819779d27f5fe440b26ef95b0845b39db6eb775"
+  dependencies:
+    query-string "4.3.4"
+
+dmi-mch-services-city@^1.0.1, "dmi-mch-services-city@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-city/-/dmi-mch-services-city-1.0.1.tgz":
   version "1.0.1"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-city/-/dmi-mch-services-city-1.0.1.tgz#b428c1bc97a53239bd6d89ba8dcb64acf2f4eb20"
   integrity sha512-iBg3tLJl3MXCWMTy7RHX8Q0kxsyeFw0P2odJn8IT9bXYnFCLGCnj5tp8PJfXyQVfWBHMDGceffaFm/xFdeHpTQ==
@@ -4666,7 +4696,14 @@ dmi-mch-services-place@^1.0.2:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     query-string "4.3.4"
 
-dmi-mch-services-usergroup@^1.0.8:
+"dmi-mch-services-place@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.4.tgz":
+  version "1.0.4"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-place/-/dmi-mch-services-place-1.0.4.tgz#5d0f02ecfb07e55c398360b7f8e8ec9b1abc807a"
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+    query-string "4.3.4"
+
+dmi-mch-services-usergroup@^1.0.8, "dmi-mch-services-usergroup@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-usergroup/-/dmi-mch-services-usergroup-1.0.8.tgz":
   version "1.0.8"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-usergroup/-/dmi-mch-services-usergroup-1.0.8.tgz#96411d397147a67ded4ecf130fad572637d9341b"
   integrity sha512-PblmNSin9nXxBkbs6iX3V7/bsi3QG7WKYUvKugJ6XGYd8sR7ODphzc1ankdm7gjUfLUx0qLeDxilDfMMDTr5Dw==
@@ -4690,6 +4727,10 @@ dmi-mch-utils-dropdown@^1.0.2:
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.2.tgz#5a364d8d69c189776193fb31b254c422cae938b1"
   integrity sha512-2mhZH6zkn34IF+K8fKGWmXfnA0dKjEc49PL6VYjRL/3mtlNbwBXooZw+tnV17kwXPLR6ncH9EHZPpJv8DttQjw==
 
+"dmi-mch-utils-dropdown@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.4.tgz":
+  version "1.0.4"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.4.tgz#ca3a20904487b657ac9afad4e9e0b2ba8b85d5e8"
+
 "dmi-mch-utils-gettranslation@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz":
   version "1.0.0"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz#007175f284487b847e79f5905b62f3cebe181691"
@@ -4698,6 +4739,15 @@ dmi-mch-utils-imagecropper@^1.0.5:
   version "1.0.5"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.5.tgz#a23a7538a2e459072129542303c5bccac1e6b9b1"
   integrity sha512-bxNX+/DYqaAWEhhgUV3eYlVc6y4LzVbltyHHTvGFWq0uD0laYOdXpWfQisApTkP508YnsqwOFSvmLky1VUIdFQ==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.4.0"
+    "@babel/polyfill" "^7.4.3"
+    react-image-crop "3.0.10"
+    regenerator-runtime "^0.13.2"
+
+"dmi-mch-utils-imagecropper@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.8.tgz":
+  version "1.0.8"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-imagecropper/-/dmi-mch-utils-imagecropper-1.0.8.tgz#9124fff45914ecf850aba7b3b54f725a78dd4028"
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.0"
     "@babel/polyfill" "^7.4.3"
@@ -4719,10 +4769,20 @@ dmi-mch-utils-logger@^1.0.10:
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.10.tgz#b850634e8b7d4551b90d250ce0756a0cfa75f4e0"
   integrity sha512-AvFGe2iOdDTwZ75weyThlp3liLCR/5dvxbF6MunQpCkmsuzqC4TyWoPVFMnbjxvBLJ0bPNSLbRxF7UCFC8Xb2w==
 
+"dmi-mch-utils-logger@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.14.tgz":
+  version "1.0.14"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-logger/-/dmi-mch-utils-logger-1.0.14.tgz#2e15fa8cbc1651eb4eda1357851ac783a5df6e58"
+
 dmi-mch-utils-validate-axios-response@^1.0.2:
   version "1.0.2"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-validate-axios-response/-/dmi-mch-utils-validate-axios-response-1.0.2.tgz#5f336796aa4902f01bd10ac8839bb5c6432c64c3"
   integrity sha512-2J1rB/vkWDfVOvzUbtIcm4FS3Hc0Vx0nNBpQ2uVhFuH3NCP5j6DYg29oEHnzouAEf+8bSxMop1iKh3FNshZNpQ==
+  dependencies:
+    lodash "^4.17.11"
+
+"dmi-mch-utils-validate-axios-response@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-validate-axios-response/-/dmi-mch-utils-validate-axios-response-1.0.4.tgz":
+  version "1.0.4"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-validate-axios-response/-/dmi-mch-utils-validate-axios-response-1.0.4.tgz#8f1944b71af79f499b8e037a994e8b78445e1aa6"
   dependencies:
     lodash "^4.17.11"
 

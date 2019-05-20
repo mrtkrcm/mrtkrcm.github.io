@@ -35,6 +35,7 @@ import Label from 'dmi-mch-services-label'
 import getTranslationByName from 'dmi-mch-utils-gettranslation'
 import Text from 'dmi-mch-text'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
+import PanelForm from 'dmi-mch-panel'
 
 const EventForm = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -264,339 +265,355 @@ const EventForm = (props) => {
           </>
           )
         }
-        <h3>{translate('KeyInformationTitle')}</h3>
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Form.Field>
-                <Form.Select
-                  name='eventTypes'
-                  fluid
-                  label={`${translate('TypeFieldTitle') || ''}*`}
-                  options={eventAttributesDropdown}
-                  onChange={(e, { value }) => {
-                    setFieldValue('eventTypes', value)
-                  }}
-                  error={(errors.eventTypes && true) && touched.eventTypes && true}
-                  multiple
-                  value={values.eventTypes}
-                />
-                {errors.eventTypes && touched.eventTypes && <InputFeedback>{errors.eventTypes}</InputFeedback>}
-              </Form.Field>
-              <Form.Field error={errors.title && touched.title}>
-                <label htmlFor='title'>{translate('TitleFieldTitle')}*</label>
-                <Input
-                  type='text'
-                  name='title'
-                  id='title'
-                  value={values.title}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.title && touched.title}
-                />
+        <PanelForm backgroundColor='white' separatorColor='#bdbdbd'>
+          <PanelForm.Header>{translate('KeyInformationTitle')}</PanelForm.Header>
+          <PanelForm.Block>
+            <Grid>
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  <Form.Field>
+                    <Form.Select
+                      name='eventTypes'
+                      fluid
+                      label={`${translate('TypeFieldTitle') || ''}*`}
+                      options={eventAttributesDropdown}
+                      onChange={(e, { value }) => {
+                        setFieldValue('eventTypes', value)
+                      }}
+                      error={(errors.eventTypes && true) && touched.eventTypes && true}
+                      multiple
+                      value={values.eventTypes}
+                    />
+                    {errors.eventTypes && touched.eventTypes && <InputFeedback>{errors.eventTypes}</InputFeedback>}
+                  </Form.Field>
+                  <Form.Field error={errors.title && touched.title}>
+                    <label htmlFor='title'>{translate('TitleFieldTitle')}*</label>
+                    <Input
+                      type='text'
+                      name='title'
+                      id='title'
+                      value={values.title}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.title && touched.title}
+                    />
 
-                {errors.title && touched.title && <InputFeedback>{errors.title}</InputFeedback> }
-              </Form.Field>
-              <Form.Field>
-                <label>{translate('SubTitleFieldTitle')}</label>
-                <Input
-                  type='text'
-                  name='shortParagraphText'
-                  id='shortParagraphText'
-                  value={values.shortParagraphText}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.shortParagraphText && touched.shortParagraphText}
-                />
-                {errors.shortParagraphText && touched.shortParagraphText
-                  && <InputFeedback>{errors.shortParagraphText}</InputFeedback>}
-              </Form.Field>
-              <Form.Field>
-                <label>{translate('DescriptionFieldTitle')}</label>
-                {!isLoading && (
-                  <RichTextEditor
-                    name='longParagraphText'
-                    data={values.longParagraphText}
-                    customHandler={(e) => {
-                      props.setFieldValue('longParagraphText', e.editor.getData())
-                    }}
-                  />
-                )}
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('ImageFieldTitle')}*</label>
-                <Uploader
-                  accept='.jpg,.jpeg,.jpe,.png'
-                  maxSize={10485760}
-                  minWidth={400}
-                  minHeight={400}
-                  name='eventImage'
-                  id='eventImage'
-                  updateProp={values.eventImage}
-                >
-                  {(ref, file) => (
-                    <>
-                      <div
-                        onClick={() => selectImage(ref)}
-                        onKeyDown={() => selectImage(ref)}
-                        role='button'
-                        tabIndex={0}
-                        style={{
-                          position: 'relative',
-                          width: '316px',
-                          border: '1px dashed lightgrey',
-                          cursor: 'pointer'
+                    {errors.title && touched.title && <InputFeedback>{errors.title}</InputFeedback> }
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{translate('SubTitleFieldTitle')}</label>
+                    <Input
+                      type='text'
+                      name='shortParagraphText'
+                      id='shortParagraphText'
+                      value={values.shortParagraphText}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.shortParagraphText && touched.shortParagraphText}
+                    />
+                    {errors.shortParagraphText && touched.shortParagraphText
+                      && <InputFeedback>{errors.shortParagraphText}</InputFeedback>}
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{translate('DescriptionFieldTitle')}</label>
+                    {!isLoading && (
+                      <RichTextEditor
+                        name='longParagraphText'
+                        data={values.longParagraphText}
+                        customHandler={(e) => {
+                          props.setFieldValue('longParagraphText', e.editor.getData())
                         }}
-                      >
-                        {values.eventImage
-                          ? (
-                            <>
-                              <div style={{
-                                position: 'absolute',
-                                color: 'white',
-                                width: '100%',
-                                height: '100%',
-                                backgroundColor: 'rgba(0, 0, 0, .4)',
-                                textAlign: 'center',
-                                paddingTop: '90px'
-                              }}
-                              >
-                                <Icon name='trash' size='large' />
-                              </div>
-                              <img
-                                src={values.eventImage}
-                                alt='Uploaded pic'
-                                style={{
-                                  width: '100%'
-                                }}
-                              />
-                            </>
-                          ) : (
-                            <div
-                              style={{
-                                width: '316px',
-                                minHeight: '168px',
-                                textAlign: 'center',
-                                paddingTop: '50px',
-                                color: 'grey',
-                                fontSize: '30px',
-                                cursor: 'pointer'
-                              }}
-                            >+<br />
-                              <Text isHtml isSmall textColor='#bdbdbd' lineHeight='17px'>
-                                {translate('ImageDimensionsPlaceholder')}
-                              </Text>
-                            </div>
-                          )}
-                      </div>
+                      />
+                    )}
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('ImageFieldTitle')}*</label>
+                    <Uploader
+                      accept='.jpg,.jpeg,.jpe,.png'
+                      maxSize={10485760}
+                      minWidth={400}
+                      minHeight={400}
+                      name='eventImage'
+                      id='eventImage'
+                      updateProp={values.eventImage}
+                    >
+                      {(ref, file) => (
+                        <>
+                          <div
+                            onClick={() => selectImage(ref)}
+                            onKeyDown={() => selectImage(ref)}
+                            role='button'
+                            tabIndex={0}
+                            style={{
+                              position: 'relative',
+                              width: '316px',
+                              border: '1px dashed lightgrey',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            {values.eventImage
+                              ? (
+                                <>
+                                  <div style={{
+                                    position: 'absolute',
+                                    color: 'white',
+                                    width: '100%',
+                                    height: '100%',
+                                    backgroundColor: 'rgba(0, 0, 0, .4)',
+                                    textAlign: 'center',
+                                    paddingTop: '90px'
+                                  }}
+                                  >
+                                    <Icon name='trash' size='large' />
+                                  </div>
+                                  <img
+                                    src={values.eventImage}
+                                    alt='Uploaded pic'
+                                    style={{
+                                      width: '100%'
+                                    }}
+                                  />
+                                </>
+                              ) : (
+                                <div
+                                  style={{
+                                    width: '316px',
+                                    minHeight: '168px',
+                                    textAlign: 'center',
+                                    paddingTop: '50px',
+                                    color: 'grey',
+                                    fontSize: '30px',
+                                    cursor: 'pointer'
+                                  }}
+                                >+<br />
+                                  <Text isHtml isSmall textColor='#bdbdbd' lineHeight='17px'>
+                                    {translate('ImageDimensionsPlaceholder')}
+                                  </Text>
+                                </div>
+                              )}
+                          </div>
 
-                      {(file && file.length && ref) !== null && (
-                        <ImageCropperModal
-                          open={!cropConfirmed}
-                          fileUrl={file[0].preview}
-                          file={file[0]}
-                          uploadPreset='mfp-fe-gallery-event-image'
-                          cloudinary={configuration.cloudinary}
-                          onCropConfirmed={onCropConfirmed}
-                          cropProperties={{
-                            x: 20,
-                            y: 20,
-                            width: 160,
-                            height: 100,
-                            aspect: 1.6
-                          }}
-                        />
+                          {(file && file.length && ref) !== null && (
+                            <ImageCropperModal
+                              open={!cropConfirmed}
+                              fileUrl={file[0].preview}
+                              file={file[0]}
+                              uploadPreset='mfp-fe-gallery-event-image'
+                              cloudinary={configuration.cloudinary}
+                              onCropConfirmed={onCropConfirmed}
+                              cropProperties={{
+                                x: 20,
+                                y: 20,
+                                width: 160,
+                                height: 100,
+                                aspect: 1.6
+                              }}
+                            />
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </Uploader>
-              </Form.Field>
-              {errors.eventImage && touched.eventImage && <InputFeedback>{errors.eventImage}</InputFeedback>}
-              <Form.Field>
-                <label>{translate('ImageCaptionFieldTitle')}</label>
-                <Input
-                  type='text'
-                  name='imageCaption'
-                  id='imageCaption'
-                  value={values.imageCaption}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.imageCaption && touched.imageCaption}
-                />
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <h3>{translate('VenueInformationTitle')}</h3>
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Form.Select
-                fluid
-                label={`${translate('LocationFieldTitle') || ''}*`}
-                name='placeId'
-                options={myAddresses}
+                    </Uploader>
+                  </Form.Field>
+                  {errors.eventImage && touched.eventImage && <InputFeedback>{errors.eventImage}</InputFeedback>}
+                  <Form.Field>
+                    <label>{translate('ImageCaptionFieldTitle')}</label>
+                    <Input
+                      type='text'
+                      name='imageCaption'
+                      id='imageCaption'
+                      value={values.imageCaption}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.imageCaption && touched.imageCaption}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </PanelForm.Block>
+        </PanelForm>
+
+        <PanelForm backgroundColor='white' separatorColor='#bdbdbd'>
+          <PanelForm.Header>{translate('VenueInformationTitle')}</PanelForm.Header>
+          <PanelForm.Block>
+            <Grid>
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  <Form.Select
+                    fluid
+                    label={`${translate('LocationFieldTitle') || ''}*`}
+                    name='placeId'
+                    options={myAddresses}
                 // this code purpose is to put a value in the locations dropdown (this dropdown is a bit "funny",
                 // doesn't correspond to any field in the event object or DB, so just helps in UX)
                 // If the placeId of the event matches one item in the list of gallery addresses, it will show it as
                 // selected in the dropdown
                 // If can't find anything, but there is a venue, it will show "CUSTOM LOCATION" option
                 // If can't find anything, and there is no venue, it will show empty.
-                value={(myAddresses.find(address => address.value === values.placeId) && values.placeId)
+                    value={(myAddresses.find(address => address.value === values.placeId) && values.placeId)
                   || (values.venue ? '0' : null)}
-                onChange={(e, { value }) => {
-                  updateVenueFromId(value)
-                }}
-              />
-              <Form.Field>
-                <label>{translate('SearchTitle')}</label>
-                <Search
-                  disabled={!!myAddresses.find(address => (values.placeId !== '0' && address.value === values.placeId))}
-                  onResultSelect={handleResultSelect}
-                  onSearchChange={handleSearchChange}
-                  results={locationSuggestions}
-                  value={customLocationValue}
-                />
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('VenueNameTitle')}</label>
-                <div>{values.venue ? values.venue.name : '-'}</div>
-              </Form.Field>
-              <Form.Field>
-                <label>{translate('AdressLineTitle')}</label>
-                <div>{values.venue ? values.venue.street : '-'}</div>
-              </Form.Field>
-              <Form.Field>
-                <label>{translate('CityTitle')}</label>
-                <div>{values.venue ? values.venue.city : '-'}</div>
-              </Form.Field>
-              <Form.Field>
-                <label>{translate('CountryTitle')}</label>
-                <div>{values.venue ? values.venue.country : '-'}</div>
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('ZIPCodeTitle')}</label>
-                <div>{values.venue ? values.venue.postCode : '-'}</div>
-              </Form.Field>
-              <Form.Field>
-                <label>{translate('StateTitle')}</label>
-                <div>-</div>
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-          {errors.venue && touched.venue && <InputFeedback>{errors.venue}</InputFeedback>}
-        </Grid>
-        <h3>{translate('DateTimeTitle')}</h3>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('EventDateTimeTitle')}</label>
-                <DateInput
-                  onKeyDown={e => e.preventDefault()}
-                  name='date'
-                  placeholder={translate('EventDateTimeTitle')}
-                  value={values.date}
-                  iconPosition='left'
-                  dateFormat='DD/MM/YYYY'
-                  onChange={(e, { value }) => {
-                    props.setFieldValue('date', value)
-                  }}
-                  closable
-                  error={errors.date && touched.date}
-                />
-                {errors.date && touched.date && <InputFeedback>{errors.date}</InputFeedback>}
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('EventStartTimeTitle')}*</label>
-                <TimeInput
-                  onKeyDown={e => e.preventDefault()}
-                  name='startTime'
-                  placeholder={translate('EventStartTimeTitle')}
-                  value={values.startTime}
-                  iconPosition='left'
-                  onChange={(e, { value }) => {
-                    props.setFieldValue('startTime', value)
-                  }}
-                  closable
-                  error={errors.startTime && touched.startTime}
-                />
-                {errors.startTime && touched.startTime && <InputFeedback>{errors.startTime}</InputFeedback>}
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('EventEndTitle')}*</label>
-                <TimeInput
-                  onKeyDown={e => e.preventDefault()}
-                  name='endTime'
-                  placeholder={translate('EventEndTitle')}
-                  value={values.endTime}
-                  iconPosition='left'
-                  onChange={(e, { value }) => {
-                    props.setFieldValue('endTime', value)
-                  }}
-                  closable
-                  error={errors.endTime && touched.endTime}
-                />
-                {errors.endTime && touched.endTime && <InputFeedback>{errors.endTime}</InputFeedback>}
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-          <Text isSmall textColor='grey'>{translate('DateWarningLabelTitle')}</Text>
-        </Grid>
-        {!showAdvancedVisibilityPanel
+                    onChange={(e, { value }) => {
+                      updateVenueFromId(value)
+                    }}
+                  />
+                  <Form.Field>
+                    <label>{translate('SearchTitle')}</label>
+                    <Search
+                      disabled={myAddresses
+                        .find(address => (values.placeId !== '0' && address.value === values.placeId))}
+                      onResultSelect={handleResultSelect}
+                      onSearchChange={handleSearchChange}
+                      results={locationSuggestions}
+                      value={customLocationValue}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('VenueNameTitle')}</label>
+                    <div>{values.venue ? values.venue.name : '-'}</div>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{translate('AdressLineTitle')}</label>
+                    <div>{values.venue ? values.venue.street : '-'}</div>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{translate('CityTitle')}</label>
+                    <div>{values.venue ? values.venue.city : '-'}</div>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{translate('CountryTitle')}</label>
+                    <div>{values.venue ? values.venue.country : '-'}</div>
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('ZIPCodeTitle')}</label>
+                    <div>{values.venue ? values.venue.postCode : '-'}</div>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{translate('StateTitle')}</label>
+                    <div>-</div>
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+              {errors.venue && touched.venue && <InputFeedback>{errors.venue}</InputFeedback>}
+            </Grid>
+
+          </PanelForm.Block>
+        </PanelForm>
+
+        <PanelForm backgroundColor='white' separatorColor='#bdbdbd'>
+          <PanelForm.Header>{translate('DateTimeTitle')}</PanelForm.Header>
+          <PanelForm.Block>
+            <Grid>
+              <Grid.Row columns={3}>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('EventDateTimeTitle')}</label>
+                    <DateInput
+                      onKeyDown={e => e.preventDefault()}
+                      name='date'
+                      placeholder={translate('EventDateTimeTitle')}
+                      value={values.date}
+                      iconPosition='left'
+                      dateFormat='DD/MM/YYYY'
+                      onChange={(e, { value }) => {
+                        props.setFieldValue('date', value)
+                      }}
+                      closable
+                      error={errors.date && touched.date}
+                    />
+                    {errors.date && touched.date && <InputFeedback>{errors.date}</InputFeedback>}
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('EventStartTimeTitle')}*</label>
+                    <TimeInput
+                      onKeyDown={e => e.preventDefault()}
+                      name='startTime'
+                      placeholder={translate('EventStartTimeTitle')}
+                      value={values.startTime}
+                      iconPosition='left'
+                      onChange={(e, { value }) => {
+                        props.setFieldValue('startTime', value)
+                      }}
+                      closable
+                      error={errors.startTime && touched.startTime}
+                    />
+                    {errors.startTime && touched.startTime && <InputFeedback>{errors.startTime}</InputFeedback>}
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('EventEndTitle')}*</label>
+                    <TimeInput
+                      onKeyDown={e => e.preventDefault()}
+                      name='endTime'
+                      placeholder={translate('EventEndTitle')}
+                      value={values.endTime}
+                      iconPosition='left'
+                      onChange={(e, { value }) => {
+                        props.setFieldValue('endTime', value)
+                      }}
+                      closable
+                      error={errors.endTime && touched.endTime}
+                    />
+                    {errors.endTime && touched.endTime && <InputFeedback>{errors.endTime}</InputFeedback>}
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+              <Text isSmall textColor='grey'>{translate('DateWarningLabelTitle')}</Text>
+            </Grid>
+          </PanelForm.Block>
+        </PanelForm>
+        <PanelForm backgroundColor='white' separatorColor='#bdbdbd'>
+          <PanelForm.Header>{translate('PublishingTitle')}</PanelForm.Header>
+          <PanelForm.Block>
+            {!showAdvancedVisibilityPanel
           && (
-            <>
-              <h3>{translate('PublishingTitle')}</h3>
-              <Grid className='radiobuttons'>
-                <Grid.Row className='radiobuttons__title'>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>{translate('VisibilityFieldTitle')}</label>
-                    </Form.Field>
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row className='radiobuttons__group'>
-                  <Form.Group inline>
-                    <Form.Field>
-                      <Radio
-                        style={{ width: 'auto' }}
-                        id='publishPublic'
-                        name='publish'
-                        label={`${translate('VisibilityFieldValuePublic')}`}
-                        onChange={handleChange}
-                        value='public'
-                        checked={values.publish === 'public'}
-                      />
-                    </Form.Field>
-                    <Form.Field>
-                      <Radio
-                        id='publishVips'
-                        name='publish'
-                        label={`${translate('VisibilityFieldValueVIP')}`}
-                        onChange={handleChange}
-                        checked={values.publish === 'vip'}
-                      />
-                    </Form.Field>
-                  </Form.Group>
-                </Grid.Row>
-                {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
-              </Grid>
-            </>
+            <Grid className='radiobuttons'>
+              <Grid.Row className='radiobuttons__title'>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('VisibilityFieldTitle')}</label>
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row className='radiobuttons__group'>
+                <Form.Group inline>
+                  <Form.Field>
+                    <Radio
+                      style={{ width: 'auto' }}
+                      id='publishPublic'
+                      name='publish'
+                      label={`${translate('VisibilityFieldValuePublic')}`}
+                      onChange={handleChange}
+                      value='public'
+                      checked={values.publish === 'public'}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Radio
+                      id='publishVips'
+                      name='publish'
+                      label={`${translate('VisibilityFieldValueVIP')}`}
+                      onChange={handleChange}
+                      checked={values.publish === 'vip'}
+                    />
+                  </Form.Field>
+                </Form.Group>
+              </Grid.Row>
+              {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
+            </Grid>
           )}
 
-        {showAdvancedVisibilityPanel
+            {showAdvancedVisibilityPanel
         && (
         <>
           <h3>{translate('StatusFieldTitle', 'Type of event')}</h3>
@@ -628,39 +645,41 @@ const EventForm = (props) => {
           </Grid>
         </>
         )}
-        <Grid className='radiobuttons'>
-          <Grid.Row className='radiobuttons__title'>
-            <Grid.Column>
-              <Form.Field>
-                <label>{translate('StatusFieldTitle')}</label>
-              </Form.Field>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row className='radiobuttons__group'>
-            <Form.Group inline>
-              <Form.Field>
-                <Radio
-                  id='statusDraft'
-                  name='status'
-                  label={translate('VisibilityFieldValueDraft')}
-                  onChange={handleChange}
-                  value='DRAFT'
-                  checked={values.status === 'DRAFT'}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  id='statusLive'
-                  name='status'
-                  label={translate('VisibilityFieldValueLive')}
-                  onChange={handleChange}
-                  value='LIVE'
-                  checked={values.status === 'LIVE'}
-                />
-              </Form.Field>
-            </Form.Group>
-          </Grid.Row>
-        </Grid>
+            <Grid className='radiobuttons'>
+              <Grid.Row className='radiobuttons__title'>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>{translate('StatusFieldTitle')}</label>
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row className='radiobuttons__group'>
+                <Form.Group inline>
+                  <Form.Field>
+                    <Radio
+                      id='statusDraft'
+                      name='status'
+                      label={translate('VisibilityFieldValueDraft')}
+                      onChange={handleChange}
+                      value='DRAFT'
+                      checked={values.status === 'DRAFT'}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Radio
+                      id='statusLive'
+                      name='status'
+                      label={translate('VisibilityFieldValueLive')}
+                      onChange={handleChange}
+                      value='LIVE'
+                      checked={values.status === 'LIVE'}
+                    />
+                  </Form.Field>
+                </Form.Group>
+              </Grid.Row>
+            </Grid>
+          </PanelForm.Block>
+        </PanelForm>
       </Form>
     </section>
   )
