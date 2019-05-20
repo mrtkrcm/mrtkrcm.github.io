@@ -66,8 +66,8 @@ const EventFormWrapper = () => {
           }
         }}
         context={{ http }}
-        backgroundColor='white'
-        headerSeparatorColor='#dbdbdb'
+        bodycolor='white'
+        headerseparatorcolor='#dbdbdb'
       />
     </NoSSR>
   )

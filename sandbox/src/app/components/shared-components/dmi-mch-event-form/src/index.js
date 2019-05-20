@@ -203,8 +203,8 @@ const EventForm = (props) => {
     language = '',
     showMessage,
     dirty,
-    bodyColor = 'white',
-    headerSeparatorColor = '#dbdbdb',
+    bodycolor = 'white',
+    headerseparatorcolor = '#dbdbdb',
     // Functions visible from the outside world
     bindSubmitForm = () => {},
     bindDeleteForm = () => {},
@@ -267,7 +267,7 @@ const EventForm = (props) => {
           </>
           )
         }
-        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header>{translate('KeyInformationTitle')}</PanelForm.Header>
           <PanelForm.Block>
             <Grid>
@@ -437,7 +437,7 @@ const EventForm = (props) => {
           </PanelForm.Block>
         </PanelForm>
 
-        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header>{translate('VenueInformationTitle')}</PanelForm.Header>
           <PanelForm.Block>
             <Grid>
@@ -509,7 +509,7 @@ const EventForm = (props) => {
           </PanelForm.Block>
         </PanelForm>
 
-        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header>{translate('DateTimeTitle')}</PanelForm.Header>
           <PanelForm.Block>
             <Grid>
@@ -574,7 +574,7 @@ const EventForm = (props) => {
             </Grid>
           </PanelForm.Block>
         </PanelForm>
-        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header>{translate('PublishingTitle')}</PanelForm.Header>
           <PanelForm.Block>
             {!showAdvancedVisibilityPanel
@@ -710,8 +710,8 @@ EventForm.propTypes = {
   language: PropTypes.string,
   dirty: PropTypes.bool,
   isDirty: PropTypes.func,
-  bodyColor: PropTypes.string,
-  headerSeparatorColor: PropTypes.string
+  bodycolor: PropTypes.string,
+  headerseparatorcolor: PropTypes.string
 }
 
 const EventFormContainer = (props) => {
