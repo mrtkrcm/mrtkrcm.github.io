@@ -203,7 +203,7 @@ const EventForm = (props) => {
     language = '',
     showMessage,
     dirty,
-    backgroundColor = 'white',
+    bodyColor = 'white',
     headerSeparatorColor = '#dbdbdb',
     // Functions visible from the outside world
     bindSubmitForm = () => {},
@@ -267,7 +267,7 @@ const EventForm = (props) => {
           </>
           )
         }
-        <PanelForm backgroundColor={backgroundColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
           <PanelForm.Header>{translate('KeyInformationTitle')}</PanelForm.Header>
           <PanelForm.Block>
             <Grid>
@@ -437,7 +437,7 @@ const EventForm = (props) => {
           </PanelForm.Block>
         </PanelForm>
 
-        <PanelForm backgroundColor={backgroundColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
           <PanelForm.Header>{translate('VenueInformationTitle')}</PanelForm.Header>
           <PanelForm.Block>
             <Grid>
@@ -509,7 +509,7 @@ const EventForm = (props) => {
           </PanelForm.Block>
         </PanelForm>
 
-        <PanelForm backgroundColor={backgroundColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
           <PanelForm.Header>{translate('DateTimeTitle')}</PanelForm.Header>
           <PanelForm.Block>
             <Grid>
@@ -574,7 +574,7 @@ const EventForm = (props) => {
             </Grid>
           </PanelForm.Block>
         </PanelForm>
-        <PanelForm backgroundColor={backgroundColor} headerSeparatorColor={headerSeparatorColor}>
+        <PanelForm bodyColor={bodyColor} headerSeparatorColor={headerSeparatorColor}>
           <PanelForm.Header>{translate('PublishingTitle')}</PanelForm.Header>
           <PanelForm.Block>
             {!showAdvancedVisibilityPanel
@@ -710,7 +710,7 @@ EventForm.propTypes = {
   language: PropTypes.string,
   dirty: PropTypes.bool,
   isDirty: PropTypes.func,
-  backgroundColor: PropTypes.string,
+  bodyColor: PropTypes.string,
   headerSeparatorColor: PropTypes.string
 }
 

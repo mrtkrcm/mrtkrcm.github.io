@@ -24,7 +24,7 @@
     "dmi-mch-services-label": "1.0.0",
     "dmi-mch-utils-gettranslation": "1.0.0",
     "dmi-mch-text": "1.0.1",
-    "dmi-mch-panel": "1.0.0",
+    "dmi-mch-panel": "1.0.1",
     "react": "^16.6.1",
     "react-dom": "^16.6.3",
     "semantic-ui-react": "^0.86.0"
@@ -62,6 +62,6 @@
     "dmi-mch-services-label": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz",
     "dmi-mch-utils-gettranslation": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-gettranslation/-/dmi-mch-utils-gettranslation-1.0.0.tgz",
     "dmi-mch-text": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-text/-/dmi-mch-text-1.0.1.tgz",
-    "dmi-mch-panel": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-panel/-/dmi-mch-panel-1.0.0.tgz"
+    "dmi-mch-panel": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-panel/-/dmi-mch-panel-1.0.1.tgz"
   }
 }
