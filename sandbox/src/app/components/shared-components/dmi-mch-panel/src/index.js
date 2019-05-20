@@ -31,12 +31,12 @@ const StyledPanelForm = styled(PanelFormComponent).withConfig({ componentId: 'dm
   border-radius: 0;
 
   .heading {
-    background: ${props => props.bodyColor};
+    background: ${props => props.bodycolor};
     border-radius: 0;
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid ${props => props.headerSeparatorColor};
+    border-bottom: 1px solid ${props => props.headerseparatorcolor};
     font-weight: 700;
     font-size: 16px;
     padding: 16px 16px 16px 30px;
@@ -44,7 +44,7 @@ const StyledPanelForm = styled(PanelFormComponent).withConfig({ componentId: 'dm
 
   .block {
     padding: 8px 30px 30px;
-    background: ${props => props.bodyColor};
+    background: ${props => props.bodycolor};
     border-bottom: none;
     border-left: none;
     border-right: none;
