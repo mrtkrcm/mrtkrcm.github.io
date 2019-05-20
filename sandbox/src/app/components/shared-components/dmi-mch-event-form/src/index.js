@@ -892,7 +892,8 @@ const FormRules = withFormik({
         objectToSave.accessPermission = AccesssPermission.VIP
         objectToSave.whiteListAccessGroups = []
         objectToSave.blackListAccessGroups = []
-        objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
+        props.configuration.eventsandexhibitions
+          && objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
       } else if (publishValue === 'custom') {
         objectToSave.accessPermission = AccesssPermission.PUBLIC
         objectToSave.whiteListAccessGroups = []
@@ -910,7 +911,7 @@ const FormRules = withFormik({
     try {
       const saveMessage = {
         show: true,
-        color: 'olive',
+        color: 'green',
         header: 'Event saved successfully'
       }
       const event = new Event(props.context)
@@ -918,26 +919,24 @@ const FormRules = withFormik({
       if (props.id) {
         // Edit
         savedEvent = await event.put(props.id, objectToSave)
-        props.setMessage(saveMessage)
-        setTimeout(() => {
-          props.setMessage({})
-          resetForm(values)
-          // Router.push('/')
-        }, 3000)
+        if (ValidateAxiosResponse(savedEvent)) {
+          props.setMessage(saveMessage)
+          setTimeout(() => {
+            props.setMessage({})
+            resetForm(values)
+          }, 3000)
+        }
       } else {
         // Add
         savedEvent = await event.post(objectToSave)
-        props.setMessage(saveMessage)
-        setTimeout(() => {
-          props.setMessage({})
-          Router.push(`/?id=${savedEvent.data.id}&page=event`)
-        }, 3000)
-      }
-
-      if (ValidateAxiosResponse(savedEvent)) {
-        // resetForm(objectToSave)
-        // props.setIsFormSubmitted(true)
-        // props.setFormSubmitting(false)
+        if (ValidateAxiosResponse(savedEvent)) {
+          props.setMessage(saveMessage)
+          setTimeout(() => {
+            props.setMessage({})
+            // This is specific redirect URL for MFP
+            window.location.href = `/dashboard/events?id=${savedEvent.data.id}&page=event`
+          }, 3000)
+        }
       }
     } catch (e) {
       Logger(e)
