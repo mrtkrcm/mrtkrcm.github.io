@@ -43,12 +43,17 @@ const EventFormWrapper = () => {
       <button onClick={handleSubmitEventForm} disabled={!isDirty} type='button'>Submit from outside</button>
       <button onClick={handleDeleteEventForm} type='button'>Delete from outside</button>
       <EventForm
+        debug
         id={id}
         title={id ? `Edit Event #${id}` : 'Add Event'}
         showControls
         isDirty={isFormDirty}
         bindSubmitForm={bindSubmitForm}
-        bindDeleteForm={bindDeleteForm}
+        bindArchiveForm={bindDeleteForm}
+        archiveCallback={() => {
+          window.location.href = '/'
+          // window.location.href = '/dashboard/events?page=overview'
+        }}
         showAdvancedVisibilityPanel={false}
         language='en'
         configuration={{

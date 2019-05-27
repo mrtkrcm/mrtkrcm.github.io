@@ -4,6 +4,8 @@
 // SOME NOTES:
 // For submit button outside of form
 // https://stackoverflow.com/questions/49525057/react-formik-use-submitform-outside-formik
+// For debouncing with hooks
+// https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
 
 // EventForm component should ideally be in a different file, but the current bundling
 // I couldn't find the way to do it. Needs more investigation, but should be possible with little effort.
@@ -37,7 +39,34 @@ import Text from 'dmi-mch-text'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
 import PanelForm from 'dmi-mch-panel'
 
+// TODO: Put in a separate component
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = useState(value)
+
+  useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value)
+      }, delay)
+
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler)
+      }
+    },
+    [value, delay] // Only re-call effect if value or delay changes
+  )
+
+  return debouncedValue
+}
+
 const EventForm = (props) => {
+  // Props passed from outside
+  const { context, setAddressessList, archiveCallback, debug = false } = props
   const [isLoading, setIsLoading] = useState(true)
   const [labels, setLabels] = useState([])
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
@@ -46,25 +75,52 @@ const EventForm = (props) => {
   const [locationSuggestions, setLocationSuggestions] = useState([])
   const [cropConfirmed, setCropConfirmed] = useState(null)
   const labelsEntityId = 'EventsAndExhibitionsForm'
-  const { context, setAddressessList } = props
+  const debouncedSearchTerm = useDebounce(customLocationValue, 500)
   const place = new Place(context)
 
-  const deleteEvent = async () => {
+  // Usually called when the address input field is changed (it has a debounce)
+  const searchChangeAddress = async (value) => {
+    try {
+      const matches = await place.autocomplete(value)
+      if (ValidateAxiosResponse(matches)) {
+        const remappedData = matches.data.map(item => ({ key: item.id, value: item.id, title: item.name }))
+        setLocationSuggestions(remappedData)
+      }
+    } catch (err) {
+      Logger(err)
+    }
+  }
+
+  // Debouncing the custom location input
+  useEffect(
+    () => {
+      if (debouncedSearchTerm) {
+        searchChangeAddress(customLocationValue)
+      }
+    },
+    [customLocationValue, debouncedSearchTerm, searchChangeAddress] // Only call effect if debounced search term changes
+  )
+
+  // Archives the event and shows a message on success, and calls callback. Callback can do whatever is passed to it
+  const archiveEvent = useCallback(async () => {
     const event = new Event(context)
     try {
-      const deletedEvent = await event.del(props.id)
-      if (ValidateAxiosResponse(deletedEvent)) {
-        props.setMessage({
-          show: true,
-          color: 'olive',
-          header: 'Event deleted successfully'
-        })
-        Router.push('/')
+      const { id } = props
+      const archivedEvent = await event.del(id)
+      if (archivedEvent.ok) {
+        setTimeout(() => {
+          props.setMessage({
+            show: true,
+            color: 'olive',
+            header: 'Event archived successfully'
+          })
+        }, 3000)
+        archiveCallback()
       }
     } catch (e) {
       Logger(e)
     }
-  }
+  }, [archiveCallback, context, props])
 
   // Finds the closest cityId. This doesn't represent in the screen, but it saves in background
   const updateCityId = async (latitude, longitude) => {
@@ -98,21 +154,6 @@ const EventForm = (props) => {
     setCustomLocationValue(result.title) // Updates the value in the autocomplete
     updateVenueFromId(result.value) // Updates all the info in the area (city, country, etc)
   }, [updateVenueFromId])
-
-  const handleSearchChange = async (e, { value }) => {
-    setCustomLocationValue(value)
-    // this.setState({ isLoading: true, value })
-
-    try {
-      const matches = await place.autocomplete(value)
-      if (ValidateAxiosResponse(matches)) {
-        const remappedData = matches.data.map(item => ({ key: item.id, value: item.id, title: item.name }))
-        setLocationSuggestions(remappedData)
-      }
-    } catch (err) {
-      Logger(err)
-    }
-  }
 
   const onCropConfirmed = (image) => {
     if (image && image.url) {
@@ -207,12 +248,12 @@ const EventForm = (props) => {
     headerseparatorcolor = '#dbdbdb',
     // Functions visible from the outside world
     bindSubmitForm = () => {},
-    bindDeleteForm = () => {},
+    bindArchiveForm = () => {},
     isDirty = () => {}
   } = props
 
   bindSubmitForm(handleSubmit)
-  bindDeleteForm(deleteEvent)
+  bindArchiveForm(archiveEvent)
   isDirty(dirty)
 
   const selectImage = (ref) => {
@@ -235,6 +276,11 @@ const EventForm = (props) => {
     }
 
     return label
+  }
+
+  if (debug) {
+    // eslint-disable-next-line no-console
+    console.log('re-render')
   }
 
   return (
@@ -263,7 +309,7 @@ const EventForm = (props) => {
           && (
           <>
             <Button type='submit' disabled={!dirty}>Save</Button>
-            <Button type='button' onClick={deleteEvent}>Delete</Button>
+            <Button type='button' onClick={archiveEvent}>archive</Button>
           </>
           )
         }
@@ -465,7 +511,7 @@ const EventForm = (props) => {
                       disabled={!!myAddresses
                         .find(address => (values.placeId !== '0' && address.value === values.placeId))}
                       onResultSelect={handleResultSelect}
-                      onSearchChange={handleSearchChange}
+                      onSearchChange={e => setCustomLocationValue(e.target.value)}
                       results={locationSuggestions}
                       value={customLocationValue}
                     />
@@ -696,11 +742,13 @@ EventForm.propTypes = {
   configuration: PropTypes.object,
   className: PropTypes.string,
   setAddressessList: PropTypes.func,
+  archiveCallback: PropTypes.func,
+  debug: PropTypes.bool,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
   handleSubmit: PropTypes.func,
   bindSubmitForm: PropTypes.func,
-  bindDeleteForm: PropTypes.func,
+  bindArchiveForm: PropTypes.func,
   setFieldValue: PropTypes.func,
   showMessage: PropTypes.object,
   setMessage: PropTypes.func,
