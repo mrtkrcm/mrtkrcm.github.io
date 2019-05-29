@@ -614,7 +614,7 @@ const EventForm = (props) => {
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
-              <Text isSmall textColor='grey'>{translate('DateWarningLabelTitle')}</Text>
+              <Text isSmall textColor='silver'>{translate('DateWarningLabelTitle')}</Text>
             </Grid>
           </PanelForm.Block>
         </PanelForm>
@@ -722,6 +722,7 @@ const EventForm = (props) => {
                   </Form.Field>
                 </Form.Group>
               </Grid.Row>
+              <Text isSmall textColor='silver'>{translate('DateWarningLabelTitle')}</Text>
             </Grid>
           </PanelForm.Block>
         </PanelForm>
@@ -981,6 +982,7 @@ export default styled(EventFormContainer)`
     &__group {
       margin-left: 15px;
       padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
   }
 
