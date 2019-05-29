@@ -410,7 +410,7 @@ const EventForm = (props) => {
                                     height: '100%',
                                     backgroundColor: 'rgba(0, 0, 0, .4)',
                                     textAlign: 'center',
-                                    paddingTop: '120px'
+                                    paddingTop: '130px'
                                   }}
                                   >
                                     <Icon name='trash' size='large' />
@@ -428,7 +428,7 @@ const EventForm = (props) => {
                                   style={{
                                     minHeight: '298px',
                                     textAlign: 'center',
-                                    paddingTop: '110px',
+                                    paddingTop: '130px',
                                     color: 'grey',
                                     fontSize: '30px',
                                     cursor: 'pointer'
