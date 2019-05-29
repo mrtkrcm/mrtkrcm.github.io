@@ -8,7 +8,7 @@ import Usergroup from 'dmi-mch-services-usergroup'
 
 const UserGroupSelector = (props) => {
   const [userGroupsDropDown, setUserGroupsDropDown] = useState([])
-  const { context, selected, name, setFieldValue, label } = props
+  const { context, selected, name, setFieldValue, label, disabled } = props
   useEffect(() => {
     const userGroup = new Usergroup(context)
     const fetchUsergroups = async () => {
@@ -32,6 +32,7 @@ const UserGroupSelector = (props) => {
 
   return (
     <Form.Select
+      disabled={disabled}
       search
       name={name}
       fluid
@@ -51,7 +52,8 @@ UserGroupSelector.propTypes = {
   selected: PropTypes.array,
   name: PropTypes.string,
   label: PropTypes.string,
-  setFieldValue: PropTypes.func
+  setFieldValue: PropTypes.func,
+  disabled: PropTypes.bool
 }
 
 export default UserGroupSelector

@@ -13,7 +13,6 @@
 // There are some in-line styles, should be moved to a Component or styled component
 
 import React, { useEffect, useState, useCallback } from 'react'
-import Router from 'next/router'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
@@ -111,7 +110,7 @@ const EventForm = (props) => {
         setTimeout(() => {
           props.setMessage({
             show: true,
-            color: 'olive',
+            color: 'green',
             header: 'Event archived successfully'
           })
         }, 3000)
@@ -622,8 +621,6 @@ const EventForm = (props) => {
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header><h4>{translate('PublishingTitle')}</h4></PanelForm.Header>
           <PanelForm.Block>
-            {!showAdvancedVisibilityPanel
-          && (
             <Grid className='radiobuttons'>
               <Grid.Row className='radiobuttons__title'>
                 <Grid.Column>
@@ -639,7 +636,7 @@ const EventForm = (props) => {
                       style={{ width: 'auto' }}
                       id='publishPublic'
                       name='publish'
-                      label={`${translate('VisibilityFieldValuePublic')}`}
+                      label={translate('VisibilityFieldValuePublic')}
                       onChange={handleChange}
                       value='public'
                       checked={values.publish === 'public'}
@@ -649,7 +646,7 @@ const EventForm = (props) => {
                     <Radio
                       id='publishVips'
                       name='publish'
-                      label={`${translate('VisibilityFieldValueVIP')}`}
+                      label={translate('VisibilityFieldValueVIP')}
                       onChange={handleChange}
                       value='vip'
                       checked={values.publish === 'vip'}
@@ -659,8 +656,6 @@ const EventForm = (props) => {
               </Grid.Row>
               {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
             </Grid>
-          )}
-
             {showAdvancedVisibilityPanel
         && (
         <>
@@ -670,22 +665,24 @@ const EventForm = (props) => {
               <Grid.Column>
                 <Form.Field>
                   <UserGroupSelector
+                    disabled
                     name='whiteListAccessGroups'
                     context={context}
                     selected={values.whiteListAccessGroups}
                     setFieldValue={setFieldValue}
-                    label={`${translate('VisibilityFieldTitle') || ''}*`}
+                    label={`${translate('WhiteListTitle') || ''}*`}
                   />
                 </Form.Field>
               </Grid.Column>
               <Grid.Column>
                 <Form.Field>
                   <UserGroupSelector
+                    disabled
                     name='blackListAccessGroups'
                     context={context}
                     selected={values.blackListAccessGroups}
                     setFieldValue={setFieldValue}
-                    label={`${translate('nolabel') || ''}*`}
+                    label={`${translate('BlackListTitle') || ''}*`}
                   />
                 </Form.Field>
               </Grid.Column>
@@ -801,24 +798,22 @@ const EventFormContainer = (props) => {
 }
 
 // How to show the publishing panel when loading the page in MFP Edit mode? (rules in MCHGB-2940)
-const publishingStatus = (accessPermission, whiteListAccessGroups, blackListAccessGroups) => {
-  // If the event is not VIP and has no whitelist / blacklist, this radio button shows the "Public" option selected.
-  if (accessPermission === AccesssPermission.PUBLIC
-    && whiteListAccessGroups.length === 0
-    && blackListAccessGroups.length === 0) {
-    return 'public'
+const publishingStatus = (accessPermission) => {
+  let status = null
+  // This has been simplified. Read ticket comments MCHGB-2940.
+  if (accessPermission === AccesssPermission.PUBLIC) {
+    status = 'public'
   }
-  // If the event is VIP and has only the whitelist WAG 2000162, the VIP option is selected.
-  if (accessPermission === AccesssPermission.VIP
-    && whiteListAccessGroups.length === 1
-    && whiteListAccessGroups[0] === '2000162') {
-    return 'vip'
+  // If the event is VIP the VIP option is selected.
+  if (accessPermission === AccesssPermission.VIP) {
+    status = 'vip'
   }
 
   if (!accessPermission) {
-    return ''
+    status = ''
   }
-  return 'custom'
+
+  return status
 }
 
 // Checks if a date is later than other
@@ -878,10 +873,9 @@ const FormRules = withFormik({
       && props.currentEvent.openingDateTimes.length > 0 && props.currentEvent.openingDateTimes[0].endTime) || '',
 
     // publish
-    // It's so complex to determine it's default status, that we better put in a separate function
+    // It's so complex to determine this default status, that we better put in a separate function
     publish: (props.currentEvent
-      && publishingStatus(props.currentEvent.accessPermission,
-        props.currentEvent.whiteListAccessGroups, props.currentEvent.blackListAccessGroups)),
+      && publishingStatus(props.currentEvent.accessPermission)),
     whiteListAccessGroups: (props.currentEvent && props.currentEvent.whiteListAccessGroups) || [],
     blackListAccessGroups: (props.currentEvent && props.currentEvent.blackListAccessGroups) || [],
 
@@ -893,8 +887,8 @@ const FormRules = withFormik({
   enableReinitialize: true,
 
 
-  validationSchema: (props) => {
-    let schema = {
+  validationSchema: () => {
+    const schema = {
       eventTypes: Yup.array().min(1),
       title: Yup.string().required(),
       date: Yup.string().required(),
@@ -902,10 +896,8 @@ const FormRules = withFormik({
       endTime: Yup.string().required()
         .isLaterTime(Yup.ref('startTime')),
       eventImage: Yup.string().required(),
-      venue: Yup.object().isVenueCorrect()
-    }
-    if (!props.showAdvancedVisibilityPanel) {
-      schema = { ...schema, ...{ publish: Yup.string().required('This field is required') } }
+      venue: Yup.object().isVenueCorrect(),
+      publish: Yup.string().required('This field is required')
     }
     return Yup.object().shape(schema)
   },
@@ -928,33 +920,12 @@ const FormRules = withFormik({
       }
     ]
     const publishValue = values.publish
-    // If MFP (No ID)
-    if (!props.showAdvancedVisibilityPanel) {
-      // Some logic for Saving the publish status (rules in MCHGB-2940)
-      if (publishValue === 'public') {
-        objectToSave.accessPermission = AccesssPermission.PUBLIC
-        // Clearing the access group array
-        objectToSave.whiteListAccessGroups = []
-        objectToSave.blackListAccessGroups = []
-      } else if (publishValue === 'vip') {
-        objectToSave.accessPermission = AccesssPermission.VIP
-        objectToSave.whiteListAccessGroups = []
-        objectToSave.blackListAccessGroups = []
-        props.configuration.eventsandexhibitions
-          && objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
-      } else if (publishValue === 'custom') {
-        objectToSave.accessPermission = AccesssPermission.PUBLIC
-        objectToSave.whiteListAccessGroups = []
-        objectToSave.blackListAccessGroups = []
-        objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.custom)
-      }
-    // If CMS
-    } else if (publishValue === 'custom') {
+    // For most complex logic to revert, check older commits. This has been simplified as per client requirement.
+    if (publishValue === 'public') {
       objectToSave.accessPermission = AccesssPermission.PUBLIC
-      objectToSave.whiteListAccessGroups = values.whiteListAccessGroups
-      objectToSave.blackListAccessGroups = values.blackListAccessGroups
+    } else if (publishValue === 'vip') {
+      objectToSave.accessPermission = AccesssPermission.VIP
     }
-
 
     try {
       const saveMessage = {
@@ -982,7 +953,7 @@ const FormRules = withFormik({
           setTimeout(() => {
             props.setMessage({})
             // This is specific redirect URL for MFP
-            window.location.href = `/dashboard/events?id=${savedEvent.data.id}&page=edit`
+            window.location.href = `${window.location.href}?page=edit&id=${savedEvent.data.id}`
           }, 3000)
         }
       }
