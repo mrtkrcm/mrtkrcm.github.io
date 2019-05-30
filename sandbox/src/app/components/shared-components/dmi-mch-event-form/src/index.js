@@ -78,7 +78,7 @@ const EventForm = (props) => {
   const place = new Place(context)
 
   // Usually called when the address input field is changed (it has a debounce)
-  const searchChangeAddress = async (value) => {
+  const searchChangeAddress = useCallback(async (value) => {
     try {
       const matches = await place.autocomplete(value)
       if (ValidateAxiosResponse(matches)) {
@@ -88,17 +88,15 @@ const EventForm = (props) => {
     } catch (err) {
       Logger(err)
     }
-  }
+  })
 
   // Debouncing the custom location input
-  useEffect(
-    () => {
-      if (debouncedSearchTerm) {
-        searchChangeAddress(customLocationValue)
-      }
-    },
-    [customLocationValue, debouncedSearchTerm, searchChangeAddress] // Only call effect if debounced search term changes
-  )
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      searchChangeAddress(customLocationValue)
+    }
+  },
+  [customLocationValue, debouncedSearchTerm, searchChangeAddress]) // Only call effect if debounced search term changes
 
   // Archives the event and shows a message on success, and calls callback. Callback can do whatever is passed to it
   const archiveEvent = useCallback(async () => {
@@ -174,7 +172,10 @@ const EventForm = (props) => {
         Logger(e)
       }
     }
+    fetchLabels()
+  }, [context, labelsEntityId])
 
+  useEffect(() => {
     // Fetching Event Attributes
     const event = new Event(context)
     const fetchEventAttributes = async () => {
@@ -194,7 +195,10 @@ const EventForm = (props) => {
         Logger(e)
       }
     }
+    fetchEventAttributes()
+  }, [context])
 
+  useEffect(() => {
     // Fetching the list of locations, first fetching myAccount
     const account = new Account(context)
     const fetchMyAccount = async () => {
@@ -220,12 +224,12 @@ const EventForm = (props) => {
         Logger(e)
       }
     }
-
-    fetchLabels()
-    fetchEventAttributes()
     fetchMyAccount()
+  }, [context, setAddressessList])
+
+  useEffect(() => {
     setIsLoading(false)
-  }, [context, labelsEntityId, setAddressessList])
+  }, [setIsLoading])
 
   const {
     values,
@@ -508,7 +512,8 @@ const EventForm = (props) => {
                     <label>{translate('SearchTitle')}</label>
                     <Search
                       disabled={!!myAddresses
-                        .find(address => (values.placeId !== '0' && address.value === values.placeId))}
+                        .find(address => (!values.placeId || (values.placeId !== '0'
+                        && address.value === values.placeId)))}
                       onResultSelect={handleResultSelect}
                       onSearchChange={e => setCustomLocationValue(e.target.value)}
                       results={locationSuggestions}
