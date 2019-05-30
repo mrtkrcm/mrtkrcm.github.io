@@ -722,7 +722,7 @@ const EventForm = (props) => {
                   </Form.Field>
                 </Form.Group>
               </Grid.Row>
-              <Text isSmall textColor='silver'>{translate('DateWarningLabelTitle')}</Text>
+              <Text isSmall textColor='silver'>{translate('ReviewWarningLabelTitle')}</Text>
             </Grid>
           </PanelForm.Block>
         </PanelForm>
@@ -954,7 +954,7 @@ const FormRules = withFormik({
           setTimeout(() => {
             props.setMessage({})
             // This is specific redirect URL for MFP
-            window.location.href = `${window.location.href}?page=edit&id=${savedEvent.data.id}`
+            window.location.href = `${window.location.pathname}?page=edit&id=${savedEvent.data.id}`
           }, 3000)
         }
       }
