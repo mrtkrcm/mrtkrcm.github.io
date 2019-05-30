@@ -96,7 +96,7 @@ const EventForm = (props) => {
       searchChangeAddress(customLocationValue)
     }
   },
-  [customLocationValue, debouncedSearchTerm, searchChangeAddress]) // Only call effect if debounced search term changes
+  [debouncedSearchTerm]) // Only call effect if debounced search term changes
 
   // Archives the event and shows a message on success, and calls callback. Callback can do whatever is passed to it
   const archiveEvent = useCallback(async () => {
