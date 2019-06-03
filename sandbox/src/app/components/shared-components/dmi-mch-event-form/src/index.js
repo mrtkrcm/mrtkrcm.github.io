@@ -107,7 +107,7 @@ const EventForm = (props) => {
     const event = new Event(context)
     try {
       const { id } = props
-      const archivedEvent = await event.updateStatus(id)
+      const archivedEvent = await event.updateStatus(id, { status: 'ARCHIVED' })
       if (archivedEvent.ok) {
         setTimeout(() => {
           props.setMessage({
