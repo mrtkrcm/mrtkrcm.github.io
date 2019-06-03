@@ -33,7 +33,7 @@
     "dmi-mch-richtextbox": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-richtextbox/-/dmi-mch-richtextbox-1.0.9.tgz",
     "dmi-mch-services-account": "^1.0.0",
     "dmi-mch-services-city": "^1.0.1",
-    "dmi-mch-services-event": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.14.tgz",
+    "dmi-mch-services-event": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.15.tgz",
     "dmi-mch-services-label": "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-label/-/dmi-mch-services-label-1.0.1.tgz",
     "dmi-mch-services-place": "^1.0.2",
     "dmi-mch-services-usergroup": "^1.0.8",
