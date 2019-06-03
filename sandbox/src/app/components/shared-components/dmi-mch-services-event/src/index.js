@@ -26,6 +26,11 @@ class Event {
     return this.context.http.put(`/msvc/v1/events/event/${id}`, params)
   }
 
+  // Change status
+  updateStatus(id, status) {
+    return this.context.http.put(`/msvc/v1/events/event/${id}/status`, status)
+  }
+
   // Creates
   post(params) {
     return this.context.http.post('/msvc/v1/events/event', params)
