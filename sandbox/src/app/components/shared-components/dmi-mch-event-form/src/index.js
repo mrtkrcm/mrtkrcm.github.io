@@ -12,6 +12,9 @@
 // Dayjs and datejs didn't work for the basic purpose below
 // There are some in-line styles, should be moved to a Component or styled component
 
+// Structure:
+// EventFormContainer -> FormRules -> EventForm. (Could not break down in different files)
+
 import React, { useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
@@ -69,6 +72,7 @@ const EventForm = (props) => {
   const [isLoading, setIsLoading] = useState(true)
   const [labels, setLabels] = useState([])
   const [eventAttributesDropdown, setEventAttributesDropdown] = useState([])
+  const [myAccount, setMyAccount] = useState(null)
   const [myAddresses, setMyAddresses] = useState([])
   const [customLocationValue, setCustomLocationValue] = useState('')
   const [locationSuggestions, setLocationSuggestions] = useState([])
@@ -199,26 +203,37 @@ const EventForm = (props) => {
   }, [context])
 
   useEffect(() => {
+    if (myAccount) {
+      const account = new Account(context)
+      const getMyAddressesList = async () => {
+        // Adding CUSTOM item to the dropdown array. We will fill the other items later
+        let locationsList = [{ locationId: 0, placeId: '0', name: '[CUSTOM LOCATION]' }]
+        const myAddressesList = await account.getMineAddresses(myAccount.id)
+        const selectItem = {
+          key: 'locationId',
+          value: 'placeId',
+          text: 'name',
+          name: 'myAddress'
+        }
+        setAddressessList(myAddressesList.data)
+        // Show only those that have a placeId
+        locationsList = [...myAddressesList.data.filter(location => location.placeId), ...locationsList]
+        const dropdownOptions = buildSelectOptions(locationsList, selectItem)
+        setMyAddresses(dropdownOptions)
+      }
+      getMyAddressesList()
+    }
+  }, [myAccount])
+
+  useEffect(() => {
     // Fetching the list of locations, first fetching myAccount
     const account = new Account(context)
     const fetchMyAccount = async () => {
-      // Adding CUSTOM item to the dropdown array. We will fill the other items later
-      let locationsList = [{ locationId: 0, placeId: '0', name: '[CUSTOM LOCATION]' }]
       try {
         const myAcc = await account.getMine()
         if (ValidateAxiosResponse(myAcc)) {
-          const myAddressesList = await account.getMineAddresses(myAcc.data[0].id)
-          const selectItem = {
-            key: 'locationId',
-            value: 'placeId',
-            text: 'name',
-            name: 'myAddress'
-          }
-          setAddressessList(myAddressesList.data)
-          // Show only those that have a placeId
-          locationsList = [...myAddressesList.data.filter(location => location.placeId), ...locationsList]
-          const dropdownOptions = buildSelectOptions(locationsList, selectItem)
-          setMyAddresses(dropdownOptions)
+          props.setFieldValue('ownerAccountId', myAcc.data[0].id)
+          setMyAccount(myAcc.data[0])
         }
       } catch (e) {
         Logger(e)
@@ -911,6 +926,8 @@ const FormRules = withFormik({
   handleSubmit: async (values, { resetForm, props }) => {
     const objectToSave = { ...values }
     const startDate = `${moment(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD')} ${values.startTime}`
+    // Owner of the Event
+    objectToSave.ownerAccountId = values.ownerAccountId
     // Adapting the object to be sent to Save API
     objectToSave.venue = values.venue
     // Careful with the typo in timezone. API unconsistency
