@@ -107,7 +107,7 @@ const EventForm = (props) => {
     const event = new Event(context)
     try {
       const { id } = props
-      const archivedEvent = await event.updateStatus(id, { status: 'ARCHIVED' })
+      const archivedEvent = await event.del(id)
       if (archivedEvent.ok) {
         setTimeout(() => {
           props.setMessage({
@@ -258,6 +258,9 @@ const EventForm = (props) => {
     configuration,
     showControls,
     showAdvancedVisibilityPanel,
+    showAttributesPanel,
+    showPublishingArchiveRadio,
+    showAccessPanel,
     className,
     language = '',
     showMessage,
@@ -363,7 +366,6 @@ const EventForm = (props) => {
                       onBlur={handleBlur}
                       error={errors.title && touched.title}
                     />
-
                     {errors.title && touched.title && <InputFeedback>{errors.title}</InputFeedback> }
                   </Form.Field>
                   <Form.Field>
@@ -537,41 +539,82 @@ const EventForm = (props) => {
                   </Form.Field>
                 </Grid.Column>
               </Grid.Row>
-              <Grid.Row columns={2}>
-                <Grid.Column>
-                  <Form.Field>
-                    <label>{translate('VenueNameTitle')}</label>
-                    <div>{values.venue ? values.venue.name : '-'}</div>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>{translate('AdressLineTitle')}</label>
-                    <div>{values.venue ? values.venue.street : '-'}</div>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>{translate('CityTitle')}</label>
-                    <div>{values.venue ? values.venue.city : '-'}</div>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>{translate('CountryTitle')}</label>
-                    <div>{values.venue ? values.venue.country : '-'}</div>
-                  </Form.Field>
-                </Grid.Column>
-                <Grid.Column>
-                  <Form.Field>
-                    <label>{translate('ZIPCodeTitle')}</label>
-                    <div>{values.venue ? values.venue.postCode : '-'}</div>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>{translate('StateTitle')}</label>
-                    <div>-</div>
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
+              {values.venue
+                && (
+                  <Grid.Row columns={2}>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{translate('VenueNameTitle')}</label>
+                        <div>{values.venue ? values.venue.name : '-'}</div>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>{translate('AdressLineTitle')}</label>
+                        <div>{values.venue ? values.venue.street : '-'}</div>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>{translate('CityTitle')}</label>
+                        <div>{values.venue ? values.venue.city : '-'}</div>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>{translate('CountryTitle')}</label>
+                        <div>{values.venue ? values.venue.country : '-'}</div>
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Form.Field>
+                        <label>{translate('ZIPCodeTitle')}</label>
+                        <div>{values.venue ? values.venue.postCode : '-'}</div>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>{translate('StateTitle')}</label>
+                        <div>-</div>
+                      </Form.Field>
+                    </Grid.Column>
+                  </Grid.Row>
+                )
+              }
               {errors.venue && touched.venue && <InputFeedback>{errors.venue}</InputFeedback>}
             </Grid>
 
           </PanelForm.Block>
         </PanelForm>
+        {showAdvancedVisibilityPanel
+          && (
+          <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
+            <PanelForm.Header><h4>Visibility</h4></PanelForm.Header>
+            <PanelForm.Block>
+              <Grid>
+                <Grid.Row columns={2}>
+                  <Grid.Column>
+                    <Form.Field>
+                      <UserGroupSelector
+                        disabled
+                        name='whiteListAccessGroups'
+                        context={context}
+                        selected={values.whiteListAccessGroups}
+                        setFieldValue={setFieldValue}
+                        label={`${translate('WhiteListTitle') || ''}*`}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Form.Field>
+                      <UserGroupSelector
+                        disabled
+                        name='blackListAccessGroups'
+                        context={context}
+                        selected={values.blackListAccessGroups}
+                        setFieldValue={setFieldValue}
+                        label={`${translate('BlackListTitle') || ''}*`}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </PanelForm.Block>
+          </PanelForm>
+          )
+        }
 
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header><h4>{translate('DateTimeTitle')}</h4></PanelForm.Header>
@@ -638,86 +681,111 @@ const EventForm = (props) => {
             </Grid>
           </PanelForm.Block>
         </PanelForm>
+        {showAttributesPanel
+          && (
+          <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
+            <PanelForm.Header><h4>Attributes</h4></PanelForm.Header>
+            <PanelForm.Block>
+              <Grid className='radiobuttons'>
+                <Grid.Row className='radiobuttons__title'>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>{translate('VisibilityFieldTitle')}</label>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row className='radiobuttons__group'>
+                  <Form.Group inline>
+                    <Form.Field>
+                      <Radio
+                        disabled
+                        style={{ width: 'auto' }}
+                        id='publishPublic'
+                        name='publish'
+                        label={translate('VisibilityFieldValuePublic')}
+                        onChange={handleChange}
+                        value='public'
+                        checked={values.publish === 'public'}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <Radio
+                        disabled
+                        id='publishVips'
+                        name='publish'
+                        label={translate('VisibilityFieldValueVIP')}
+                        onChange={handleChange}
+                        value='vip'
+                        checked={values.publish === 'vip'}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <Radio
+                        disabled
+                        id='publishPrivate'
+                        name='publish'
+                        label='Private'
+                        onChange={handleChange}
+                        value='private'
+                        checked={values.publish === 'private'}
+                      />
+                    </Form.Field>
+                  </Form.Group>
+                </Grid.Row>
+                {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
+              </Grid>
+            </PanelForm.Block>
+          </PanelForm>
+          )}
+
+        {showAccessPanel
+          && (
+          <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
+            <PanelForm.Header><h4>Access</h4></PanelForm.Header>
+            <PanelForm.Block>
+              <Grid className='radiobuttons'>
+                <Grid.Row className='radiobuttons__title'>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>{translate('VisibilityFieldTitle')}</label>
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row className='radiobuttons__group'>
+                  <Form.Group inline>
+                    <Form.Field>
+                      <Radio
+                        style={{ width: 'auto' }}
+                        id='publishPublic'
+                        name='publish'
+                        label={translate('VisibilityFieldValuePublic')}
+                        onChange={handleChange}
+                        value='public'
+                        checked={values.publish === 'public'}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <Radio
+                        id='publishVips'
+                        name='publish'
+                        label={translate('VisibilityFieldValueVIP')}
+                        onChange={handleChange}
+                        value='vip'
+                        checked={values.publish === 'vip'}
+                      />
+                    </Form.Field>
+                  </Form.Group>
+                </Grid.Row>
+                {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
+              </Grid>
+            </PanelForm.Block>
+          </PanelForm>
+          )}
+
         <PanelForm bodycolor={bodycolor} headerseparatorcolor={headerseparatorcolor}>
           <PanelForm.Header><h4>{translate('PublishingTitle')}</h4></PanelForm.Header>
           <PanelForm.Block>
             <Grid className='radiobuttons'>
-              <Grid.Row className='radiobuttons__title'>
-                <Grid.Column>
-                  <Form.Field>
-                    <label>{translate('VisibilityFieldTitle')}</label>
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row className='radiobuttons__group'>
-                <Form.Group inline>
-                  <Form.Field>
-                    <Radio
-                      style={{ width: 'auto' }}
-                      id='publishPublic'
-                      name='publish'
-                      label={translate('VisibilityFieldValuePublic')}
-                      onChange={handleChange}
-                      value='public'
-                      checked={values.publish === 'public'}
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Radio
-                      id='publishVips'
-                      name='publish'
-                      label={translate('VisibilityFieldValueVIP')}
-                      onChange={handleChange}
-                      value='vip'
-                      checked={values.publish === 'vip'}
-                    />
-                  </Form.Field>
-                </Form.Group>
-              </Grid.Row>
-              {errors.publish && touched.publish && <InputFeedback>This field is required</InputFeedback>}
-            </Grid>
-            {showAdvancedVisibilityPanel
-        && (
-        <>
-          <h3>{translate('StatusFieldTitle', 'Type of event')}</h3>
-          <Grid>
-            <Grid.Row columns={2}>
-              <Grid.Column>
-                <Form.Field>
-                  <UserGroupSelector
-                    disabled
-                    name='whiteListAccessGroups'
-                    context={context}
-                    selected={values.whiteListAccessGroups}
-                    setFieldValue={setFieldValue}
-                    label={`${translate('WhiteListTitle') || ''}*`}
-                  />
-                </Form.Field>
-              </Grid.Column>
-              <Grid.Column>
-                <Form.Field>
-                  <UserGroupSelector
-                    disabled
-                    name='blackListAccessGroups'
-                    context={context}
-                    selected={values.blackListAccessGroups}
-                    setFieldValue={setFieldValue}
-                    label={`${translate('BlackListTitle') || ''}*`}
-                  />
-                </Form.Field>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </>
-        )}
-            <Grid className='radiobuttons'>
-              <Grid.Row className='radiobuttons__title'>
-                <Grid.Column>
-                  <Form.Field>
-                    <label>{translate('StatusFieldTitle')}</label>
-                  </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
               <Grid.Row className='radiobuttons__group'>
                 <Form.Group inline>
                   <Form.Field>
@@ -740,6 +808,20 @@ const EventForm = (props) => {
                       checked={values.status === 'LIVE'}
                     />
                   </Form.Field>
+                  {showPublishingArchiveRadio
+                    && (
+                      <Form.Field>
+                        <Radio
+                          id='statusLive'
+                          name='status'
+                          label='Archive'
+                          onChange={handleChange}
+                          value='ARCHIVE'
+                          checked={values.status === 'ARCHIVE'}
+                        />
+                      </Form.Field>
+                    )
+                  }
                 </Form.Group>
               </Grid.Row>
               <Text isSmall textColor='silver'>{translate('ReviewWarningLabelTitle')}</Text>
@@ -773,6 +855,9 @@ EventForm.propTypes = {
   showControls: PropTypes.bool,
   title: PropTypes.string,
   showAdvancedVisibilityPanel: PropTypes.bool,
+  showAttributesPanel: PropTypes.bool,
+  showPublishingArchiveRadio: PropTypes.bool,
+  showAccessPanel: PropTypes.bool,
   language: PropTypes.string,
   dirty: PropTypes.bool,
   isDirty: PropTypes.func,
@@ -828,6 +913,10 @@ const publishingStatus = (accessPermission) => {
   // If the event is VIP the VIP option is selected.
   if (accessPermission === AccesssPermission.VIP) {
     status = 'vip'
+  }
+
+  if (accessPermission === AccesssPermission.PRIVATE_INVITATION) {
+    status = 'private'
   }
 
   if (!accessPermission) {
@@ -946,8 +1035,14 @@ const FormRules = withFormik({
     // For most complex logic to revert, check older commits. This has been simplified as per client requirement.
     if (publishValue === 'public') {
       objectToSave.accessPermission = AccesssPermission.PUBLIC
+      objectToSave.whiteListAccessGroups = []
+      objectToSave.blackListAccessGroups = []
     } else if (publishValue === 'vip') {
       objectToSave.accessPermission = AccesssPermission.VIP
+      objectToSave.whiteListAccessGroups = []
+      objectToSave.blackListAccessGroups = []
+      props.configuration.eventsandexhibitions
+        && objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
     }
 
     try {

@@ -4728,6 +4728,13 @@ dmi-mch-services-usergroup@^1.0.8, "dmi-mch-services-usergroup@https://nexus.dmi
     "@babel/polyfill" "^7.4.3"
     regenerator-runtime "^0.13.2"
 
+"dmi-mch-usergroupselector@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.5.tgz":
+  version "1.0.5"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-usergroupselector/-/dmi-mch-usergroupselector-1.0.5.tgz#47fc6590e01c7153f9355c1d6d1de043d094c87c"
+  dependencies:
+    "@babel/polyfill" "^7.4.3"
+    regenerator-runtime "^0.13.2"
+
 dmi-mch-utils-dropdown@^1.0.2:
   version "1.0.2"
   resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-utils-dropdown/-/dmi-mch-utils-dropdown-1.0.2.tgz#5a364d8d69c189776193fb31b254c422cae938b1"

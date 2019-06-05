@@ -52,9 +52,7 @@ const EventFormWrapper = () => {
         bindArchiveForm={bindDeleteForm}
         archiveCallback={() => {
           window.location.href = '/'
-          // window.location.href = '/dashboard/events?page=overview'
         }}
-        showAdvancedVisibilityPanel={false}
         language='en'
         configuration={{
           eventsandexhibitions: {
@@ -73,6 +71,12 @@ const EventFormWrapper = () => {
         context={{ http }}
         bodycolor='white'
         headerseparatorcolor='#dbdbdb'
+        showAdvancedVisibilityPanel
+        showPublishingArchiveRadio
+        showAttributesPanel
+        showAccessPanel
+        // TODO
+        showWarnings
       />
     </NoSSR>
   )
