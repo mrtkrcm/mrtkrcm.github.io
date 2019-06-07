@@ -16,6 +16,10 @@ class Account {
   getMineAddresses(id) {
     return this.context.http.get(`/msvc/v1/accounts/mine/${id}/addresses`)
   }
+
+  getOwnerAddresses(id) {
+    return this.context.http.get(`/msvc/v1/accounts/items/${id}/addresses`)
+  }
 }
 
 export default Account
