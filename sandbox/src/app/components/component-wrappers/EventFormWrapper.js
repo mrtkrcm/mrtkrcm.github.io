@@ -43,7 +43,7 @@ const EventFormWrapper = () => {
       <button onClick={handleSubmitEventForm} disabled={!isDirty} type='button'>Submit from outside</button>
       <button onClick={handleDeleteEventForm} type='button'>Delete from outside</button>
       <EventForm
-        debug
+        // debug
         id={id}
         title={id ? `Edit Event #${id}` : 'Add Event'}
         showControls
@@ -73,7 +73,7 @@ const EventFormWrapper = () => {
         headerseparatorcolor='#dbdbdb'
         showAdvancedVisibilityPanel
         showPublishingArchiveRadio
-        showAttributesPanel
+        // showAttributesPanel
         showAccessPanel
         // TODO
         showWarnings
