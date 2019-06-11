@@ -422,6 +422,7 @@ const EventForm = (props) => {
                               style={{
                                 position: 'relative',
                                 width: '476px',
+                                height: '299px',
                                 border: '1px dashed lightgrey',
                                 cursor: 'pointer'
                               }}
