@@ -91,7 +91,7 @@ const EventForm = (props) => {
   const [locationSuggestions, setLocationSuggestions] = useState([])
   const [cropConfirmed, setCropConfirmed] = useState(null)
   const labelsEntityId = 'EventsAndExhibitionsForm'
-  const debouncedSearchTerm = useDebounce(customLocationValue, 700)
+  const debouncedSearchTerm = useDebounce(customLocationValue, 500)
   const place = new Place(context)
 
   // BASIC STUFF NEEDED, IN THIS FIRST BLOCK OF THE CODE. Dropdowns etc.
@@ -200,7 +200,7 @@ const EventForm = (props) => {
           color: 'green',
           header: 'Event archived successfully'
         })
-      }, 3000)
+      }, 2000)
       archiveCallback()
       // }
     } catch (e) {
@@ -555,7 +555,7 @@ const EventForm = (props) => {
                         </Form.Field>
                         <Form.Field>
                           <label>{translate('AdressLineTitle')}</label>
-                          <div>{values.venue ? values.venue.street : '-'}</div>
+                          <div>{(values.venue && values.venue.street) ? values.venue.street : '-'}</div>
                         </Form.Field>
                         <Form.Field>
                           <label>{translate('CityTitle')}</label>
@@ -569,11 +569,11 @@ const EventForm = (props) => {
                       <Grid.Column>
                         <Form.Field>
                           <label>{translate('ZIPCodeTitle')}</label>
-                          <div>{values.venue ? values.venue.postCode : '-'}</div>
+                          <div>{(values.venue && values.venue.postCode) ? values.venue.postCode : '-'}</div>
                         </Form.Field>
                         <Form.Field>
                           <label>{translate('StateTitle')}</label>
-                          <div>-</div>
+                          <div>{(values.venue && values.venue.state) ? values.venue.state : '-'}</div>
                         </Form.Field>
                       </Grid.Column>
                     </Grid.Row>
