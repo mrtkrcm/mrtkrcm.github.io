@@ -188,25 +188,25 @@ const EventForm = (props) => {
   },
   [debouncedSearchTerm]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Archives the event and shows a message on success, and calls callback. Callback can do whatever is passed to it
-  // By the way, this has changed so many times.... Archive is actually deleting. Should rename this.
+  // Deletes the event and shows a message on success, and calls callback. Callback can do whatever is passed to it
+  // By the way, this has changed so many times.... now archives, now deletes, and so on...
   const archiveEvent = useCallback(async () => {
     try {
-      // const archivedEvent = await event.del(id)
-      // if (archivedEvent.ok) {
-      setTimeout(() => {
-        setMessage({
-          show: true,
-          color: 'green',
-          header: 'Event archived successfully'
-        })
-      }, 2000)
-      archiveCallback()
-      // }
+      const deletedEvent = await event.del(id)
+      if (deletedEvent.ok) {
+        setTimeout(() => {
+          setMessage({
+            show: true,
+            color: 'green',
+            header: 'Event deleted successfully'
+          })
+        }, 2000)
+        archiveCallback()
+      }
     } catch (e) {
       Logger(e)
     }
-  }, [archiveCallback, setMessage])
+  }, [archiveCallback, event, id, setMessage])
 
   // Finds the closest cityId. This doesn't represent in the screen, but it saves in background
   const updateCityId = async (latitude, longitude) => {
@@ -976,7 +976,11 @@ function isLaterTime(ref) {
       reference: ref.path
     },
     test(value) {
-      return value > this.resolve(ref)
+      // If startTime is filled, and endTime < startTime, it won't pass validation
+      if (this.resolve(ref) !== undefined && (value < this.resolve(ref))) {
+        return false
+      }
+      return true
     }
   })
 }
@@ -1043,8 +1047,7 @@ const FormRules = withFormik({
       title: Yup.string().required(),
       date: Yup.string().required(),
       startTime: Yup.string().required(),
-      endTime: Yup.string().required()
-        .isLaterTime(Yup.ref('startTime')),
+      endTime: Yup.string().isLaterTime(Yup.ref('startTime')),
       eventImage: Yup.string().required(),
       venue: Yup.object().isVenueCorrect(),
       publish: Yup.string().required('This field is required')
