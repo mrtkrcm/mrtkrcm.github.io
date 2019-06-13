@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-utils-dropdown",
-  "version": "1.0.6-SNAPSHOT",
+  "version": "1.0.7-SNAPSHOT",
   "description": "DMI MCH Utils Dropdown",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
