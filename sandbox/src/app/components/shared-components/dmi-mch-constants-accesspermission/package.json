@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-constants-accesspermission",
-  "version": "1.0.2-SNAPSHOT",
+  "version": "1.0.3-SNAPSHOT",
   "description": "DMI MCH Constants Access Permission",
   "repository":"https://nexus.dminc-gtc.com/nexus/repository/npmjs",
   "main": "index.js",
