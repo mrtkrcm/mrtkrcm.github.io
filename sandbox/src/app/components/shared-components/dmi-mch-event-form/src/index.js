@@ -80,7 +80,8 @@ const EventForm = (props) => {
     id,
     userAccount,
     event,
-    setMessage
+    setMessage,
+    isProcessing
   } = props
 
   const [isLoading, setIsLoading] = useState(true)
@@ -272,15 +273,17 @@ const EventForm = (props) => {
     dirty,
     bodycolor = 'white',
     headerseparatorcolor = '#dbdbdb',
-    // Functions visible from the outside world
+    // Functions and states visible from the outside world
     bindSubmitForm = () => {},
     bindArchiveForm = () => {},
-    isDirty = () => {}
+    isDirty = () => {},
+    isFormProcessing = () => {}
   } = props
 
   bindSubmitForm(handleSubmit)
   bindArchiveForm(archiveEvent)
   isDirty(dirty)
+  isFormProcessing(isProcessing)
 
   const selectImage = (ref) => {
     if (values.eventImage) {
@@ -303,7 +306,6 @@ const EventForm = (props) => {
 
     return label
   }
-
   if (debug) {
     // eslint-disable-next-line no-console
     console.log('re-render')
@@ -334,7 +336,7 @@ const EventForm = (props) => {
           {showControls
             && (
             <>
-              <Button type='submit' disabled={!dirty}>Save</Button>
+              <Button type='submit' disabled={!dirty || isProcessing}>Save</Button>
               <Button type='button' onClick={archiveEvent}>archive</Button>
             </>
             )
@@ -582,7 +584,6 @@ const EventForm = (props) => {
                 }
                 {errors.venue && touched.venue && <InputFeedback>{errors.venue}</InputFeedback>}
               </Grid>
-
             </PanelForm.Block>
           </PanelForm>
           {showAdvancedVisibilityPanel
@@ -870,6 +871,8 @@ EventForm.propTypes = {
   language: PropTypes.string,
   dirty: PropTypes.bool,
   isDirty: PropTypes.func,
+  isFormProcessing: PropTypes.func,
+  isProcessing: PropTypes.bool,
   bodycolor: PropTypes.string,
   headerseparatorcolor: PropTypes.string,
   userAccount: PropTypes.object,
@@ -880,12 +883,12 @@ EventForm.propTypes = {
 const EventFormContainer = (props) => {
   const [currentEvent, setCurrentEvent] = useState(null)
   const [showMessage, setMessage] = useState({})
+  const [isProcessing, setIsProcessing] = useState(false)
   const [myAccount, setMyAccount] = useState(null)
 
   const { context, id } = props
   const userAccount = new Account(context)
   const event = new Event(context)
-
 
   // Getting the ownerAccount from the Event itself. Only for Edit mode. In Add mode, the Event has
   // no ID yet (obviously) so in Add mode we will take it from the logged in account
@@ -937,7 +940,9 @@ const EventFormContainer = (props) => {
       currentEvent,
       myAccount,
       showMessage,
-      setMessage
+      setMessage,
+      setIsProcessing,
+      isProcessing
     }
   }
   return (<FormRules {...newProps} />)
@@ -1087,7 +1092,8 @@ const FormRules = withFormik({
       props.configuration.eventsandexhibitions
         && objectToSave.whiteListAccessGroups.push(props.configuration.eventsandexhibitions.wag.whitelist.vip)
     }
-
+    // Start the save / edit process. This can be used for button states, etc.
+    props.setIsProcessing(true)
     try {
       const saveMessage = {
         show: true,
@@ -1104,6 +1110,7 @@ const FormRules = withFormik({
           setTimeout(() => {
             props.setMessage({})
             resetForm(values)
+            props.setIsProcessing(false)
           }, 3000)
         }
       } else {

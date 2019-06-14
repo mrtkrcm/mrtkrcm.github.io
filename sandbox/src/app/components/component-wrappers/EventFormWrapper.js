@@ -8,7 +8,10 @@ import EventForm from '../shared-components/dmi-mch-event-form/src'
 
 
 const EventFormWrapper = () => {
+  // Used mostly to disabled the button when form has no changes, and keep a "healthy" form.
   const [isDirty, setDirty] = useState(false)
+  // Used mostly for button state. Will disable the button during Saving time
+  const [isProcessing, setProcessing] = useState(false)
   const id = (Router.router && parseInt(Router.router.query.id, 0)) || null
 
   let submitEventForm = null
@@ -38,9 +41,13 @@ const EventFormWrapper = () => {
     setDirty(dirt)
   }
 
+  const isFormProcessing = (processing) => {
+    setProcessing(processing)
+  }
+
   return (
     <NoSSR>
-      <button onClick={handleSubmitEventForm} disabled={!isDirty} type='button'>Submit from outside</button>
+      <button onClick={handleSubmitEventForm} disabled={!isDirty || isProcessing} type='button'>Submit from outside</button>
       <button onClick={handleDeleteEventForm} type='button'>Delete from outside</button>
       <EventForm
         // debug
@@ -48,6 +55,7 @@ const EventFormWrapper = () => {
         title={id ? `Edit Event #${id}` : 'Add Event'}
         showControls
         isDirty={isFormDirty}
+        isFormProcessing={isFormProcessing}
         bindSubmitForm={bindSubmitForm}
         bindArchiveForm={bindDeleteForm}
         archiveCallback={() => {
