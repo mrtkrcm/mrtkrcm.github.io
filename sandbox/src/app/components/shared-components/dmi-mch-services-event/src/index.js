@@ -12,7 +12,8 @@ class Event {
 
   getAttributes() {
     const params = {
-      attributeType: 'EVENT_TYPE'
+      attributeType: 'EVENT_TYPE',
+      limit: 50
     }
     return this.context.http.get(`/msvc/v1/events/attributes/?${qs.stringify(params)}`)
   }
