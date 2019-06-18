@@ -4681,9 +4681,9 @@ dmi-mch-services-city@^1.0.1, "dmi-mch-services-city@https://nexus.dminc-gtc.com
   dependencies:
     query-string "4.3.4"
 
-"dmi-mch-services-event@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.15.tgz":
-  version "1.0.15"
-  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.15.tgz#b6bff3d879c6eae830ba0478af64395a1eb32ff7"
+"dmi-mch-services-event@https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.17.tgz":
+  version "1.0.17"
+  resolved "https://nexus.dminc-gtc.com/nexus/repository/npm-registry/dmi-mch-services-event/-/dmi-mch-services-event-1.0.17.tgz#ab9eff96da817006ec85bafce432cddba3476bc6"
   dependencies:
     query-string "4.3.4"
 
