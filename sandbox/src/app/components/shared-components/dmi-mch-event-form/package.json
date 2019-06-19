@@ -1,6 +1,6 @@
 {
   "name": "dmi-mch-event-form",
-  "version": "1.0.108-SNAPSHOT",
+  "version": "1.0.109-SNAPSHOT",
   "description": "DMI MCH Event form",
   "main": "index.js",
   "scripts": {
