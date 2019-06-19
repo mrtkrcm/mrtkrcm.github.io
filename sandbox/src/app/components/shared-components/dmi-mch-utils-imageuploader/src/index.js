@@ -196,6 +196,8 @@ class Uploader extends React.Component {
 
     axios.all(uploaders).then((resolve) => {
       this.setState({ uploadedFile: resolve, uploadInProgress: false })
+    }).catch(() => {
+      this.setState({ uploadedFile: null, uploadInProgress: false })
     })
   }
 
