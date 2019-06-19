@@ -1070,7 +1070,7 @@ const FormRules = withFormik({
     // Careful with the typo in timezone. API unconsistency
     objectToSave.venue.timezoneId = values.venue.timeZoneId || values.venue.timezoneId
     objectToSave.cityId = values.cityId
-    objectToSave.startDate = props.currentEvent ? props.currentEvent.startDate : startDate
+    objectToSave.startDate = startDate
     objectToSave.openingDateTimes = [
       {
         // YYYY-MM-DD is the format the API needs
