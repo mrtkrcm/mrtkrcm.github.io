@@ -1141,6 +1141,7 @@ const FormRules = withFormik({
             props.setMessage({})
             resetForm(values)
             props.setIsProcessing(false)
+            window.location.href = `${window.location.pathname}?page=detail&id=${savedEvent.data.id}`
           }, 3000)
         }
       } else {
@@ -1151,7 +1152,7 @@ const FormRules = withFormik({
           setTimeout(() => {
             props.setMessage({})
             // This is specific redirect URL for MFP
-            window.location.href = `${window.location.pathname}?page=edit&id=${savedEvent.data.id}`
+            window.location.href = `${window.location.pathname}?page=detail&id=${savedEvent.data.id}`
           }, 3000)
         }
       }
