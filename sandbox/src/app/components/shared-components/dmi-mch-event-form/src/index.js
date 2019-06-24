@@ -385,6 +385,7 @@ const EventForm = (props) => {
                         }}
                         error={(errors.eventTypes && true) && touched.eventTypes && true}
                         multiple
+                        closeOnChange
                         value={values.eventTypes}
                       />
                       {errors.eventTypes && touched.eventTypes && <InputFeedback>{errors.eventTypes}</InputFeedback>}
