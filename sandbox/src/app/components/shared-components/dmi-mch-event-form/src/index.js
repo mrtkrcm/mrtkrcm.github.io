@@ -623,6 +623,7 @@ const EventForm = (props) => {
                     <Grid.Column>
                       <Form.Field>
                         <UserGroupSelector
+                          disabled
                           name='whiteListAccessGroups'
                           context={context}
                           selected={values.whiteListAccessGroups}
