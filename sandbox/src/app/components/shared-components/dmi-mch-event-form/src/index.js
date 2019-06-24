@@ -39,6 +39,7 @@ import Label from 'dmi-mch-services-label'
 import getTranslationByName from 'dmi-mch-utils-gettranslation'
 import Text from 'dmi-mch-text'
 import UserGroupSelector from 'dmi-mch-usergroupselector'
+import Usergroup from 'dmi-mch-services-usergroup'
 import PanelForm from 'dmi-mch-panel'
 
 // TODO: Put in a separate component
@@ -91,6 +92,7 @@ const EventForm = (props) => {
   const [customLocationValue, setCustomLocationValue] = useState('')
   const [locationSuggestions, setLocationSuggestions] = useState([])
   const [cropConfirmed, setCropConfirmed] = useState(null)
+  const [userGroupsDropDown, setUserGroupsDropDown] = useState([])
   const labelsEntityId = 'EventsAndExhibitionsForm'
   const debouncedSearchTerm = useDebounce(customLocationValue, 500)
   const place = new Place(context)
@@ -138,6 +140,30 @@ const EventForm = (props) => {
       fetchLabels()
     }
   }, [context, labelsEntityId, labels])
+
+  // Fetching user group
+  useEffect(() => {
+    if (userGroupsDropDown.length === 0) {
+      const userGroup = new Usergroup(context)
+      const fetchUsergroups = async () => {
+        try {
+          const userGroups = await userGroup.getAll()
+          if (ValidateAxiosResponse(userGroups)) {
+            const selectItem = {
+              key: 'name',
+              value: 'name',
+              text: 'displayName'
+            }
+            const dropdownOptions = buildSelectOptions(userGroups.data, selectItem)
+            setUserGroupsDropDown(dropdownOptions)
+          }
+        } catch (e) {
+          Logger(e)
+        }
+      }
+      fetchUsergroups()
+    }
+  }, [context, userGroupsDropDown])
 
   // Retrieve locations. Use one API or another for retrieving the locations, if have ID or not.
   useEffect(() => {
@@ -310,6 +336,7 @@ const EventForm = (props) => {
     // eslint-disable-next-line no-console
     console.log('re-render')
   }
+
   if (labels && eventAttributesDropdown && myAccount) {
     return (
       <section className={className}>
@@ -596,11 +623,11 @@ const EventForm = (props) => {
                     <Grid.Column>
                       <Form.Field>
                         <UserGroupSelector
-                          disabled
                           name='whiteListAccessGroups'
                           context={context}
                           selected={values.whiteListAccessGroups}
                           setFieldValue={setFieldValue}
+                          dropDownOptions={userGroupsDropDown}
                           label={`${translate('WhiteListTitle') || ''}*`}
                         />
                       </Form.Field>
@@ -613,6 +640,7 @@ const EventForm = (props) => {
                           context={context}
                           selected={values.blackListAccessGroups}
                           setFieldValue={setFieldValue}
+                          dropDownOptions={userGroupsDropDown}
                           label={`${translate('BlackListTitle') || ''}*`}
                         />
                       </Form.Field>
