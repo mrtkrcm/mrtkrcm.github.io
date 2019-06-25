@@ -20,7 +20,7 @@ import PropTypes from 'prop-types'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
-import { Input, Form, Grid, Button, Radio, Search, Icon, Message } from 'semantic-ui-react'
+import { Input, Form, Grid, Button, Radio, Search, Icon, Message, TextArea } from 'semantic-ui-react'
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react'
 import styled from 'styled-components'
 import ValidateAxiosResponse from 'dmi-mch-utils-validate-axios-response'
@@ -293,6 +293,7 @@ const EventForm = (props) => {
     showAttributesPanel,
     showPublishingArchiveRadio,
     showAccessPanel,
+    displayRichEditor,
     className,
     language = '',
     showMessage,
@@ -419,13 +420,24 @@ const EventForm = (props) => {
                     </Form.Field>
                     <Form.Field>
                       <label>{translate('DescriptionFieldTitle')}</label>
-                      {!isLoading && (
+                      {!isLoading && displayRichEditor && (
                         <RichTextEditor
                           name='longParagraphText'
                           data={values.longParagraphText}
                           customHandler={(e) => {
                             setFieldValue('longParagraphText', e.editor.getData())
                           }}
+                        />
+                      )}
+                      {!displayRichEditor && (
+                        <TextArea
+                          id='longParagraphText'
+                          name='longParagraphText'
+                          value={values.longParagraphText}
+                          style={{ minHeight: 140 }}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={errors.longParagraphText && touched.longParagraphText}
                         />
                       )}
                     </Form.Field>
@@ -898,6 +910,7 @@ EventForm.propTypes = {
   showAttributesPanel: PropTypes.bool,
   showPublishingArchiveRadio: PropTypes.bool,
   showAccessPanel: PropTypes.bool,
+  displayRichEditor: PropTypes.bool,
   language: PropTypes.string,
   dirty: PropTypes.bool,
   isDirty: PropTypes.func,

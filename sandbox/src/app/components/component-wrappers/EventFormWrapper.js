@@ -58,6 +58,7 @@ const EventFormWrapper = () => {
         isFormProcessing={isFormProcessing}
         bindSubmitForm={bindSubmitForm}
         bindArchiveForm={bindDeleteForm}
+        displayRichEditor
         archiveCallback={() => {
           window.location.href = '/'
         }}
