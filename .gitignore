@@ -33,3 +33,5 @@ sandbox/.env.production.local
 sandbox/npm-debug.log*
 sandbox/yarn-debug.log*
 sandbox/yarn-error.log*
+node_modules
+.next/

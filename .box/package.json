@@ -1,0 +1,28 @@
+{
+  "name": "dmi-storybook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "build-box": "build-storybook -c .storybook -o .out",
+    "deploy-box": "storybook-to-ghpages -o .out",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006"
+  },
+  "dependencies": {
+    "next": "^8.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@storybook/addon-actions": "^5.1.9",
+    "@storybook/addon-links": "^5.1.9",
+    "@storybook/addons": "^5.1.9",
+    "@storybook/react": "^5.1.9",
+    "@storybook/storybook-deployer": "^2.8.1",
+    "babel-loader": "^8.0.6"
+  }
+}
