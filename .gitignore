@@ -3,6 +3,9 @@
 #
 /scripts
 
+# Coverage directory used by tools like istanbul or jest
+coverage
+
 # dependencies
 /node_modules
 
